@@ -21,12 +21,19 @@ var villanScripts = [];
 // Create a file that stores all game data and copy over the above code into it.
 // Out of class, there are (conveniently) four things that we didn't get to:
 // 1. Main character
-// 2. Score (health, gold/points, etc.)
+// 2. Bullets
 // 3. Sources (where hazards come from)
 // 4. "Good" Items: Things like soap
 // Complete these in the new game data file that we create and push to the
 // Github repository.
 
+
+// Write the function moveHazards, which takes in hazards and updates the 
+// x and y coordinates by deltaX and deltaY.
+
+function moveHazards(hazards, deltaX, deltaY) {
+    // ...
+}
 
 // Write a function that removes some bullets from list of all the bullets.
 // Bullets are represented by x and y coordinates like: [x, y]. 
@@ -47,3 +54,4 @@ function testRemoveBullets() {
 }
 
 // testRemoveBullets();
+
