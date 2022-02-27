@@ -36,7 +36,13 @@ var smoke = {
     damage: 5,
 }; // Fill in with another hazard
 
+var level = {
+    levelNum: 1,
+    maxScore: 16
+};
+
 var hazards = [dirtyHands, smoke]; // fill in the rest with your code.
+var bullets = [];
 
 // Create an array for the scripts of evil villan
 // (Find them on the game design document)
@@ -53,8 +59,9 @@ var villanScripts = ["",
 
 // Easy Functions
 
+// Where did we store the points for the character?
 function addToScore(points) {
-    // ...
+    mainCharacter.score += points;
 }
 
 // Returns true/false
@@ -65,38 +72,73 @@ function isLevelOver(level, currScore) {
     //     maxScore: 16,
     //     ...
     // }
+    if (currScore >= maxScore) {
+        return true;
+    }
+    return false;
 }
 
 // Get speed from character object's field.
-function moveCharacter() {
-    // ...
+function moveCharacterUp() {
+    mainCharacter.y -= mainCharacter.speed;
+}
+
+function moveCharacterDown() {
+    mainCharacter.y += mainCharacter.speed;
 }
 
 function moveBullets(bullets) {
-    // ...
+    for (bullet in bullets) {
+        bullet.x += bullet.speed;
+        bullet.y += bullet.speed;
+    }
 }
 
 // Check if game is over, whether they won OR lost.
 function isGameOver() {
-    // ...
+    // Check if won:
+    if (isLevelOver(level, mainCharacter.score)) {
+        return true;
+    }
+
+    if (mainCharacter.health <= 0) {
+        return true;
+    }
+
+    return false;
+
 }
 
 // Return script for evil enemy based on which level we're on, where 
 // levelNum is an integer.
 function getScript(levelNum) {
-    // ...
+    return villanScripts[levelNum - 1];
 }
 
 // Medium 
 // Create a new hazard from a source. A source should have a field called
-// source.hazard. Spawn it at the source's x and y coordinates.
+// source.hazardName. Spawn it at the source's x and y coordinates.
 function produceHazardFromSource(source) {
-    // ...
+    hazard = {
+        hazardName: source.hazardName,
+        x: source.x,
+        y: source.y,
+        speed: 5
+    }
+    hazards.push(hazard);
 }
 
-function spawnHazard(hazard) {
+// return {hazardName: __, points: ___}
+function spawnHazard(hazardName) {
     // Needs to spawn on left side, but randomly in terms of the y coordinate.
     // You should look up how to generate a random number between some bounds.
+    hazard = {
+        hazardName: source.hazardName,
+        x: 0,
+        y: Math.floor(Math.random() * document.documentElement.clientHeight),
+        speed: 5
+    }
+    hazards.push(hazard);
 }
 
 // Returns true/false based on if a bullet hit a hazard.
@@ -104,15 +146,32 @@ function spawnHazard(hazard) {
 // Assume we already implemented collisionCheck, a function that takes in two 
 // coordinates and checks if they are overlapping. We will implement this 
 // in a later week.
+
+function collisionCheck(x0, y0, x1, y1) {
+    return true;
+}
+
 function bulletCollided(bullet, hazard) {
-    // ...
+    return collisionCheck(bullet.x, bullet.y, hazard.x, hazard.y);
 }
 
 // Use bulletCollided to check for every single collision.
 // Should return an array of all bullets that had collisions, which can be used
 // to call removeBullets function from last session.
 function checkAllCollisions(bullets, hazard) {
-    // ...
+    var resultList = Array();
+    for (let i = 0; i < bullets.length; i++) {
+        var bullet = bullets[i];
+        for (let j = 0; j < hazards.length; j++) {
+            var hazard = hazards[j];
+            if (bulletCollided(bullet, hazard)) {
+                resultList.push(bullet);
+                break;
+            }
+        }
+    }
+
+    return resultList;
 }
 
 // These are all time-based functions. How would we call them based on 
@@ -150,4 +209,15 @@ function getMousePosition(canvas, event) {
 // Use this to implement when you press space to spawn a bullet if enough 
 // bullets are available.
 
-// ...
+window.addEventListener("keydown", function(event) {
+    if (event.code === 'Space' && mainCharacter.bullets > 0) {
+        let bullet = {
+            x: document.documentElement.clientWidth - 40,
+            y: document.documentElement.clientHeight - 40,
+            speed: 10
+        };
+
+        bullets.push(bullet);
+        mainCharacter.bullets -= 1;
+    }
+});

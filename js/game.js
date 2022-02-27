@@ -1,6 +1,6 @@
 function initCanvas() {
     var canvas = document.createElement('canvas');
-    canvas.id = ''; // Add some id
+    canvas.id = 'canvas-id';
     resizeCanvas(canvas);
     document.getElementById('wrapper').appendChild(canvas);
     // Add resizeCanvas function to resize so that it changes dynamically:
