@@ -1,3 +1,6 @@
+// Variables needed for game:
+var lastTime = Date.now();
+
 // Create an array for the different hazards that exist:
 
 var offScreenSource = {};
@@ -47,3 +50,104 @@ var villanScripts = ["",
                     "...",
                     "Zounds!  He used chlorine [and a filter] to remove poop and germs from the water.  But there is no way to keep people with measles away from him.  He has not been immunized, so any nearby measles will spread to him quickly! ",
                     ];
+
+// Easy Functions
+
+function addToScore(points) {
+    // ...
+}
+
+// Returns true/false
+function isLevelOver(level, currScore) {
+    // Level is an object represented as:
+    // {
+    //     levelNum: 1,
+    //     maxScore: 16,
+    //     ...
+    // }
+}
+
+// Get speed from character object's field.
+function moveCharacter() {
+    // ...
+}
+
+function moveBullets(bullets) {
+    // ...
+}
+
+// Check if game is over, whether they won OR lost.
+function isGameOver() {
+    // ...
+}
+
+// Return script for evil enemy based on which level we're on, where 
+// levelNum is an integer.
+function getScript(levelNum) {
+    // ...
+}
+
+// Medium 
+// Create a new hazard from a source. A source should have a field called
+// source.hazard. Spawn it at the source's x and y coordinates.
+function produceHazardFromSource(source) {
+    // ...
+}
+
+function spawnHazard(hazard) {
+    // Needs to spawn on left side, but randomly in terms of the y coordinate.
+    // You should look up how to generate a random number between some bounds.
+}
+
+// Returns true/false based on if a bullet hit a hazard.
+// Check to make sure the hazard can be hit in the first place.
+// Assume we already implemented collisionCheck, a function that takes in two 
+// coordinates and checks if they are overlapping. We will implement this 
+// in a later week.
+function bulletCollided(bullet, hazard) {
+    // ...
+}
+
+// Use bulletCollided to check for every single collision.
+// Should return an array of all bullets that had collisions, which can be used
+// to call removeBullets function from last session.
+function checkAllCollisions(bullets, hazard) {
+    // ...
+}
+
+// These are all time-based functions. How would we call them based on 
+// time passed?
+function mainLoop(context) {
+    var now = Date.now();
+    var dt = (now - lastTime) / 1000.0;
+
+    update(dt); // Some update function
+
+    lastTime = now;
+
+    requestAnimFrame(() => mainLoop(context));
+}
+
+function update(dt) {
+    // Do something to update...
+    
+}
+
+// How to call functions based on events (controller functions):
+
+// Returns the mouse click coordinates wrapped in an object {x: _, y: _}
+// https://stackoverflow.com/questions/24384368/simple-button-in-html5-canvas/24384882
+function getMousePosition(canvas, event) {
+    let canvasRect = canvas.getBoundingClientRect();
+    return {
+        x: event.clientX - canvasRect.left,
+        y: event.clientY - canvasRect.top
+    };
+}
+
+// To use key pressed:
+// window.onkeydown = function() {} or use lambda (window.onkeydown = () => {})
+// Use this to implement when you press space to spawn a bullet if enough 
+// bullets are available.
+
+// ...

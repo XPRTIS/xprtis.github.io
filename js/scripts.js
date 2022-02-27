@@ -1,6 +1,3 @@
-import 'data';
-
-
 // Bringing it all together: 
 // Create a file that stores all game data and copy over the above code into it.
 // Out of class, there are (conveniently) four things that we didn't get to:
