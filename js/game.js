@@ -1,3 +1,5 @@
+var timeElapsed = 0;
+
 function initCanvas() {
     var canvas = document.createElement('canvas');
     canvas.id = 'canvas-id';
@@ -15,6 +17,29 @@ function initCanvas() {
             handleMousePressed(mousePosition, context);
         }, false);
 
+        document.addEventListener("keydown", function(event) {
+            if (event.code === 'Space') {
+                let bullet = {
+                    x: document.documentElement.clientWidth / 2,
+                    y: document.documentElement.clientHeight - 75,
+                    w: 30,
+                    h: 10,
+                    speed: 10
+                };
+                
+                bullets.push(bullet);
+                mainCharacter.bullets -= 1;
+            }
+
+            if (event.code === 'ArrowUp') {
+                moveCharacterUp();
+            }
+            
+            if (event.code === 'ArrowDown') {
+                moveCharacterDown();
+            }
+        });
+
         // Start the game by starting the main loop.
         mainLoop(context);
     }
@@ -28,6 +53,8 @@ function mainLoop(context) {
 
     lastTime = now;
 
+    context.clearRect(0, 0, document.documentElement.clientWidth, 
+        document.documentElement.clientHeight);
     renderAll(context);
 
     // using requestAnimFrame to call mainloop again after a certain interval
@@ -35,8 +62,15 @@ function mainLoop(context) {
 }
 
 function update(dt) {
+    timeElapsed += dt;
     // If we have information we need to update for every frame, write it here.
-    
+    moveBullets();
+    moveHazards();
+
+    if (timeElapsed > 5) {
+        spawnHazard();
+        timeElapsed = 0;
+    }
 }
 
 /* How to change canvas size code from:

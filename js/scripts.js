@@ -11,13 +11,20 @@
 
 // Write the function moveHazards, which takes in hazards and updates them.
 
-function moveHazards(hazards) {
+function moveHazards() {
     for (let i = 0; i < hazards.length; i++) {
         var hazard = hazards[i];
         if ('speed' in hazard) {
             hazard.x += hazard.speed;
-            hazard.y += hazard.speed;
         }
+    }
+}
+
+function moveBullets() {
+    for (let i = 0; i < bullets.length; i ++) {
+        var bullet = bullets[i];
+        bullet.x -= bullet.speed;
+        bullet.y -= bullet.speed;
     }
 }
     

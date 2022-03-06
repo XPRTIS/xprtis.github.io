@@ -41,8 +41,8 @@ var level = {
     maxScore: 16
 };
 
-var hazards = [dirtyHands, smoke]; // fill in the rest with your code.
-var bullets = [];
+var hazards = []; // fill in the rest with your code.
+var bullets = [{x: 20, y: 20, w: 30, h: 10}];
 
 // Create an array for the scripts of evil villan
 // (Find them on the game design document)
@@ -76,6 +76,14 @@ function isLevelOver(level, currScore) {
         return true;
     }
     return false;
+}
+
+var mainCharacter = {
+    x: (9 * document.documentElement.clientWidth) / 10,
+    y: document.documentElement.clientHeight / 2,
+    speed: 30,
+    imgUrl: 'assets/walking_girl.png',
+    bullets: 10
 }
 
 // Get speed from character object's field.
@@ -128,15 +136,16 @@ function produceHazardFromSource(source) {
     hazards.push(hazard);
 }
 
-// return {hazardName: __, points: ___}
+// return {hazardName: __, points: ___} 
 function spawnHazard(hazardName) {
     // Needs to spawn on left side, but randomly in terms of the y coordinate.
     // You should look up how to generate a random number between some bounds.
-    hazard = {
-        hazardName: source.hazardName,
+    let hazard = {
+        hazardName: hazardName,
         x: 0,
         y: Math.floor(Math.random() * document.documentElement.clientHeight),
-        speed: 5
+        speed: 10,
+        imgUrl: 'assets/dirty_hand.png'
     }
     hazards.push(hazard);
 }
@@ -179,15 +188,3 @@ function checkAllCollisions(bullets, hazard) {
 // Use this to implement when you press space to spawn a bullet if enough 
 // bullets are available.
 
-window.addEventListener("keydown", function(event) {
-    if (event.code === 'Space' && mainCharacter.bullets > 0) {
-        let bullet = {
-            x: document.documentElement.clientWidth - 40,
-            y: document.documentElement.clientHeight - 40,
-            speed: 10
-        };
-
-        bullets.push(bullet);
-        mainCharacter.bullets -= 1;
-    }
-});
