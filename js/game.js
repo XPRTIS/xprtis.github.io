@@ -28,6 +28,7 @@ function mainLoop(context) {
 
     lastTime = now;
 
+    context.clearRect(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight)
     renderAll(context);
 
     // using requestAnimFrame to call mainloop again after a certain interval
