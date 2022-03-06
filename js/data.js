@@ -19,8 +19,8 @@ var dirtyHands = {
     speed: 10,
     source: offScreenSource,
     prevention: soap,
-    points = 2,
-    health = 100
+    points: 2,
+    health: 100
 };
 
 var stove = {
@@ -172,36 +172,6 @@ function checkAllCollisions(bullets, hazard) {
     }
 
     return resultList;
-}
-
-// These are all time-based functions. How would we call them based on 
-// time passed?
-function mainLoop(context) {
-    var now = Date.now();
-    var dt = (now - lastTime) / 1000.0;
-
-    update(dt); // Some update function
-
-    lastTime = now;
-
-    requestAnimFrame(() => mainLoop(context));
-}
-
-function update(dt) {
-    // Do something to update...
-    
-}
-
-// How to call functions based on events (controller functions):
-
-// Returns the mouse click coordinates wrapped in an object {x: _, y: _}
-// https://stackoverflow.com/questions/24384368/simple-button-in-html5-canvas/24384882
-function getMousePosition(canvas, event) {
-    let canvasRect = canvas.getBoundingClientRect();
-    return {
-        x: event.clientX - canvasRect.left,
-        y: event.clientY - canvasRect.top
-    };
 }
 
 // To use key pressed:
