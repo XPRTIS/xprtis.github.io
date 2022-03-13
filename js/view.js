@@ -6,9 +6,8 @@ function renderBackground(context) {
 
 function renderBulletSource(context) {
     context.fillStyle = 'rgba(100, 80, 12)';
-    let xMid = document.documentElement.clientWidth / 2;
-    let y0 = document.documentElement.clientHeight - 75;
-    context.fillRect(xMid - 40, y0, 80, 75);
+    context.fillRect(bulletSource.x, bulletSource.y, 
+                     bulletSource.w, bulletSource.h);
 }
 
 function renderCharacter(context) {
@@ -47,7 +46,9 @@ function renderSources(context) {
 
 }
 
-function renderScript(context) {}
+function renderScript(context) {
+
+}
 
 function renderAll(context) {
     // Call all render functions. Remember that every call will overlap on top

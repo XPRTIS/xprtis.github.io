@@ -18,17 +18,11 @@ function initCanvas() {
         }, false);
 
         document.addEventListener("keydown", function(event) {
+            // Tip: You can use a combination of keyup, keydown, and boolean
+            // (true/false) flags to know whether or not a user is holding
+            // down a key.
             if (event.code === 'Space') {
-                let bullet = {
-                    x: document.documentElement.clientWidth / 2,
-                    y: document.documentElement.clientHeight - 75,
-                    w: 30,
-                    h: 10,
-                    speed: 10
-                };
-                
-                bullets.push(bullet);
-                mainCharacter.bullets -= 1;
+                createBullet();
             }
 
             if (event.code === 'ArrowUp') {
@@ -62,6 +56,9 @@ function mainLoop(context) {
 }
 
 function update(dt) {
+    // To do: we use timeElapsed only for spawning hazards. We might need
+    // more for other time based events such as spawning sources, hazards
+    // from sources, etc.
     timeElapsed += dt;
     // If we have information we need to update for every frame, write it here.
     moveBullets();
@@ -94,6 +91,7 @@ var requestAnimFrame = (function() {
         window.oRequestAnimationFrame       ||
         window.msRequestAnimationFrame      ||
         function(callback) {
+            // This is where the framerate is set, in milliseconds.
             window.setTimeout(callback, 1000 / 60);
         };
 })();

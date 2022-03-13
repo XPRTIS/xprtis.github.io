@@ -1,0 +1,6 @@
+body {
+    /* Gets rid of white margins around page */
+    margin: 0;
+    /* Don't allow scrolling */
+    overflow: hidden;
+}
