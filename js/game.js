@@ -23,6 +23,7 @@ function initCanvas() {
             // down a key.
             if (event.code === 'Space') {
                 createBullet();
+                console.log(bullets);
             }
 
             if (event.code === 'ArrowUp') {
@@ -31,6 +32,14 @@ function initCanvas() {
             
             if (event.code === 'ArrowDown') {
                 moveCharacterDown();
+            }
+
+            if (event.code === 'ArrowLeft') {
+                moveBulletSourceLeft();
+            }
+
+            if (event.code === 'ArrowRight') {
+                moveBulletSourceRight();
             }
         });
 

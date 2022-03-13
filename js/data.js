@@ -81,10 +81,25 @@ function isLevelOver(level, currScore) {
 /* Returns true/false based on if two rectangles overlap.
    Each object needs to have the following fields:
    {x, y, w, h} (where x and y are the TOP LEFT of the rectangle)
-   (Hint 1: we need to know the width/height of the rectangles)
-   (Hint 2: it might be helpful to draw out different scenarios on paper first!)
+   (Hint 1: it might be helpful to draw out different scenarios on paper first!)
 */
 function collisionCheckRect(object1, object2) {
+    if (object1.x < object2.x + object2.w) {
+        return false;
+    }
+
+    if (object1.x + object1.w < object2.x) {
+        return false;
+    }
+
+    if (object1.y + object1.h < object2.y) {
+        return false;
+    }
+
+    if (object1 > object2.y + object2.h) {
+        return false;
+    }
+
     return true;
 }
 
@@ -93,7 +108,11 @@ function collisionCheckRect(object1, object2) {
 // (Hint 1: The distance between two points formula is needed for this calculation.)
 // (Hint 2: it might be helpful to draw out differenct scenarios on paper first!)
 function collisionCheckCircle(object1, object2) {
-    return true;
+    let distance = ((object1.cx - object2.cx) ** 2 + (object1.cy - object2.cy) ** 2) ** 0.5;
+    if (distance < (object1.r + object2.r)) {
+        return true;
+    }
+    return false;
 }
 
 // Returns true/false based on if a rectangle and circle overlap.
@@ -138,22 +157,24 @@ var mainCharacter = {
     bullets: 10
 }
 
-// Calculates deltaX and deltaY for bullet based on angle (in degrees):
+// Calculates deltaX and deltaY for bullet based on angle (in radians):
 // (Hint: for cos and sin, use Math.cos and Math.sin)
 function calculateDeltas(angle) {
-    return {dx: 0, dy: 0}
+    let speed = 10;
+    return {dy: -1 * speed * Math.cos(angle), dx: speed * Math.sin(angle)}
 }
 
 function createBullet() {
-    // let angle = ???
+    let angle = bulletSource.angle;
+    let deltas = calculateDeltas(angle);
     let bullet = {
         // TO DO: replace with cannon's x and y rather than copy and paste:
         x: document.documentElement.clientWidth / 2,
         y: document.documentElement.clientHeight - 75,
         w: 30,
         h: 10,
-        // TO DO: update with dx and dy from calculateDeltas
-        speed: 10
+        dx: deltas.dx,
+        dy: deltas.dy
     };
     
     bullets.push(bullet);
@@ -170,10 +191,11 @@ function moveCharacterDown() {
     mainCharacter.y += mainCharacter.speed;
 }
 
-function moveBullets(bullets) {
-    for (bullet in bullets) {
-        bullet.x += bullet.speed;
-        bullet.y += bullet.speed;
+function moveBullets() {
+    for (let i = 0; i < bullets.length; i ++) {
+        var bullet = bullets[i];
+        bullet.x += bullet.dx;
+        bullet.y += bullet.dy;
     }
 }
 
@@ -216,6 +238,8 @@ function spawnHazard(hazardName) {
         hazardName: hazardName,
         x: 0,
         y: Math.floor(Math.random() * document.documentElement.clientHeight),
+        w: 400,
+        h: 400,
         speed: 10,
         imgUrl: 'assets/dirty_hand.png'
     }
@@ -231,11 +255,17 @@ var bulletSource = {
 }
 
 function moveBulletSourceLeft() {
-
+    let angleDelta = 10; // in degrees
+    let angleDeltaRadians = (Math.PI * angleDelta) / 180;
+    
+    bulletSource.angle -= angleDeltaRadians;
 }
 
 function moveBulletSourceRight() {
-
+    let angleDelta = 10; // in degrees
+    let angleDeltaRadians = (Math.PI * angleDelta) / 180;
+    
+    bulletSource.angle += angleDeltaRadians;
 }
 
 /*

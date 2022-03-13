@@ -5,9 +5,13 @@ function renderBackground(context) {
 }
 
 function renderBulletSource(context) {
+    context.save();
+    context.translate(bulletSource.x, bulletSource.y + bulletSource.h / 2);
+    context.rotate(bulletSource.angle);
     context.fillStyle = 'rgba(100, 80, 12)';
-    context.fillRect(bulletSource.x, bulletSource.y, 
+    context.fillRect(0, -bulletSource.h / 2, 
                      bulletSource.w, bulletSource.h);
+    context.restore();
 }
 
 function renderCharacter(context) {
