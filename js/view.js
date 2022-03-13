@@ -1,36 +1,29 @@
 function renderBackground(context) {
-    context.fillStyle = 'rgba(0, 0, 0, 0.4)');
-    context.fillrect(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight);
+    context.fillStyle = 'rgba(0, 0, 0, 0.4)';
+    context.fillRect(0, 0, document.documentElement.clientWidth, 
+        document.documentElement.clientHeight);
 }
 
 function renderBulletSource(context) {
     context.fillStyle = 'rgba(100, 80, 12)';
-    let xMid = document.documentElement.clientWidth / 2
-    let y0 = document.documentElement.clientHeight - 75
-    context.fillRect(xMid - 40, y0, 80 , 75);
+    context.fillRect(bulletSource.x, bulletSource.y, 
+                     bulletSource.w, bulletSource.h);
 }
 
 function renderCharacter(context) {
-    var charachterImage = new Image();
-    charachterImage.addEventListener('load' , () => {
-        let w = 536;
-        let h = 739;
-        let x0 = mainCharacter.x
-        let x1 = mainCharacter.y
-        charachterImage.src = 'assests/walking_girl.png';
-        context.drawImage(charachterImage, 0, 0)
-    });
-
+    var characterImage = new Image();
+    characterImage.src = mainCharacter.imgUrl;
+    let x0 = mainCharacter.x;
+    let y0 = mainCharacter.y;
+    context.drawImage(characterImage, x0, y0, 200, 200);
 }
 
 function renderBullets(context) {
-    for (let i = 0; i <bullets.length; i++) {
-        let bullet = bullet[i];
+    for (let i = 0; i < bullets.length; i++) {
+        let bullet = bullets[i];
         context.fillStyle = 'rgba(0, 0, 255, 1)';
-        context.fillRect(bullet.x, bullet.y, w, h);
+        context.fillRect(bullet.x, bullet.y, bullet.w, bullet.h);
     }
-
-    
 }
 
 function renderHazards(context) {
@@ -41,15 +34,34 @@ function renderHazards(context) {
         let x0 = hazard.x;
         let y0 = hazard.y;
 
-        context.drawImage(hazardimage)
+        context.drawImage(hazardImage, x0, y0, 300, 300);
     }
 }
 
 function renderScore(context) {
+    for(currScore > maxScore) {
+        if(currScore != currScore) {
+            context.clearRect(0, 0, 20, 10)
+            context.strokeText(currScore)
+        }
+    }
 
 }
 
 function renderSources(context) {
+    for(source.health > 0) {
+        if(dt == 5) {
+            var hazardImage = new Image();
+            hazardImage.src = hazard.imgUrl;
+            let x0 = source.x;
+            let y0 = source.y;
+
+        context.drawImage(hazardImage, x0, y0, 300, 300);
+        }
+    }
+}
+
+function renderScript(context) {
 
 }
 
@@ -63,4 +75,5 @@ function renderAll(context) {
     renderHazards(context);
     renderScore(context);
     renderSources(context);
+    renderScript(context);
 }

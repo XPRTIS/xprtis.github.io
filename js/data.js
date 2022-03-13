@@ -47,7 +47,7 @@ var level = {
     maxScore: 16
 };
 
-var hazards = [dirtyHands, smoke]; // fill in the rest with your code.
+var hazards = [];
 var bullets = [];
 
 // Create an array for the scripts of evil villan
@@ -97,6 +97,7 @@ function isLevelOver(level, currScore) {
     return false;
 }
 
+<<<<<<< HEAD
 var mainCharacter = {
     x: document.documentElement.clientWidth * 9 / 10,
     y: document.documentElement.clientHeight/2,
@@ -104,10 +105,94 @@ var mainCharacter = {
     imageUrl: 'assets/walking_girl.png',
     bullets: 10
 };
+=======
+/* Returns true/false based on if two rectangles overlap.
+   Each object needs to have the following fields:
+   {x, y, w, h} (where x and y are the TOP LEFT of the rectangle)
+   (Hint 1: we need to know the width/height of the rectangles)
+   (Hint 2: it might be helpful to draw out different scenarios on paper first!)
+*/
+function collisionCheckRect(object1, object2) {
+    return true;
+}
+
+// Returns true/false based on if two circles overlap.
+// Each object needs to have the following fields: {cx, cy, r}
+// (Hint 1: The distance between two points formula is needed for this calculation.)
+// (Hint 2: it might be helpful to draw out differenct scenarios on paper first!)
+function collisionCheckCircle(object1, object2) {
+    return true;
+}
+
+// Returns true/false based on if a rectangle and circle overlap.
+// circleObj = {cx, cy, r}, rectObj = {x, y, w, h}
+// (Hint: First figure out which edge of rect is closest to the circle)
+function collisionCheckRectAndCircle(circleObj, rectObj) {
+
+}
+
+// Use bulletCollided to check for every single collision.
+// Should return an array of all bullets that had collisions, which can be used
+// to call removeBullets function from last session.
+function checkAllCollisions(bullets, hazard) {
+    var resultList = Array();
+    for (let i = 0; i < bullets.length; i++) {
+        var bullet = bullets[i];
+        for (let j = 0; j < hazards.length; j++) {
+            var hazard = hazards[j];
+            if (collisionCheckRect(bullet, hazard)) {
+                resultList.push(bullet);
+                break;
+            }
+        }
+    }
+
+    return resultList;
+}
+
+// Next steps:
+/*
+* Make sure all objects follow the protocol
+* Clear collided objects
+* Update scores?
+* Figure out what you want to do with bullets
+*/
+
+var mainCharacter = {
+    x: (9 * document.documentElement.clientWidth) / 10,
+    y: document.documentElement.clientHeight / 2,
+    speed: 30,
+    imgUrl: 'assets/walking_girl.png',
+    bullets: 10
+}
+
+// Calculates deltaX and deltaY for bullet based on angle (in degrees):
+// (Hint: for cos and sin, use Math.cos and Math.sin)
+function calculateDeltas(angle) {
+    return {dx: 0, dy: 0}
+}
+
+function createBullet() {
+    // let angle = ???
+    let bullet = {
+        // TO DO: replace with cannon's x and y rather than copy and paste:
+        x: document.documentElement.clientWidth / 2,
+        y: document.documentElement.clientHeight - 75,
+        w: 30,
+        h: 10,
+        // TO DO: update with dx and dy from calculateDeltas
+        speed: 10
+    };
+    
+    bullets.push(bullet);
+    mainCharacter.bullets -= 1;
+}
+>>>>>>> main
 
 // Get speed from character object's field.
 function moveCharacterUp() {
     mainCharacter.y -= mainCharacter.speed;
+
 }
 
 function moveCharacterDown() {
@@ -127,13 +212,11 @@ function isGameOver() {
     if (isLevelOver(level, mainCharacter.score)) {
         return true;
     }
-
     if (mainCharacter.health <= 0) {
         return true;
     }
 
     return false;
-
 }
 
 // Return script for evil enemy based on which level we're on, where 
@@ -142,7 +225,6 @@ function getScript(levelNum) {
     return villanScripts[levelNum - 1];
 }
 
-// Medium 
 // Create a new hazard from a source. A source should have a field called
 // source.hazardName. Spawn it at the source's x and y coordinates.
 function produceHazardFromSource(source) {
@@ -155,66 +237,58 @@ function produceHazardFromSource(source) {
     hazards.push(hazard);
 }
 
-// return {hazardName: __, points: ___}
+// return {hazardName: __, points: ___} 
 function spawnHazard(hazardName) {
     // Needs to spawn on left side, but randomly in terms of the y coordinate.
     // You should look up how to generate a random number between some bounds.
-    hazard = {
-        hazardName: source.hazardName,
+    let hazard = {
+        hazardName: hazardName,
         x: 0,
         y: Math.floor(Math.random() * document.documentElement.clientHeight),
-        speed: 5
+        speed: 10,
+        imgUrl: 'assets/dirty_hand.png'
     }
     hazards.push(hazard);
 }
 
-// Returns true/false based on if a bullet hit a hazard.
-// Check to make sure the hazard can be hit in the first place.
-// Assume we already implemented collisionCheck, a function that takes in two 
-// coordinates and checks if they are overlapping. We will implement this 
-// in a later week.
-
-function collisionCheck(x0, y0, x1, y1) {
-    return true;
+var bulletSource = {
+    x: (document.documentElement.clientWidth / 2) - 10,
+    y: document.documentElement.clientHeight - 75,
+    w: 20,
+    h: 1000, // To elongate the source, not visible to user.
+    angle: 0 // in radians
 }
 
-function bulletCollided(bullet, hazard) {
-    return collisionCheck(bullet.x, bullet.y, hazard.x, hazard.y);
+function moveBulletSourceLeft() {
+
 }
 
-// Use bulletCollided to check for every single collision.
-// Should return an array of all bullets that had collisions, which can be used
-// to call removeBullets function from last session.
-function checkAllCollisions(bullets, hazard) {
-    var resultList = Array();
-    for (let i = 0; i < bullets.length; i++) {
-        var bullet = bullets[i];
-        for (let j = 0; j < hazards.length; j++) {
-            var hazard = hazards[j];
-            if (bulletCollided(bullet, hazard)) {
-                resultList.push(bullet);
-                break;
-            }
-        }
-    }
+function moveBulletSourceRight() {
 
-    return resultList;
 }
 
-// To use key pressed:
-// window.onkeydown = function() {} or use lambda (window.onkeydown = () => {})
-// Use this to implement when you press space to spawn a bullet if enough 
-// bullets are available.
+/*
+    Lets say we create a hazard that can follow the player. How can we implement
+    this? 
 
-window.addEventListener("keydown", function(event) {
-    if (event.code === 'Space' && mainCharacter.bullets > 0) {
-        let bullet = {
-            x: document.documentElement.clientWidth - 40,
-            y: document.documentElement.clientHeight - 40,
-            speed: 10
-        };
+    Part of the challenge is that if the code always copies where the user is 
+    and adjust the speed, the game is too difficult.
 
+<<<<<<< HEAD
         bullets.push(bullet);
         mainCharacter.bullets -= 1;
     }
 });
+=======
+    One solution is to update the direction of the hazard every so often rather
+    than all the time. Say every 2 seconds.
+
+    Write a function that will update direction of a hazard given the current
+    location of the character. Then add to the timer function for this to run
+    only every 2 seconds.
+*/
+
+function updateHazardDirection(hazard, character) {
+
+}
+>>>>>>> main
