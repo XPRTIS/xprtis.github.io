@@ -36,8 +36,16 @@ function mainLoop(context) {
 }
 
 function update(dt) {
+    elapsedTime += dt;
     // If we have information we need to update for every frame, write it here.
-    
+    moveBullets();
+    moveHazards();
+
+    if (elapsedTim > 5) {
+        spawnHazard();
+        elapsedTime = 0;
+    }
+
 }
 
 /* How to change canvas size code from:

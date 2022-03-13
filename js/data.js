@@ -73,11 +73,11 @@ function addToScore(points) {
 // Returns true/false
 function isLevelOver(level, currScore) {
     levelNum = level
-    let currScore = currScore
+    let currentScore = currScore
     let maxScore = 0
     if (levelNum == 1) {
         maxScore = 16
-        if (currScore == maxScore) {
+        if (currentScore == maxScore) {
             return true
         } else {
             return false
@@ -96,6 +96,14 @@ function isLevelOver(level, currScore) {
     }
     return false;
 }
+
+var mainCharacter = {
+    x: document.documentElement.clientWidth * 9 / 10,
+    y: document.documentElement.clientHeight/2,
+    speed: 30,
+    imageUrl: 'assets/walking_girl.png',
+    bullets: 10
+};
 
 // Get speed from character object's field.
 function moveCharacterUp() {
