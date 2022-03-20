@@ -164,21 +164,28 @@ function calculateDeltas(angle) {
     return {dy: -1 * speed * Math.cos(angle), dx: speed * Math.sin(angle)}
 }
 
+class Bullet {
+    constructor(angle) {
+        this.angle = angle;
+        this.x = bulletSource.x;
+        this.y = bulletSource.y;
+        this.w = 30;
+        this.h = 10;
+        let deltas = calculateDeltas(angle);
+        this.dx = deltas.dx;
+        this.dy = deltas.dy;
+    }
+
+    update() {
+        this.x += this.dx;
+        this.y += this.dy;
+    }
+
+}
+
 function createBullet() {
-    let angle = bulletSource.angle;
-    let deltas = calculateDeltas(angle);
-    let bullet = {
-        // TO DO: replace with cannon's x and y rather than copy and paste:
-        x: document.documentElement.clientWidth / 2,
-        y: document.documentElement.clientHeight - 75,
-        w: 30,
-        h: 10,
-        dx: deltas.dx,
-        dy: deltas.dy
-    };
-    
-    bullets.push(bullet);
-    mainCharacter.bullets -= 1;
+    bullets.push(new Bullet(bulletSource.angle));
+    mainCharacter.bullets -= 1; // this is optional 
 }
 
 // Get speed from character object's field.
