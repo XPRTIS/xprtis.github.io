@@ -97,15 +97,6 @@ function isLevelOver(level, currScore) {
     return false;
 }
 
-<<<<<<< HEAD
-var mainCharacter = {
-    x: document.documentElement.clientWidth * 9 / 10,
-    y: document.documentElement.clientHeight/2,
-    speed: 30,
-    imageUrl: 'assets/walking_girl.png',
-    bullets: 10
-};
-=======
 /* Returns true/false based on if two rectangles overlap.
    Each object needs to have the following fields:
    {x, y, w, h} (where x and y are the TOP LEFT of the rectangle)
@@ -113,7 +104,17 @@ var mainCharacter = {
    (Hint 2: it might be helpful to draw out different scenarios on paper first!)
 */
 function collisionCheckRect(object1, object2) {
-    return true;
+    if(object1.x + object1.w < object2.x) {
+        return false;
+    } else if (object1.x < object2.x + object1.w) {
+        return false;
+    } else if (object1.y + object1.h < object2.y) {
+        return false;
+    } else if (object2.y < object2.y + object2.h) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 // Returns true/false based on if two circles overlap.
@@ -121,7 +122,10 @@ function collisionCheckRect(object1, object2) {
 // (Hint 1: The distance between two points formula is needed for this calculation.)
 // (Hint 2: it might be helpful to draw out differenct scenarios on paper first!)
 function collisionCheckCircle(object1, object2) {
-    return true;
+    var distance = Math.sqrt((object1.x - object2.x) ** 2 + (object1.y - object2.y) ** 2)
+    if(distance < object1.r + object2.r) {
+        return true;
+    }
 }
 
 // Returns true/false based on if a rectangle and circle overlap.
@@ -169,7 +173,9 @@ var mainCharacter = {
 // Calculates deltaX and deltaY for bullet based on angle (in degrees):
 // (Hint: for cos and sin, use Math.cos and Math.sin)
 function calculateDeltas(angle) {
-    return {dx: 0, dy: 0}
+      let speed = 10;
+      return {dx: 10 * Math.cos(angle), dy: 10 * Math.sin(angle)}
+  
 }
 
 function createBullet() {
@@ -187,7 +193,6 @@ function createBullet() {
     bullets.push(bullet);
     mainCharacter.bullets -= 1;
 }
->>>>>>> main
 
 // Get speed from character object's field.
 function moveCharacterUp() {
@@ -274,12 +279,6 @@ function moveBulletSourceRight() {
     Part of the challenge is that if the code always copies where the user is 
     and adjust the speed, the game is too difficult.
 
-<<<<<<< HEAD
-        bullets.push(bullet);
-        mainCharacter.bullets -= 1;
-    }
-});
-=======
     One solution is to update the direction of the hazard every so often rather
     than all the time. Say every 2 seconds.
 
@@ -291,4 +290,3 @@ function moveBulletSourceRight() {
 function updateHazardDirection(hazard, character) {
 
 }
->>>>>>> main
