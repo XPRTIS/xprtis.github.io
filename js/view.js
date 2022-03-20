@@ -32,7 +32,7 @@ function renderBullets(context) {
 
 function renderHazards(context) {
     for (let i = 0; i < hazards.length; i++) {
-        let hazards = hazards[i];
+        let hazard = hazards[i];
         var hazardImage = new Image();
         hazardImage.src = hazard.imgUrl;
         let x0 = hazard.x;
@@ -43,7 +43,7 @@ function renderHazards(context) {
 }
 
 function renderScore(context) {
-    for(currScore > maxScore) {
+    if(currScore < maxScore) {
         if(currScore != currScore) {
             context.clearRect(0, 0, 20, 10)
             context.strokeText(currScore)
@@ -53,7 +53,7 @@ function renderScore(context) {
 }
 
 function renderSources(context) {
-    for(source.health > 0) {
+    if(source.health > 0) {
         if(dt == 5) {
             var hazardImage = new Image();
             hazardImage.src = hazard.imgUrl;

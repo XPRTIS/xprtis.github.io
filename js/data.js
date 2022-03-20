@@ -42,13 +42,20 @@ var smoke = {
     damage: 5,
 }; // Fill in with another hazard
 
+var source = {
+    smoke: stove,
+}
+
 var level = {
     levelNum: 1,
     maxScore: 16
 };
 
-var hazards = [];
-var bullets = [];
+var hazards = [ ];
+var bullets = [ ];
+
+var currScore = 0
+let maxScore = 0
 
 // Create an array for the scripts of evil villan
 // (Find them on the game design document)
@@ -74,7 +81,6 @@ function addToScore(points) {
 function isLevelOver(level, currScore) {
     levelNum = level
     let currentScore = currScore
-    let maxScore = 0
     if (levelNum == 1) {
         maxScore = 16
         if (currentScore == maxScore) {
