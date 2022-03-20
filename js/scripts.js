@@ -19,14 +19,6 @@ function moveHazards() {
         }
     }
 }
-<<<<<<< HEAD
- 
-function moveBullets(bullets) {
-    for (let i = 0; i < bullets.length; i++) {
-        
-    }
-}
-=======
 
 function moveBullets() {
     for (let i = 0; i < bullets.length; i ++) {
@@ -36,7 +28,6 @@ function moveBullets() {
     }
 }
     
->>>>>>> main
 // Write a function that removes some bullets from list of all the bullets.
 // Bullets are represented by x and y coordinates like: [x, y]. 
 

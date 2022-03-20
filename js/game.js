@@ -47,12 +47,8 @@ function mainLoop(context) {
 
     lastTime = now;
 
-<<<<<<< HEAD
-    context.clearRect(0, 0, document.documentElement.clientWidth, document.documentElement.clientHeight)
-=======
     context.clearRect(0, 0, document.documentElement.clientWidth, 
         document.documentElement.clientHeight);
->>>>>>> main
     renderAll(context);
 
     // using requestAnimFrame to call mainloop again after a certain interval
@@ -60,30 +56,18 @@ function mainLoop(context) {
 }
 
 function update(dt) {
-<<<<<<< HEAD
-    elapsedTime += dt;
-=======
     // To do: we use timeElapsed only for spawning hazards. We might need
     // more for other time based events such as spawning sources, hazards
     // from sources, etc.
     timeElapsed += dt;
->>>>>>> main
     // If we have information we need to update for every frame, write it here.
     moveBullets();
     moveHazards();
 
-<<<<<<< HEAD
-    if (elapsedTim > 5) {
-        spawnHazard();
-        elapsedTime = 0;
-    }
-
-=======
     if (timeElapsed > 5) {
         spawnHazard();
         timeElapsed = 0;
     }
->>>>>>> main
 }
 
 /* How to change canvas size code from:
