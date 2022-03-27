@@ -51,8 +51,8 @@ var level = {
     maxScore: 16
 };
 
-var hazards = [ ];
-var bullets = [ ];
+var hazards = [];
+var bullets = [];
 
 var currScore = 0
 let maxScore = 0
@@ -211,6 +211,7 @@ class Bullet {
 function createBullet() {
     bullets.push(new Bullet(bulletSource.angle));
     mainCharacter.bullets -= 1; // this is optional 
+    console.log(bullets)
 }
 
 // Get speed from character object's field.

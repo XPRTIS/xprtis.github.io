@@ -23,6 +23,8 @@ function initCanvas() {
             // down a key.
             if (event.code === 'Space') {
                 createBullet();
+                moveBullets();
+                renderBullets(context);
                 console.log(bullets);
             }
 
