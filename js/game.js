@@ -1,4 +1,5 @@
 var timeElapsed = 0;
+var stateStack = [];
 
 function initCanvas() {
     var canvas = document.createElement('canvas');
@@ -12,6 +13,8 @@ function initCanvas() {
     // canvas.getContext exists first.
     if (canvas.getContext) {
         var context = canvas.getContext('2d');
+        var startScreen = new StartScreenView();
+        stateStack.push(startScreen);
         canvas.addEventListener('click', (event) => {
             let mousePosition = getMousePosition(canvas, event);
             handleMousePressed(mousePosition, context);
@@ -21,27 +24,41 @@ function initCanvas() {
             // Tip: You can use a combination of keyup, keydown, and boolean
             // (true/false) flags to know whether or not a user is holding
             // down a key.
-            if (event.code === 'Space') {
-                createBullet();
-                moveBullets();
-                renderBullets(context);
-                console.log(bullets);
-            }
 
-            if (event.code === 'ArrowUp') {
-                moveCharacterUp();
-            }
-            
-            if (event.code === 'ArrowDown') {
-                moveCharacterDown();
-            }
+            // Separate out to different views so that keys only work in their
+            // respective views:
+            if (stateStack[stateStack.length - 1].name === "StartScreenView") {
+                if (event.code === 'Space') {
+                
+                    var gameView = new GameView();
+                    stateStack.push(gameView);
+                }
 
-            if (event.code === 'ArrowLeft') {
-                moveBulletSourceLeft();
-            }
+            } else if (stateStack[stateStack.length - 1].name === "GameView") {
+                if (event.code === "KeyB") {
+                    stateStack.pop();
+                }
 
-            if (event.code === 'ArrowRight') {
-                moveBulletSourceRight();
+                if (event.code === 'Space') {
+                    createBullet();
+                    console.log(bullets);
+                }
+    
+                if (event.code === 'ArrowUp') {
+                    moveCharacterUp();
+                }
+                
+                if (event.code === 'ArrowDown') {
+                    moveCharacterDown();
+                }
+    
+                if (event.code === 'ArrowLeft') {
+                    moveBulletSourceLeft();
+                }
+    
+                if (event.code === 'ArrowRight') {
+                    moveBulletSourceRight();
+                }
             }
         });
 
@@ -60,7 +77,16 @@ function mainLoop(context) {
 
     context.clearRect(0, 0, document.documentElement.clientWidth, 
         document.documentElement.clientHeight);
-    renderAll(context);
+    
+    if (stateStack.length === 0) {
+        // This is bad and should never happen, but in this case just
+        // render only the View:
+        var view = new View();
+        view.renderAll(context);
+    } else {
+        // Get the current state and render its view.
+        stateStack[stateStack.length - 1].renderAll(context);
+    }
 
     // using requestAnimFrame to call mainloop again after a certain interval
     requestAnimFrame(() => mainLoop(context)); 
@@ -83,12 +109,12 @@ function update(dt) {
 
 /* How to change canvas size code from:
    https://stackoverflow.com/questions/4037212/html-canvas-full-screen */
-   function resizeCanvas(canvas) {
+function resizeCanvas(canvas) {
     canvas.width = document.documentElement.clientWidth;
     canvas.height = document.documentElement.clientHeight;
 }
 
-$(document).ready(function() {
+$(document).ready(function() { // Once the page is loaded...
     initCanvas();
 });
 
