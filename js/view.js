@@ -20,14 +20,22 @@ class StartScreenView extends View { // subclass of View
         // super(context);
         // Write render code here.
         this.renderInstructions(context);
+        this.renderBackground(context);
     }
 
     renderInstructions(context) {
-        let text = "Hi! Press Space to play!";
+        let text = "↓ Press Space to play! ↓";
+        var textWidth = context.measureText(text).width;
         context.font = "30px Helvetica";
         context.fillStyle = 'rgba(0, 0, 0)';
-        context.fillText(text, document.documentElement.clientWidth / 2, 
-                         document.documentElement.clientHeight / 2);
+        context.fillText(text, document.documentElement.clientWidth / 2 - textWidth/2 , 
+                         document.documentElement.clientHeight*0.6);
+    }
+
+    renderBackground(context) {
+        context.fillStyle = 'rgba(0, 0, 0, 0.4)';
+        context.fillRect(0, 0, document.documentElement.clientWidth, 
+            document.documentElement.clientHeight);
     }
 }
 

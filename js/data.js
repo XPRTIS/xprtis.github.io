@@ -1,6 +1,12 @@
 // Variables needed for game:
 var lastTime = Date.now();
 
+var character = {
+    x: 0,
+    y: 0,
+    speed: 1,
+    health: 100,
+}
 // Create an array for the different hazards that exist:
 
 var offScreenSource = {};
@@ -36,6 +42,10 @@ var smoke = {
     damage: 5,
 }; // Fill in with another hazard
 
+var source = {
+    smoke: stove,
+}
+
 var level = {
     levelNum: 1,
     maxScore: 16
@@ -43,6 +53,9 @@ var level = {
 
 var hazards = [];
 var bullets = [];
+
+var currScore = 0
+let maxScore = 0
 
 // Create an array for the scripts of evil villan
 // (Find them on the game design document)
@@ -66,6 +79,18 @@ function addToScore(points) {
 
 // Returns true/false
 function isLevelOver(level, currScore) {
+    levelNum = level
+    let currentScore = currScore
+    if (levelNum == 1) {
+        maxScore = 16
+        if (currentScore == maxScore) {
+            return true
+        } else {
+            return false
+        }
+    } else if (levelNum == 2) {
+        //...
+    }
     // Level is an object represented as:
     // {
     //     levelNum: 1,
@@ -201,8 +226,7 @@ function moveCharacterDown() {
 function moveBullets() {
     for (let i = 0; i < bullets.length; i ++) {
         var bullet = bullets[i];
-        bullet.x += bullet.dx;
-        bullet.y += bullet.dy;
+        bullet.update();
     }
 }
 
@@ -278,10 +302,13 @@ function moveBulletSourceRight() {
 /*
     Lets say we create a hazard that can follow the player. How can we implement
     this? 
+
     Part of the challenge is that if the code always copies where the user is 
     and adjust the speed, the game is too difficult.
+
     One solution is to update the direction of the hazard every so often rather
     than all the time. Say every 2 seconds.
+
     Write a function that will update direction of a hazard given the current
     location of the character. Then add to the timer function for this to run
     only every 2 seconds.

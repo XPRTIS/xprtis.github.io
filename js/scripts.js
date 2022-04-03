@@ -20,13 +20,6 @@ function moveHazards() {
     }
 }
 
-function moveBullets() {
-    for (let i = 0; i < bullets.length; i ++) {
-        var bullet = bullets[i];
-        bullet.x -= bullet.speed;
-        bullet.y -= bullet.speed;
-    }
-}
     
 // Write a function that removes some bullets from list of all the bullets.
 // Bullets are represented by x and y coordinates like: [x, y]. 
