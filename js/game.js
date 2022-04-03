@@ -30,10 +30,16 @@ function initCanvas() {
             if (stateStack[stateStack.length - 1].name === "StartScreenView") {
                 if (event.code === 'Space') {
                 
-                    var gameView = new GameView();
-                    stateStack.push(gameView);
+                    var gameView = new LevelView();
+                    stateStack.push(LevelView);
                 }
 
+            } else if (stateStack[stateStack.length - 1].name === "LevelView") {
+                if (event.code === 'Space') {
+                
+                    var gameView = new GameView();
+                    stateStack.push(GameView);
+                }
             } else if (stateStack[stateStack.length - 1].name === "GameView") {
                 if (event.code === "KeyB") {
                     stateStack.pop();
@@ -67,6 +73,7 @@ function initCanvas() {
     }
 }
 
+
 function mainLoop(context) {
     var now = Date.now();
     var dt = (now - lastTime) / 1000.0;
@@ -85,7 +92,7 @@ function mainLoop(context) {
         view.renderAll(context);
     } else {
         // Get the current state and render its view.
-        stateStack[stateStack.length - 1].renderAll(context);
+        LevelView.renderAll(context);
     }
 
     // using requestAnimFrame to call mainloop again after a certain interval
@@ -100,7 +107,7 @@ function update(dt) {
     // If we have information we need to update for every frame, write it here.
     moveBullets();
     moveHazards();
-
+    
     if (timeElapsed > 5) {
         spawnHazard();
         timeElapsed = 0;
