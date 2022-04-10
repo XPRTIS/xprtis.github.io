@@ -116,11 +116,7 @@ class GameView extends View{
     }
     
     renderCharacter(context) {
-        var characterImage = new Image();
-        characterImage.src = mainCharacter.imgUrl;
-        let x0 = mainCharacter.x;
-        let y0 = mainCharacter.y;
-        context.drawImage(characterImage, x0, y0, 200, 200);
+        mainCharacter.draw(context);
     }
     
     renderBullets(context) {
