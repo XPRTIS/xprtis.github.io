@@ -54,9 +54,6 @@ var level = {
 var hazards = [];
 var bullets = [];
 
-var currScore = 0
-let maxScore = 0
-
 // Create an array for the scripts of evil villan
 // (Find them on the game design document)
 
@@ -77,19 +74,16 @@ function addToScore(points) {
     mainCharacter.score += points;
 }
 
+const maxScore = [16, 20, 30, 30, 35, 40, 40]
+
 // Returns true/false
 function isLevelOver(level, currScore) {
-    levelNum = level
+    let levelNum = level
     let currentScore = currScore
-    if (levelNum == 1) {
-        maxScore = 16
-        if (currentScore == maxScore) {
-            return true
-        } else {
-            return false
-        }
-    } else if (levelNum == 2) {
-        //...
+    if (currentScore == maxScore[levelNum-1] || currentScore >= maxScore) {
+        return true
+    } else {
+        return false
     }
     // Level is an object represented as:
     // {
@@ -97,10 +91,6 @@ function isLevelOver(level, currScore) {
     //     maxScore: 16,
     //     ...
     // }
-    if (currScore >= maxScore) {
-        return true;
-    }
-    return false;
 }
 
 /* Returns true/false based on if two rectangles overlap.

@@ -28,7 +28,7 @@ class StartScreenView extends View { // subclass of View
         let text = "↓ Press Space to play! ↓";
         var textWidth = context.measureText(text).width;
         context.font = "30px Helvetica";
-        context.fillStyle = 'rgba(255, 255, 255)';
+        context.fillStyle = 'rgba(255, 255, 255, 0)';
         context.fillText(text, document.documentElement.clientWidth / 2 - textWidth/2 , 
                          document.documentElement.clientHeight*0.6);
     }
@@ -56,26 +56,30 @@ class StartScreenView extends View { // subclass of View
 class LevelView extends View{
     constructor() {
         super();
-        this.name = "levelView";
+        this.name = "LevelView";
     }
 
     renderAll(context) {
+        this.renderBackground(context);
         this.renderLv1(context);
-        this.renderLv2(context);
-        this.renderLv3(context);
-        this.renderLv4(context);
-        this.renderLv5(context);
-        this.renderLv6(context);
+        
+    }
+
+    renderBackground(context) {
+        context.fillStyle = 'rgba(0, 0, 0, 0.4)';
+        context.fillRect(0, 0, document.documentElement.clientWidth, 
+            document.documentElement.clientHeight);
     }
 
     renderLv1(context) {
-        var lv1 = new Image();
-        lv1.src = 'assets/1.png';
-        let imgWidth = document.documentElement.clientWidth / 6
+        context.fillStyle = 'rgba(255, 255, 255, 1)'
+        let imgWidth = document.documentElement.clientWidth / 10
         let imgHeight = document.documentElement.clientHeight / 6 
-        let x0 = document.documentElement.clientWidth *2 / 7 - titleWidth*2 / 7
+        let x0 = document.documentElement.clientWidth *1 / 7 - imgWidth*1 / 7
         let y0 = document.documentElement.clientHeight * 0.1
-        context.drawImage(titleImage, x0, y0, imgWidth, imgHeight)
+        context.fillRect(x0, y0, imgWidth, imgHeight)
+        context.fillStyle = 'rgba(0, 0, 0, 1)'
+        context.fillText('1', x0, y0)
     }
 }
 
