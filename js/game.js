@@ -45,11 +45,13 @@ function initCanvas() {
                 }
     
                 if (event.code === 'ArrowUp') {
-                    moveCharacterUp();
+                    console.log(mainCharacter);
+                    mainCharacter.moveCharacterUp();
                 }
                 
                 if (event.code === 'ArrowDown') {
-                    moveCharacterDown();
+                    console.log(mainCharacter);
+                    mainCharacter.moveCharacterDown();
                 }
     
                 if (event.code === 'ArrowLeft') {

@@ -141,21 +141,10 @@ function checkAllCollisions(bullets, hazard) {
     return resultList;
 }
 
-// Next steps:
-/*
-* Make sure all objects follow the protocol
-* Clear collided objects
-* Update scores?
-* Figure out what you want to do with bullets
-*/
-
-var mainCharacter = {
-    x: (9 * document.documentElement.clientWidth) / 10,
-    y: document.documentElement.clientHeight / 2,
-    speed: 30,
-    imgUrl: 'assets/walking_girl.png',
-    bullets: 10
-}
+let imageUrl = 'assets/walking_girl_spritesheet.png';
+this.spriteImage = new Image();
+this.spriteImage.src = imageUrl;
+var mainCharacter = new MainCharacter(spriteImage);
 
 // Calculates deltaX and deltaY for bullet based on angle (in radians):
 // (Hint: for cos and sin, use Math.cos and Math.sin)
@@ -191,7 +180,7 @@ function createBullet() {
 // Get speed from character object's field.
 function moveCharacterUp() {
     mainCharacter.y -= mainCharacter.speed;
-
+    
 }
 
 function moveCharacterDown() {
@@ -199,7 +188,7 @@ function moveCharacterDown() {
 }
 
 function moveBullets() {
-    for (let i = 0; i < bullets.length; i ++) {
+    for (let i = 0; i < bullets.length; i++) {
         var bullet = bullets[i];
         bullet.x += bullet.dx;
         bullet.y += bullet.dy;
