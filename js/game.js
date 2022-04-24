@@ -99,7 +99,7 @@ function mainLoop(context) {
 
     if (isLevelOver(level, currScore) = true) {
         SVGFEDisplacementMapElement();
-        stateStack.push(starScreenView);
+        stateStack.push(startScreen);
     }
     
 }
