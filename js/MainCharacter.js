@@ -9,6 +9,7 @@ class MainCharacter {
         this.height = 740;
         this.frameIndex = 0;
         this.numFrames = 4; 
+        this.score = 0;
     }
 
     moveCharacterUp() {

@@ -41,17 +41,26 @@ function isEqual(bullet1, bullet2) {
 // a.splice(1, 1) -> a = [1, 3]
 
 function removeBullets(bullets, removeList) {
+    var result = false;
     for (let i = 0; i < bullets.length; i++) {
         // Check that bullet is in removeList
         let bullet = bullets[i];
-        if (removeList.some(elem => isEqual(elem, bullet))) {
+        if (removeList.some(elem => elem == bullet)) {
+            result = true;
             bullets.splice(i, 1);
         }
     }
+    
+    return result;
 }
 
 function removeHazards(hazards, removeList) {
-    
+    for (let i = 0; i < hazards.length; i++) {
+        let hazard = hazards[i];
+        if (removeList.some(elem => elem == hazard)) {
+            hazards.splice(i, 1);
+        }
+    }
 }
 
 

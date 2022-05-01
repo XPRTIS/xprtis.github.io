@@ -257,7 +257,8 @@ function spawnHazard(hazardName) {
         w: 400,
         h: 400,
         speed: 10,
-        imgUrl: 'assets/dirty_hand.png'
+        imgUrl: 'assets/dirty_hand.png',
+        points: 1
     }
     hazards.push(hazard);
 }

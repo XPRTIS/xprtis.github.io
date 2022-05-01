@@ -116,8 +116,15 @@ function update(dt) {
     moveHazards();
 
     var allCollisions = checkAllCollisions(bullets, hazards);
+    
     removeBullets(bullets, allCollisions.bulletRemoveList);
     removeHazards(hazards, allCollisions.hazardRemoveList);
+
+    for (let i = 0; i < allCollisions.hazardRemoveList.length; i++) {
+        let hazard = allCollisions.hazardRemoveList[i];
+        addToScore(hazard.points);
+        console.log(mainCharacter.score);
+    }
     
     if (timeElapsed > 5) {
         spawnHazard();
