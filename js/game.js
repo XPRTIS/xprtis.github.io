@@ -29,15 +29,18 @@ function initCanvas() {
             // respective views:
             if (stateStack[stateStack.length - 1].name === "StartScreenView") {
                 if (event.code === 'Space') {
-                    var levelView = new LevelView();
-                    stateStack.push(levelView)
-                }
-            } else if (stateStack[stateStack.length - 1].name === "LevelView") {
-                if (event.code === 'Space') {
-                
+                    // var levelView = new LevelView();
+                    // stateStack.push(levelView)
                     var gameView = new GameView();
                     stateStack.push(gameView);
                 }
+            // } 
+            // else if (stateStack[stateStack.length - 1].name === "LevelView") {
+            //     if (event.code === 'Space') {
+                
+            //         var gameView = new GameView();
+            //         stateStack.push(gameView);
+            //     }
             } else if (stateStack[stateStack.length - 1].name === "GameView") {
                 if (event.code === "KeyB") {
                     stateStack.pop();
@@ -97,8 +100,7 @@ function mainLoop(context) {
     // using requestAnimFrame to call mainloop again after a certain interval
     requestAnimFrame(() => mainLoop(context)); 
 
-    if (isLevelOver(level, currScore) = true) {
-        SVGFEDisplacementMapElement();
+    if (isLevelOver(level, currScore) === true) {
         stateStack.push(startScreen);
     }
     
@@ -112,6 +114,10 @@ function update(dt) {
     // If we have information we need to update for every frame, write it here.
     moveBullets();
     moveHazards();
+
+    var allCollisions = checkAllCollisions(bullets, hazards);
+    removeBullets(bullets, allCollisions.bulletRemoveList);
+    removeHazards(hazards, allCollisions.hazardRemoveList);
     
     if (timeElapsed > 5) {
         spawnHazard();

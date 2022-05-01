@@ -50,6 +50,9 @@ function removeBullets(bullets, removeList) {
     }
 }
 
+function removeHazards(hazards, removeList) {
+    
+}
 
 
 function testRemoveBullets() {

@@ -54,6 +54,8 @@ var level = {
 var hazards = [];
 var bullets = [];
 
+var currScore = 0;
+
 // Create an array for the scripts of evil villan
 // (Find them on the game design document)
 
@@ -99,11 +101,11 @@ function isLevelOver(level, currScore) {
    (Hint 1: it might be helpful to draw out different scenarios on paper first!)
 */
 function collisionCheckRect(object1, object2) {
-    if (object1.x < object2.x + object2.w) {
+    if (object1.x + object1.w < object2.x) {
         return false;
     }
 
-    if (object1.x + object1.w < object2.x) {
+    if (object1.x > object2.x + object2.w) {
         return false;
     }
 
@@ -111,7 +113,7 @@ function collisionCheckRect(object1, object2) {
         return false;
     }
 
-    if (object1 > object2.y + object2.h) {
+    if (object1.y > object2.y + object2.h) {
         return false;
     }
 
@@ -140,20 +142,24 @@ function collisionCheckRectAndCircle(circleObj, rectObj) {
 // Use bulletCollided to check for every single collision.
 // Should return an array of all bullets that had collisions, which can be used
 // to call removeBullets function from last session.
-function checkAllCollisions(bullets, hazard) {
-    var resultList = Array();
+function checkAllCollisions(bullets, hazards) {
+    var bulletRemoveList = Array();
+    var hazardRemoveList = Array();
+
     for (let i = 0; i < bullets.length; i++) {
         var bullet = bullets[i];
         for (let j = 0; j < hazards.length; j++) {
             var hazard = hazards[j];
             if (collisionCheckRect(bullet, hazard)) {
-                resultList.push(bullet);
+                bulletRemoveList.push(bullet);
+                hazardRemoveList.push(hazard);
                 break;
             }
         }
     }
 
-    return resultList;
+    return { bulletRemoveList: bulletRemoveList, 
+             hazardRemoveList: hazardRemoveList };
 }
 
 let imageUrl = 'assets/walking_girl_spritesheet.png';
