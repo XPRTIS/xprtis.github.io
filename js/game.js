@@ -29,11 +29,15 @@ function initCanvas() {
             // respective views:
             if (stateStack[stateStack.length - 1].name === "StartScreenView") {
                 if (event.code === 'Space') {
+                    var levelView = new LevelView();
+                    stateStack.push(levelView)
+                }
+            } else if (stateStack[stateStack.length - 1].name === "LevelView") {
+                if (event.code === 'Space') {
                 
                     var gameView = new GameView();
                     stateStack.push(gameView);
                 }
-
             } else if (stateStack[stateStack.length - 1].name === "GameView") {
                 if (event.code === "KeyB") {
                     stateStack.pop();
@@ -69,6 +73,7 @@ function initCanvas() {
     }
 }
 
+
 function mainLoop(context) {
     var now = Date.now();
     var dt = (now - lastTime) / 1000.0;
@@ -87,11 +92,16 @@ function mainLoop(context) {
         view.renderAll(context);
     } else {
         // Get the current state and render its view.
-        stateStack[stateStack.length - 1].renderAll(context);
-    }
+        stateStack[stateStack.length - 1].renderAll(context);    }
 
     // using requestAnimFrame to call mainloop again after a certain interval
     requestAnimFrame(() => mainLoop(context)); 
+
+    if (isLevelOver(level, currScore) = true) {
+        SVGFEDisplacementMapElement();
+        stateStack.push(startScreen);
+    }
+    
 }
 
 function update(dt) {
@@ -102,7 +112,7 @@ function update(dt) {
     // If we have information we need to update for every frame, write it here.
     moveBullets();
     moveHazards();
-
+    
     if (timeElapsed > 5) {
         spawnHazard();
         timeElapsed = 0;

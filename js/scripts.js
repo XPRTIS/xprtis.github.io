@@ -19,6 +19,7 @@ function moveHazards() {
         }
     }
 }
+
     
 // Write a function that removes some bullets from list of all the bullets.
 // Bullets are represented by x and y coordinates like: [x, y]. 
@@ -48,6 +49,8 @@ function removeBullets(bullets, removeList) {
         }
     }
 }
+
+
 
 function testRemoveBullets() {
     let bullets = [[1, 2], [4, 3]];

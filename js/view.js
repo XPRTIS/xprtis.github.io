@@ -19,15 +19,67 @@ class StartScreenView extends View { // subclass of View
     renderAll(context) {
         // super(context);
         // Write render code here.
+        this.renderBackground(context);
+        this.renderTitle(context);
         this.renderInstructions(context);
     }
 
     renderInstructions(context) {
-        let text = "Hi! Press Space to play!";
+        let text = "↓ Press Space to play! ↓";
+        var textWidth = context.measureText(text).width;
         context.font = "30px Helvetica";
-        context.fillStyle = 'rgba(0, 0, 0)';
-        context.fillText(text, document.documentElement.clientWidth / 2, 
-                         document.documentElement.clientHeight / 2);
+        context.fillStyle = 'rgba(255, 255, 255, 0)';
+        context.fillText(text, document.documentElement.clientWidth / 2 - textWidth/2 , 
+                         document.documentElement.clientHeight*0.6);
+    }
+
+    renderBackground(context) {
+        var bgImage = new Image();
+        bgImage.src = 'assets/mainBG.jpg';
+        let bgWidth = document.documentElement.clientWidth
+        let bgHeight = document.documentElement.clientHeight
+        context.drawImage(bgImage, 0, 0, bgWidth, bgHeight)
+
+    }
+
+    renderTitle(context) {
+        var titleImage = new Image();
+        titleImage.src = 'assets/title.webp';
+        let titleWidth = document.documentElement.clientWidth / 4
+        let titleHeight = document.documentElement.clientHeight / 4 
+        let x0 = document.documentElement.clientWidth / 2 - titleWidth / 2
+        let y0 = document.documentElement.clientHeight * 0.3
+        context.drawImage(titleImage, x0, y0, titleWidth, titleHeight)
+    }
+}
+
+class LevelView extends View{
+    constructor() {
+        super();
+        this.name = "LevelView";
+    }
+
+    renderAll(context) {
+        this.renderBackground(context);
+        this.renderLv1(context);
+        
+    }
+
+    renderBackground(context) {
+        context.fillStyle = 'rgba(0, 0, 0, 0.4)';
+        context.fillRect(0, 0, document.documentElement.clientWidth, 
+            document.documentElement.clientHeight);
+    }
+
+    renderLv1(context) {
+        context.fillStyle = 'rgba(255, 255, 255, 1)'
+        let imgWidth = document.documentElement.clientWidth / 10
+        let imgHeight = document.documentElement.clientHeight / 6 
+        let x0 = document.documentElement.clientWidth *1 / 7 - imgWidth*1 / 7
+        let y0 = document.documentElement.clientHeight * 0.1
+        context.fillRect(x0, y0, imgWidth, imgHeight)
+        context.fillStyle = 'rgba(0, 0, 0, 1)'
+        context.fillText('1', x0, y0)
     }
 }
 
@@ -102,4 +154,5 @@ class GameView extends View{
     renderScript(context) {
     
     }
+
 }

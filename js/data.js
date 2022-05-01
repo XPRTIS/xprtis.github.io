@@ -1,6 +1,12 @@
 // Variables needed for game:
 var lastTime = Date.now();
 
+var character = {
+    x: 0,
+    y: 0,
+    speed: 1,
+    health: 100,
+}
 // Create an array for the different hazards that exist:
 
 var offScreenSource = {};
@@ -36,6 +42,10 @@ var smoke = {
     damage: 5,
 }; // Fill in with another hazard
 
+var source = {
+    smoke: stove,
+}
+
 var level = {
     levelNum: 1,
     maxScore: 16
@@ -64,18 +74,23 @@ function addToScore(points) {
     mainCharacter.score += points;
 }
 
+const maxScore = [16, 20, 30, 30, 35, 40, 40]
+
 // Returns true/false
 function isLevelOver(level, currScore) {
+    let levelNum = level
+    let currentScore = currScore
+    if (currentScore == maxScore[levelNum-1] || currentScore >= maxScore) {
+        return true
+    } else {
+        return false
+    }
     // Level is an object represented as:
     // {
     //     levelNum: 1,
     //     maxScore: 16,
     //     ...
     // }
-    if (currScore >= maxScore) {
-        return true;
-    }
-    return false;
 }
 
 /* Returns true/false based on if two rectangles overlap.
@@ -190,8 +205,7 @@ function moveCharacterDown() {
 function moveBullets() {
     for (let i = 0; i < bullets.length; i++) {
         var bullet = bullets[i];
-        bullet.x += bullet.dx;
-        bullet.y += bullet.dy;
+        bullet.update();
     }
 }
 
