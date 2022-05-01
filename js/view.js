@@ -29,7 +29,7 @@ class StartScreenView extends View { // subclass of View
         var textWidth = context.measureText(text).width;
         context.font = "30px Helvetica";
         context.fillStyle = 'rgba(255, 255, 255, 0)';
-        context.fillText(text, document.documentElement.clientWidth / 2 - textWidth/2 , 
+        context.fillText(text, document.documentElement.clientWidth / 2 - textWidth/2, 
                          document.documentElement.clientHeight*0.6);
     }
 
@@ -83,7 +83,7 @@ class LevelView extends View{
     }
 }
 
-class GameView extends View{
+class GameView extends View {
     constructor() {
         super();
         this.name = "GameView";
@@ -142,9 +142,30 @@ class GameView extends View{
             context.drawImage(hazardImage, x0, y0, 300, 300);
         }
     }
+
+    // renderInstructions(context) {
+    //     let text = "↓ Press Space to play! ↓";
+    //     // var textWidth = context.measureText(text).width;
+    //     context.font = "30px Helvetica";
+    //     context.fillStyle = 'rgba(255, 255, 255, 0)';
+    //     context.fillText(text, document.documentElement.clientWidth / 2 - textWidth/2, 
+    //                      document.documentElement.clientHeight*0.6);
+    // }
     
     renderScore(context) {
-    
+        // Create background box:
+        context.fillStyle = 'rgba(255, 255, 255, 1)';
+        context.fillRect(0.8 * document.documentElement.clientWidth, 0,
+                         0.2 * document.documentElement.clientWidth,  
+                         0.05 * document.documentElement.clientHeight);
+        
+        // Draw score:
+        // let text = mainCharacter.score.toString();
+        let text = "Score: " + mainCharacter.score;
+        context.font = "30px Times\ New\ Roman";
+        context.fillStyle = 'rgba(0, 0, 255, 1)';
+        context.fillText(text, 0.82 * document.documentElement.clientWidth, 35);
+        
     }
     
     renderSources(context) {
