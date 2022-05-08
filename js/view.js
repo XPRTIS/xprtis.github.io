@@ -53,7 +53,7 @@ class StartScreenView extends View { // subclass of View
     }
 }
 
-class LevelView extends View{
+class LevelView extends View {
     constructor() {
         super();
         this.name = "LevelView";
@@ -62,7 +62,7 @@ class LevelView extends View{
     renderAll(context) {
         this.renderBackground(context);
         this.renderLv1(context);
-        
+
     }
 
     renderBackground(context) {
@@ -99,6 +99,7 @@ class GameView extends View {
         this.renderBullets(context);
         this.renderHazards(context);
         this.renderScore(context);
+        this.renderLevel(context);
         this.renderSources(context);
         this.renderScript(context);
     }
@@ -139,7 +140,7 @@ class GameView extends View {
             let x0 = hazard.x;
             let y0 = hazard.y;
     
-            context.drawImage(hazardImage, x0, y0, 300, 300);
+            context.drawImage(hazardImage, x0, y0, hazard.w, hazard.h);
         }
     }
 
@@ -169,11 +170,30 @@ class GameView extends View {
     }
     
     renderSources(context) {
+        for (let i = 0; i < sources.length; i++) {
+            let source = sources[i];
+            var sourceImage = new Image();
+            sourceImage.src = source.imgUrl;
+            let x0 = source.x;
+            let y0 = source.y;
     
+            context.drawImage(sourceImage, x0, y0, source.w, source.h);
+        }
+    }
+
+    renderLevel(context) {
+        let scoreText = "Level: " + level;
+        context.font = "30px Times\ New\ Roman";
+        context.fillStyle = 'rgba(0, 0, 255, 1)';
+        context.fillText(scoreText, 0.1 * document.documentElement.clientWidth, 35);
     }
     
     renderScript(context) {
-    
+        let scriptText = villanScripts[level - 1];
+        context.font = "24px Helvetica";
+        context.fillStyle = 'rgba(0, 0, 0)';
+        let x = document.documentElement.clientWidth / 2;
+        context.fillText(scriptText, x, 35);
     }
 
 }

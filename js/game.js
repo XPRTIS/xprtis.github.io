@@ -1,4 +1,5 @@
-var timeElapsed = 0;
+var timeElapsedHazard = 0;
+var timeElapsedSource = 0;
 var stateStack = [];
 
 function initCanvas() {
@@ -110,7 +111,8 @@ function update(dt) {
     // To do: we use timeElapsed only for spawning hazards. We might need
     // more for other time based events such as spawning sources, hazards
     // from sources, etc.
-    timeElapsed += dt;
+    timeElapsedHazard += dt;
+    timeElapsedSource += dt;
     // If we have information we need to update for every frame, write it here.
     moveBullets();
     moveHazards();
@@ -120,15 +122,23 @@ function update(dt) {
     removeBullets(bullets, allCollisions.bulletRemoveList);
     removeHazards(hazards, allCollisions.hazardRemoveList);
 
+    var hazardsOffScreen = checkHazardsOffSceen(hazards);
+    removeHazards(hazards, hazardsOffScreen);
+
     for (let i = 0; i < allCollisions.hazardRemoveList.length; i++) {
         let hazard = allCollisions.hazardRemoveList[i];
         addToScore(hazard.points);
         console.log(mainCharacter.score);
     }
     
-    if (timeElapsed > 5) {
+    if (timeElapsedHazard > 5) {
         spawnHazard();
-        timeElapsed = 0;
+        timeElapsedHazard = 0;
+    }
+
+    if (timeElapsedSource > 5 && sources.length === 0) {
+        spawnSource();
+        timeElapsedSource = 0;
     }
 }
 

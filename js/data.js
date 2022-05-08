@@ -46,13 +46,11 @@ var source = {
     smoke: stove,
 }
 
-var level = {
-    levelNum: 1,
-    maxScore: 16
-};
+var level = 1;
 
 var hazards = [];
 var bullets = [];
+var sources = [];
 
 var currScore = 0;
 
@@ -73,16 +71,28 @@ var villanScripts = ["",
 
 // Where did we store the points for the character?
 function addToScore(points) {
-    mainCharacter.score += points;
+    if (points < 0 && mainCharacter.score + points >= 0) {
+        mainCharacter.score += points;
+    }
+
+    else if (points > 0) {
+        mainCharacter.score += points;
+    }
+
+    if (isLevelOver(level, mainCharacter.score)) {
+        level += 1;
+    }
+    
 }
 
-const maxScore = [16, 20, 30, 30, 35, 40, 40]
+const maxScore = [1, 20, 30, 30, 35, 40, 40]; // TO DO change back to 16
 
 // Returns true/false
 function isLevelOver(level, currScore) {
-    let levelNum = level
-    let currentScore = currScore
-    if (currentScore == maxScore[levelNum-1] || currentScore >= maxScore) {
+    let levelNum = level;
+    let currentScore = currScore;
+    if (currentScore == maxScore[levelNum-1] || currentScore >= maxScore[levelNum-1]) {
+        console.log("Moved on to next level.");
         return true
     } else {
         return false
@@ -160,6 +170,21 @@ function checkAllCollisions(bullets, hazards) {
 
     return { bulletRemoveList: bulletRemoveList, 
              hazardRemoveList: hazardRemoveList };
+}
+
+function checkHazardsOffSceen(hazards) {
+    var removeList = [];
+    for (let i = 0; i < hazards.length; i++) {
+        var hazard = hazards[i];
+        
+        // Hazard is outside of the screen, remove and lower score.
+        if (hazard.x >= document.documentElement.clientWidth) {
+            addToScore(-1 * hazard.points);
+            removeList.push(hazard);
+        }
+    }
+
+    return removeList;
 }
 
 let imageUrl = 'assets/walking_girl_spritesheet.png';
@@ -247,20 +272,39 @@ function produceHazardFromSource(source) {
 }
 
 // return {hazardName: __, points: ___} 
-function spawnHazard(hazardName) {
+function spawnHazard() {
     // Needs to spawn on left side, but randomly in terms of the y coordinate.
     // You should look up how to generate a random number between some bounds.
-    let hazard = {
-        hazardName: hazardName,
-        x: 0,
-        y: Math.floor(Math.random() * document.documentElement.clientHeight),
-        w: 400,
-        h: 400,
-        speed: 10,
-        imgUrl: 'assets/dirty_hand.png',
-        points: 1
+    if (level === 1) {
+        hazards.push(new DirtyHand());
+        return;
     }
-    hazards.push(hazard);
+
+    if (level === 2) {
+        if (sources.length === 0) {
+            hazards.push(new DirtyHand());
+            return;
+        }
+        
+        let i = Math.floor(Math.random() * 2);
+        if (i === 0) {
+            hazards.push(new DirtyHand());
+        }
+
+        if (i === 1) {
+            let stove = sources[0];
+            hazards.push(new Smoke(stove.x, stove.y));
+            console.log(hazards);
+        }
+        
+    }
+}
+
+function spawnSource() {
+    if (level === 1) { return; }
+    if (level === 2) {
+        sources.push(new Stove());
+    }
 }
 
 var bulletSource = {
