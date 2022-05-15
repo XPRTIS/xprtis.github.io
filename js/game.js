@@ -1,6 +1,11 @@
 var timeElapsedHazard = 0;
 var timeElapsedSource = 0;
+var timeElapsedUpdateDirection = 0;
 var stateStack = [];
+
+Array.prototype.randomElement = function () {
+    return this[Math.floor((Math.random() * this.length))];
+}
 
 function initCanvas() {
     var canvas = document.createElement('canvas');
@@ -101,7 +106,7 @@ function mainLoop(context) {
     // using requestAnimFrame to call mainloop again after a certain interval
     requestAnimFrame(() => mainLoop(context)); 
 
-    if (isLevelOver(level, currScore) === true) {
+    if (isLevelOver() === true) {
         stateStack.push(startScreen);
     }
     
@@ -113,6 +118,8 @@ function update(dt) {
     // from sources, etc.
     timeElapsedHazard += dt;
     timeElapsedSource += dt;
+    timeElapsedUpdateDirection += dt;
+
     // If we have information we need to update for every frame, write it here.
     moveBullets();
     moveHazards();
@@ -139,6 +146,11 @@ function update(dt) {
     if (timeElapsedSource > 5 && sources.length === 0) {
         spawnSource();
         timeElapsedSource = 0;
+    }
+
+    if (timeElapsedUpdateDirection > 3) {
+        updateHazardDirection();
+        timeElapsedUpdateDirection = 0;
     }
 }
 
@@ -180,4 +192,10 @@ function getMousePosition(canvas, event) {
     };
 }
 
-function handleMousePressed(mousePosition, context) {}
+function handleMousePressed(mousePosition, context) {
+    let angle = Math.atan2(mainCharacter.y - mousePosition.y, 
+        mainCharacter.x - mousePosition.x);
+    
+    console.log(angle * (180 / Math.PI));
+    handleSourceClicks(mousePosition.x, mousePosition.y);
+}

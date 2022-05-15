@@ -9,16 +9,6 @@
 // Github repository.
 
 
-// Write the function moveHazards, which takes in hazards and updates them.
-
-function moveHazards() {
-    for (let i = 0; i < hazards.length; i++) {
-        var hazard = hazards[i];
-        if ('speed' in hazard) {
-            hazard.x += hazard.speed;
-        }
-    }
-}
 
     
 // Write a function that removes some bullets from list of all the bullets.

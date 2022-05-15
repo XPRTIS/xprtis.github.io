@@ -1,62 +1,16 @@
 // Variables needed for game:
 var lastTime = Date.now();
-
 var character = {
     x: 0,
     y: 0,
     speed: 1,
     health: 100,
 }
-// Create an array for the different hazards that exist:
-
-var offScreenSource = {};
-
-var soap = {
-    // ...
-};
-
-var dirtyHands = {
-    x: 0,
-    y: 0,
-    width: 10,
-    height: 10,
-    damage: 5,
-    imageUrl: "images/dirtyHand.jpg",
-    speed: 10,
-    source: offScreenSource,
-    prevention: soap,
-    points: 2,
-    health: 100
-};
-
-var stove = {
-    points: 10
-};
-
-var smoke = {
-    x: 0,
-    y: 0,
-    width: 20,
-    height: 20, 
-    source: stove,
-    damage: 5,
-}; // Fill in with another hazard
-
-var source = {
-    smoke: stove,
-}
-
 var level = 1;
-
+var levelInfo = getLevelInfo(level);
 var hazards = [];
 var bullets = [];
 var sources = [];
-
-var currScore = 0;
-
-// Create an array for the scripts of evil villan
-// (Find them on the game design document)
-
 var villanScripts = ["",
                     "He will run out of energy soon, and then my filthy hands will grab him!  I just hope he does not like fruits and vegetables!",
                     "Curses, he does eat fruits and vegetables.  He knows smoke from fires hurts his eyes.  I hope he does not also know it hurts his lungs! As long as his family cooks on a traditional fire, that smoke helps me out!",
@@ -67,10 +21,9 @@ var villanScripts = ["",
                     "Zounds!  He used chlorine [and a filter] to remove poop and germs from the water.  But there is no way to keep people with measles away from him.  He has not been immunized, so any nearby measles will spread to him quickly! ",
                     ];
 
-// Easy Functions
-
 // Where did we store the points for the character?
 function addToScore(points) {
+    console.log("Adding " + points + " to score.");
     if (points < 0 && mainCharacter.score + points >= 0) {
         mainCharacter.score += points;
     }
@@ -79,36 +32,22 @@ function addToScore(points) {
         mainCharacter.score += points;
     }
 
-    if (isLevelOver(level, mainCharacter.score)) {
+    if (isLevelOver()) {
         level += 1;
+        levelInfo = getLevelInfo(level);
     }
     
 }
 
 const maxScore = [1, 20, 30, 30, 35, 40, 40]; // TO DO change back to 16
 
-// Returns true/false
-function isLevelOver(level, currScore) {
-    let levelNum = level;
-    let currentScore = currScore;
-    if (currentScore == maxScore[levelNum-1] || currentScore >= maxScore[levelNum-1]) {
-        console.log("Moved on to next level.");
-        return true
-    } else {
-        return false
-    }
-    // Level is an object represented as:
-    // {
-    //     levelNum: 1,
-    //     maxScore: 16,
-    //     ...
-    // }
+function isLevelOver() {
+    return mainCharacter.score >= levelInfo.maxPoints;
 }
 
 /* Returns true/false based on if two rectangles overlap.
    Each object needs to have the following fields:
    {x, y, w, h} (where x and y are the TOP LEFT of the rectangle)
-   (Hint 1: it might be helpful to draw out different scenarios on paper first!)
 */
 function collisionCheckRect(object1, object2) {
     if (object1.x + object1.w < object2.x) {
@@ -142,14 +81,6 @@ function collisionCheckCircle(object1, object2) {
     return false;
 }
 
-// Returns true/false based on if a rectangle and circle overlap.
-// circleObj = {cx, cy, r}, rectObj = {x, y, w, h}
-// (Hint: First figure out which edge of rect is closest to the circle)
-function collisionCheckRectAndCircle(circleObj, rectObj) {
-
-}
-
-// Use bulletCollided to check for every single collision.
 // Should return an array of all bullets that had collisions, which can be used
 // to call removeBullets function from last session.
 function checkAllCollisions(bullets, hazards) {
@@ -178,7 +109,8 @@ function checkHazardsOffSceen(hazards) {
         var hazard = hazards[i];
         
         // Hazard is outside of the screen, remove and lower score.
-        if (hazard.x >= document.documentElement.clientWidth) {
+        if (hazard.x >= document.documentElement.clientWidth || 
+            hazard.y + hazard.h < 0) {
             addToScore(-1 * hazard.points);
             removeList.push(hazard);
         }
@@ -193,20 +125,30 @@ this.spriteImage.src = imageUrl;
 var mainCharacter = new MainCharacter(spriteImage);
 
 // Calculates deltaX and deltaY for bullet based on angle (in radians):
-// (Hint: for cos and sin, use Math.cos and Math.sin)
-function calculateDeltas(angle) {
-    let speed = 10;
+function calculateDeltas(angle, speed) {
     return {dy: -1 * speed * Math.cos(angle), dx: speed * Math.sin(angle)}
+}
+
+function getBulletSourceCordsFromAngle(angle) {
+    let x0 = bulletSource.x;
+    let y0 = bulletSource.y;
+    
+    // See https://study.com/skill/learn/how-to-find-the-coordinates-of-a-polygon-after-a-rotation-explanation.html
+    // for formula for finding the coordinates after rotation. 
+    return {x: x0 * Math.cos(angle) + y0 * Math.sin(angle), 
+            y: -1 * x0 * Math.sin(angle) + y0 * Math.cos(angle)}
 }
 
 class Bullet {
     constructor(angle) {
         this.angle = angle;
-        this.x = bulletSource.x;
-        this.y = bulletSource.y;
+        let coords = getBulletSourceCordsFromAngle(angle);
+        this.x = coords.x;
+        this.y = coords.y;
         this.w = 30;
         this.h = 10;
-        let deltas = calculateDeltas(angle);
+        let speed = 10;
+        let deltas = calculateDeltas(angle, speed);
         this.dx = deltas.dx;
         this.dy = deltas.dy;
     }
@@ -253,57 +195,40 @@ function isGameOver() {
     return false;
 }
 
+function handleSourceClicks(x, y) {
+    for (let i = 0; i < sources.length; i++) {
+        let source = sources[i];
+        source.wasClicked(x, y);
+    }
+}
+
 // Return script for evil enemy based on which level we're on, where 
 // levelNum is an integer.
 function getScript(levelNum) {
     return villanScripts[levelNum - 1];
 }
 
-// Create a new hazard from a source. A source should have a field called
-// source.hazardName. Spawn it at the source's x and y coordinates.
-function produceHazardFromSource(source) {
-    hazard = {
-        hazardName: source.hazardName,
-        x: source.x,
-        y: source.y,
-        speed: 5
+function spawnHazard() {
+    // Some hazards are spawned from sources. Use the "canSpawn" function
+    // before choosing a random hazard to spawn.
+    var allHazards = levelInfo.availableHazards.filter(name => canSpawn(name));
+
+    if (allHazards.length > 0) {
+        var hazardName = allHazards.randomElement();
+        hazards.push(newInstanceFromName(hazardName));
     }
-    hazards.push(hazard);
 }
 
-// return {hazardName: __, points: ___} 
-function spawnHazard() {
-    // Needs to spawn on left side, but randomly in terms of the y coordinate.
-    // You should look up how to generate a random number between some bounds.
-    if (level === 1) {
-        hazards.push(new DirtyHand());
-        return;
-    }
-
-    if (level === 2) {
-        if (sources.length === 0) {
-            hazards.push(new DirtyHand());
-            return;
-        }
-        
-        let i = Math.floor(Math.random() * 2);
-        if (i === 0) {
-            hazards.push(new DirtyHand());
-        }
-
-        if (i === 1) {
-            let stove = sources[0];
-            hazards.push(new Smoke(stove.x, stove.y));
-            console.log(hazards);
-        }
-        
+function moveHazards() {
+    for (let i = 0; i < hazards.length; i++) {
+        hazards[i].moveHazard();
     }
 }
 
 function spawnSource() {
-    if (level === 1) { return; }
-    if (level === 2) {
-        sources.push(new Stove());
+    if (levelInfo.availableSources.length > 0) {
+        var sourceName = levelInfo.availableSources.randomElement();
+        sources.push(newInstanceFromName(sourceName));
     }
 }
 
@@ -316,14 +241,14 @@ var bulletSource = {
 }
 
 function moveBulletSourceLeft() {
-    let angleDelta = 10; // in degrees
+    let angleDelta = 5; // in degrees
     let angleDeltaRadians = (Math.PI * angleDelta) / 180;
     
     bulletSource.angle -= angleDeltaRadians;
 }
 
 function moveBulletSourceRight() {
-    let angleDelta = 10; // in degrees
+    let angleDelta = 5; // in degrees
     let angleDeltaRadians = (Math.PI * angleDelta) / 180;
     
     bulletSource.angle += angleDeltaRadians;
@@ -344,6 +269,22 @@ function moveBulletSourceRight() {
     only every 2 seconds.
 */
 
-function updateHazardDirection(hazard, character) {
+function updateHazardDirection() {
+    // First, calculate the angle between the character and the hazard:
+    for (let i = 0; i < hazards.length; i++) {
+        let hazard = hazards[i];
+        if (hazard.x >= 3 * document.documentElement.clientWidth / 4) {
+            // Don't change direction if it's already close to the end of the
+            // screen.
+            continue;
+        }
+        let angle = Math.atan2(mainCharacter.y - hazard.y, 
+                               mainCharacter.x - hazard.x);
+        
+        console.log(angle * (180 / Math.PI));
 
+        hazard.dx = hazard.speed * Math.cos(angle);
+        hazard.dy = hazard.speed * Math.sin(angle);
+    }
+    
 }

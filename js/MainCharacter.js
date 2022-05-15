@@ -10,6 +10,7 @@ class MainCharacter {
         this.frameIndex = 0;
         this.numFrames = 4; 
         this.score = 0;
+        this.health = 100;
     }
 
     moveCharacterUp() {

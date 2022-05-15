@@ -192,7 +192,8 @@ class GameView extends View {
         let scriptText = villanScripts[level - 1];
         context.font = "24px Helvetica";
         context.fillStyle = 'rgba(0, 0, 0)';
-        let x = document.documentElement.clientWidth / 2;
+        let x = document.documentElement.clientWidth / 2 - 
+                context.measureText(scriptText).width / 2;
         context.fillText(scriptText, x, 35);
     }
 
