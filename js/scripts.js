@@ -48,7 +48,6 @@ function removeHazards(hazards, removeList) {
     for (let i = 0; i < hazards.length; i++) {
         let hazard = hazards[i];
         if (removeList.some(elem => elem == hazard)) {
-            console.log("This is true");
             hazards.splice(i, 1);
         }
     }

@@ -1,11 +1,8 @@
+/* This file contains all data for the game, as well as some functions to
+   manipulate data.  */
+
 // Variables needed for game:
 var lastTime = Date.now();
-var character = {
-    x: 0,
-    y: 0,
-    speed: 1,
-    health: 100,
-}
 var level = 1;
 var levelInfo = getLevelInfo(level);
 var hazards = [];
@@ -21,9 +18,12 @@ var villanScripts = ["",
                     "Zounds!  He used chlorine [and a filter] to remove poop and germs from the water.  But there is no way to keep people with measles away from him.  He has not been immunized, so any nearby measles will spread to him quickly! ",
                     ];
 
-// Where did we store the points for the character?
+let imageUrl = 'assets/walking_girl_spritesheet.png';
+let spriteImage = new Image();
+spriteImage.src = imageUrl;
+var mainCharacter = new MainCharacter(spriteImage);
+
 function addToScore(points) {
-    console.log("Adding " + points + " to score.");
     if (points < 0 && mainCharacter.score + points >= 0) {
         mainCharacter.score += points;
     }
@@ -35,11 +35,23 @@ function addToScore(points) {
     if (isLevelOver()) {
         level += 1;
         levelInfo = getLevelInfo(level);
+        stateStack.push(new NextLevelView());
+        mainCharacter.score = 0;
+        hazards = [];
+        sources = [];
+        bullets = [];
     }
     
 }
 
-const maxScore = [1, 20, 30, 30, 35, 40, 40]; // TO DO change back to 16
+function resetGame() {
+    level = 1;
+    levelInfo = getLevelInfo(level);
+    hazards = [];
+    bullets = [];
+    sources = [];
+    mainCharacter = new MainCharacter(spriteImage);
+}
 
 function isLevelOver() {
     return mainCharacter.score >= levelInfo.maxPoints;
@@ -69,18 +81,6 @@ function collisionCheckRect(object1, object2) {
     return true;
 }
 
-// Returns true/false based on if two circles overlap.
-// Each object needs to have the following fields: {cx, cy, r}
-// (Hint 1: The distance between two points formula is needed for this calculation.)
-// (Hint 2: it might be helpful to draw out differenct scenarios on paper first!)
-function collisionCheckCircle(object1, object2) {
-    let distance = ((object1.cx - object2.cx) ** 2 + (object1.cy - object2.cy) ** 2) ** 0.5;
-    if (distance < (object1.r + object2.r)) {
-        return true;
-    }
-    return false;
-}
-
 // Should return an array of all bullets that had collisions, which can be used
 // to call removeBullets function from last session.
 function checkAllCollisions(bullets, hazards) {
@@ -91,11 +91,22 @@ function checkAllCollisions(bullets, hazards) {
         var bullet = bullets[i];
         for (let j = 0; j < hazards.length; j++) {
             var hazard = hazards[j];
-            if (collisionCheckRect(bullet, hazard)) {
+            if (!hazard.invincible && collisionCheckRect(bullet, hazard)) {
                 bulletRemoveList.push(bullet);
                 hazardRemoveList.push(hazard);
+                addToScore(hazard.points);
                 break;
             }
+        }
+    }
+
+    for (let i = 0; i < hazards.length; i++) {
+        var hazard = hazards[i];
+        if (collisionCheckRect(mainCharacter, hazard)) {
+            hazardRemoveList.push(hazard);
+            mainCharacter.health -= hazard.healthLoss;
+            console.log(mainCharacter);
+            console.log(hazard);
         }
     }
 
@@ -119,62 +130,6 @@ function checkHazardsOffSceen(hazards) {
     return removeList;
 }
 
-let imageUrl = 'assets/walking_girl_spritesheet.png';
-this.spriteImage = new Image();
-this.spriteImage.src = imageUrl;
-var mainCharacter = new MainCharacter(spriteImage);
-
-// Calculates deltaX and deltaY for bullet based on angle (in radians):
-function calculateDeltas(angle, speed) {
-    return {dy: -1 * speed * Math.cos(angle), dx: speed * Math.sin(angle)}
-}
-
-function getBulletSourceCordsFromAngle(angle) {
-    let x0 = bulletSource.x;
-    let y0 = bulletSource.y;
-    
-    // See https://study.com/skill/learn/how-to-find-the-coordinates-of-a-polygon-after-a-rotation-explanation.html
-    // for formula for finding the coordinates after rotation. 
-    return {x: x0 * Math.cos(angle) + y0 * Math.sin(angle), 
-            y: -1 * x0 * Math.sin(angle) + y0 * Math.cos(angle)}
-}
-
-class Bullet {
-    constructor(angle) {
-        this.angle = angle;
-        let coords = getBulletSourceCordsFromAngle(angle);
-        this.x = coords.x;
-        this.y = coords.y;
-        this.w = 30;
-        this.h = 10;
-        let speed = 10;
-        let deltas = calculateDeltas(angle, speed);
-        this.dx = deltas.dx;
-        this.dy = deltas.dy;
-    }
-
-    update() {
-        this.x += this.dx;
-        this.y += this.dy;
-    }
-
-}
-
-function createBullet() {
-    bullets.push(new Bullet(bulletSource.angle));
-    mainCharacter.bullets -= 1; // this is optional 
-}
-
-// Get speed from character object's field.
-function moveCharacterUp() {
-    mainCharacter.y -= mainCharacter.speed;
-    
-}
-
-function moveCharacterDown() {
-    mainCharacter.y += mainCharacter.speed;
-}
-
 function moveBullets() {
     for (let i = 0; i < bullets.length; i++) {
         var bullet = bullets[i];
@@ -185,9 +140,11 @@ function moveBullets() {
 // Check if game is over, whether they won OR lost.
 function isGameOver() {
     // Check if won:
-    if (isLevelOver(level, mainCharacter.score)) {
+    if (isLevelOver() && levelInfo.hasNextLevel) {
         return true;
     }
+
+    // Check if lost:
     if (mainCharacter.health <= 0) {
         return true;
     }
@@ -212,10 +169,14 @@ function spawnHazard() {
     // Some hazards are spawned from sources. Use the "canSpawn" function
     // before choosing a random hazard to spawn.
     var allHazards = levelInfo.availableHazards.filter(name => canSpawn(name));
+    console.log(allHazards);
 
     if (allHazards.length > 0) {
         var hazardName = allHazards.randomElement();
-        hazards.push(newInstanceFromName(hazardName));
+        let result = newInstanceFromName(hazardName);
+        if (result != null) {
+            hazards.push(result);
+        }
     }
 }
 
@@ -228,54 +189,21 @@ function moveHazards() {
 function spawnSource() {
     if (levelInfo.availableSources.length > 0) {
         var sourceName = levelInfo.availableSources.randomElement();
-        sources.push(newInstanceFromName(sourceName));
+        let result = newInstanceFromName(sourceName);
+        if (result != null) {
+            sources.push(result);
+        }
     }
 }
 
-var bulletSource = {
-    x: (document.documentElement.clientWidth / 2) - 10,
-    y: document.documentElement.clientHeight - 75,
-    w: 20,
-    h: 1000, // To elongate the source, not visible to user.
-    angle: 0 // in radians
-}
-
-function moveBulletSourceLeft() {
-    let angleDelta = 5; // in degrees
-    let angleDeltaRadians = (Math.PI * angleDelta) / 180;
-    
-    bulletSource.angle -= angleDeltaRadians;
-}
-
-function moveBulletSourceRight() {
-    let angleDelta = 5; // in degrees
-    let angleDeltaRadians = (Math.PI * angleDelta) / 180;
-    
-    bulletSource.angle += angleDeltaRadians;
-}
-
-/*
-    Lets say we create a hazard that can follow the player. How can we implement
-    this? 
-
-    Part of the challenge is that if the code always copies where the user is 
-    and adjust the speed, the game is too difficult.
-
-    One solution is to update the direction of the hazard every so often rather
-    than all the time. Say every 2 seconds.
-
-    Write a function that will update direction of a hazard given the current
-    location of the character. Then add to the timer function for this to run
-    only every 2 seconds.
-*/
-
+// Makes hazards follow player.
 function updateHazardDirection() {
     // First, calculate the angle between the character and the hazard:
     for (let i = 0; i < hazards.length; i++) {
         let hazard = hazards[i];
+        // Don't change direction if it's already close to the end of the
+        // screen.
         if (hazard.x >= 3 * document.documentElement.clientWidth / 4) {
-            // Don't change direction if it's already close to the end of the
-            // screen.
             continue;
         }
         let angle = Math.atan2(mainCharacter.y - hazard.y, 

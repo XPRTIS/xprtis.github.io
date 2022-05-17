@@ -12,22 +12,24 @@ function getLevelInfo(level) {
     switch (level) {
         case 1:
             levelInfo.availableHazards.push(DirtyHand.name);
-            levelInfo.maxPoints = 1;
+            levelInfo.maxPoints = 1; // Should be 16.
             break;
         case 2:
-            levelInfo.availableHazards.push(DirtyHand.name, Smoke.name);
+            levelInfo.availableHazards.push(DirtyHand.name, Smoke.name, 
+                                            Food.name);
             levelInfo.availableSources.push(Stove.name);
             levelInfo.maxPoints = 20;
             break;
         case 3:
-            levelInfo.availableHazards.push(DirtyHand.name, Smoke.name);
-            levelInfo.availableSources.push(Stove.name, Poop.name);
+            levelInfo.availableHazards.push(DirtyHand.name, Smoke.name, 
+                                            Food.name, Poop.name);
+            levelInfo.availableSources.push(Stove.name);
             levelInfo.maxPoints = 30;
             break;
         case 4:
             levelInfo.availableHazards.push(DirtyHand.name, Smoke.name, 
-                Flies.name);
-            levelInfo.availableSources.push(Stove.name, Poop.name);
+                Food.name, Flies.name, Poop.name);
+            levelInfo.availableSources.push(Stove.name);
             levelInfo.maxPoints = 35;
             levelInfo.hasNextLevel = false;
             break;

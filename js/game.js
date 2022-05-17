@@ -1,6 +1,9 @@
-var timeElapsedHazard = 0;
-var timeElapsedSource = 0;
-var timeElapsedUpdateDirection = 0;
+var timeElapsed = {
+    hazard: 0,
+    source: 0,
+    directionUpdate: 0,
+    allTime: 0
+}
 var stateStack = [];
 
 Array.prototype.randomElement = function () {
@@ -26,6 +29,7 @@ function initCanvas() {
             handleMousePressed(mousePosition, context);
         }, false);
 
+        var arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
         document.addEventListener("keydown", function(event) {
             // Tip: You can use a combination of keyup, keydown, and boolean
             // (true/false) flags to know whether or not a user is holding
@@ -52,27 +56,21 @@ function initCanvas() {
                     stateStack.pop();
                 }
 
+                if (event.code === "KeyP") {
+                    stateStack.push(new PauseView());
+                }
+
                 if (event.code === 'Space') {
                     createBullet();
-                    console.log(bullets);
+                }
+
+                if (arrowKeys.includes(event.code)) {
+                    mainCharacter.moveCharacter(event.code);
                 }
     
-                if (event.code === 'ArrowUp') {
-                    console.log(mainCharacter);
-                    mainCharacter.moveCharacterUp();
-                }
-                
-                if (event.code === 'ArrowDown') {
-                    console.log(mainCharacter);
-                    mainCharacter.moveCharacterDown();
-                }
-    
-                if (event.code === 'ArrowLeft') {
-                    moveBulletSourceLeft();
-                }
-    
-                if (event.code === 'ArrowRight') {
-                    moveBulletSourceRight();
+            } else if (stateStack[stateStack.length - 1].name === "NextLevelView") {
+                if (event.code === 'Space') {
+                    stateStack.pop();
                 }
             }
         });
@@ -84,12 +82,12 @@ function initCanvas() {
 
 
 function mainLoop(context) {
-    var now = Date.now();
-    var dt = (now - lastTime) / 1000.0;
-
-    update(dt); // Some update function
-
-    lastTime = now;
+    if (stateStack[stateStack.length - 1].name === "GameView") {
+        var now = Date.now();
+        var dt = (now - lastTime) / 1000.0;
+        update(dt); // Some update function
+        lastTime = now;
+    }
 
     context.clearRect(0, 0, document.documentElement.clientWidth, 
         document.documentElement.clientHeight);
@@ -116,9 +114,9 @@ function update(dt) {
     // To do: we use timeElapsed only for spawning hazards. We might need
     // more for other time based events such as spawning sources, hazards
     // from sources, etc.
-    timeElapsedHazard += dt;
-    timeElapsedSource += dt;
-    timeElapsedUpdateDirection += dt;
+    timeElapsed.hazard += dt;
+    timeElapsed.source += dt;
+    timeElapsed.directionUpdate += dt;
 
     // If we have information we need to update for every frame, write it here.
     moveBullets();
@@ -131,26 +129,20 @@ function update(dt) {
 
     var hazardsOffScreen = checkHazardsOffSceen(hazards);
     removeHazards(hazards, hazardsOffScreen);
-
-    for (let i = 0; i < allCollisions.hazardRemoveList.length; i++) {
-        let hazard = allCollisions.hazardRemoveList[i];
-        addToScore(hazard.points);
-        console.log(mainCharacter.score);
-    }
     
-    if (timeElapsedHazard > 5) {
+    if (timeElapsed.hazard > 5) {
         spawnHazard();
-        timeElapsedHazard = 0;
+        timeElapsed.hazard = 0;
     }
 
-    if (timeElapsedSource > 5 && sources.length === 0) {
+    if (timeElapsed.source > 5 && sources.length === 0) {
         spawnSource();
-        timeElapsedSource = 0;
+        timeElapsed.source = 0;
     }
 
-    if (timeElapsedUpdateDirection > 3) {
-        updateHazardDirection();
-        timeElapsedUpdateDirection = 0;
+    if (timeElapsed.directionUpdate > 3) {
+        // updateHazardDirection();
+        timeElapsed.directionUpdate = 0;
     }
 }
 
@@ -193,9 +185,33 @@ function getMousePosition(canvas, event) {
 }
 
 function handleMousePressed(mousePosition, context) {
-    let angle = Math.atan2(mainCharacter.y - mousePosition.y, 
-        mainCharacter.x - mousePosition.x);
+    if (stateStack[stateStack.length - 1].name === "PauseView") {
+        handleButtonClicks(mousePosition.x, mousePosition.y)
+    }
     
-    console.log(angle * (180 / Math.PI));
     handleSourceClicks(mousePosition.x, mousePosition.y);
+}
+
+function handleButtonClicks(x, y) {
+    let buttonWidth = 100;
+    let buttonHeight = 30;
+    let buttonX0 = document.documentElement.clientWidth / 2 - buttonWidth;
+    let buttonY0 = document.documentElement.clientHeight / 2 - buttonHeight;
+    let buttonX1 = buttonX0 + 2 * buttonWidth;
+    let buttonY1 = buttonY0 + 2 * buttonHeight;
+
+    if (x > buttonX0 && x < buttonX1 && y > buttonY0 && y < buttonY1) {
+        stateStack.pop();
+        stateStack.pop(); // Pop twice to get to the main screen.
+        // Restart any data
+        resetGame();
+    }
+
+    buttonY0 += 75;
+    buttonY1 += 75;
+    if (x > buttonX0 && x < buttonX1 && y > buttonY0 && y < buttonY1) {
+        // resume
+        stateStack.pop();
+    }
+
 }

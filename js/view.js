@@ -10,6 +10,102 @@ class View {
     renderAll(context) {}
 }
 
+class NextLevelView extends View {
+    constructor() {
+        super();
+        this.name = "NextLevelView";
+    }
+
+    renderAll(context) {
+        this.renderText(context);
+        this.renderScript(context);
+        this.renderNextLevelText(context);
+    }
+
+    renderText(context) {
+        let text = "Congrats!!";
+        var textWidth = context.measureText(text).width;
+        context.font = "64px Helvetica";
+        context.fillStyle = 'rgba(0, 0, 0, 1)';
+        context.fillText(text, document.documentElement.clientWidth / 2 - textWidth / 2, 
+                         document.documentElement.clientHeight * 0.35);
+    }
+
+    renderScript(context) {
+        let scriptText = villanScripts[level - 1];
+        let partitionedScript = partitionScript(scriptText, context);
+        if (partitionedScript != undefined && partitionedScript.lines.length > 0) {
+            context.font = "36px Helvetica";
+            context.fillStyle = 'rgba(0, 0, 0, 1)';
+            let x = document.documentElement.clientWidth / 2 - 
+                    context.measureText(partitionedScript.lines[0]).width / 2;
+            let y = document.documentElement.clientHeight * 0.45;
+            let margin = 10; // 10px margin
+            for (let i = 0; i < partitionedScript.lines.length; i++) {
+                context.fillText(partitionedScript.lines[i], x, y)
+                y += partitionedScript.height + margin;
+            }
+        }
+    }
+
+    renderNextLevelText(context) {
+        let text = "Press Space to go to next level.";
+        var textWidth = context.measureText(text).width;
+        context.font = "36px Helvetica";
+        context.fillStyle = 'rgba(0, 0, 0, 1)';
+        context.fillText(text, document.documentElement.clientWidth / 2 - textWidth / 2, 
+                         document.documentElement.clientHeight * 0.65);
+    }
+}
+
+class PauseView extends View {
+    constructor() {
+        super();
+        this.name = "PauseView";
+    }
+
+    renderAll(context) {
+        this.renderBackground(context);
+        this.renderButtons(context);
+    }
+
+    renderBackground(context) {
+        context.fillStyle = "rgba(80, 80, 80, 1)";
+        context.fillRect(0, 0, document.documentElement.clientWidth, 
+            document.documentElement.clientHeight);
+    }
+
+    renderButtons(context) {
+        // Restart
+        let x = document.documentElement.clientWidth / 2;
+        let y = document.documentElement.clientHeight / 2;
+        this.renderButton(context, x, y, "Restart");
+
+        // Resume
+        y += 75;
+        this.renderButton(context, x, y, "Resume");
+    }
+
+    renderButton(context, x, y, text) {
+        context.fillStyle = "rgba(255, 255, 255, 1)";
+        let buttonWidth = 100;
+        let buttonHeight = 30;
+        context.fillRect(x - buttonWidth, y - buttonHeight,
+                         buttonWidth * 2, buttonHeight * 2);
+        
+        context.font = "25px Helvetica";
+        context.fillStyle = "rgba(0, 0, 0, 1)";
+
+        // https://stackoverflow.com/questions/1134586/how-can-you-find-the-height-of-text-on-an-html-canvas
+        let metrics = context.measureText(text);
+        let textWidth = metrics.width;
+        
+        let textHeight = metrics.actualBoundingBoxAscent + 
+                         metrics.actualBoundingBoxDescent;
+        context.fillText(text, x - textWidth / 2, y + textHeight / 2);
+    }
+}
+
 class StartScreenView extends View { // subclass of View
     constructor() {
         super();
@@ -28,7 +124,7 @@ class StartScreenView extends View { // subclass of View
         let text = "↓ Press Space to play! ↓";
         var textWidth = context.measureText(text).width;
         context.font = "30px Helvetica";
-        context.fillStyle = 'rgba(255, 255, 255, 0)';
+        context.fillStyle = 'rgba(255, 255, 255, 1)';
         context.fillText(text, document.documentElement.clientWidth / 2 - textWidth/2, 
                          document.documentElement.clientHeight*0.6);
     }
@@ -94,30 +190,19 @@ class GameView extends View {
         // Call all render functions. Remember that every call will overlap on
         // top of each other, so order matters. Adjust order as needed.
         this.renderBackground(context);
-        this.renderBulletSource(context);
         this.renderCharacter(context);
         this.renderBullets(context);
         this.renderHazards(context);
         this.renderScore(context);
+        this.renderHealth(context);
         this.renderLevel(context);
         this.renderSources(context);
-        this.renderScript(context);
     }
 
     renderBackground(context) {
         context.fillStyle = 'rgba(0, 0, 0, 0.4)';
         context.fillRect(0, 0, document.documentElement.clientWidth, 
             document.documentElement.clientHeight);
-    }
-    
-    renderBulletSource(context) {
-        context.save();
-        context.translate(bulletSource.x, bulletSource.y + bulletSource.h / 2);
-        context.rotate(bulletSource.angle);
-        context.fillStyle = 'rgba(100, 80, 12, 1.0)';
-        context.fillRect(0, -bulletSource.h / 2, 
-                         bulletSource.w, bulletSource.h);
-        context.restore();
     }
     
     renderCharacter(context) {
@@ -127,31 +212,24 @@ class GameView extends View {
     renderBullets(context) {
         for (let i = 0; i < bullets.length; i++) {
             let bullet = bullets[i];
-            context.fillStyle = 'rgba(0, 0, 255, 1)';
-            context.fillRect(bullet.x, bullet.y, bullet.w, bullet.h);
+            bullet.draw(context);
         }
     }
     
     renderHazards(context) {
         for (let i = 0; i < hazards.length; i++) {
             let hazard = hazards[i];
-            var hazardImage = new Image();
-            hazardImage.src = hazard.imgUrl;
-            let x0 = hazard.x;
-            let y0 = hazard.y;
-    
-            context.drawImage(hazardImage, x0, y0, hazard.w, hazard.h);
+            hazard.draw(context);
         }
     }
 
-    // renderInstructions(context) {
-    //     let text = "↓ Press Space to play! ↓";
-    //     // var textWidth = context.measureText(text).width;
-    //     context.font = "30px Helvetica";
-    //     context.fillStyle = 'rgba(255, 255, 255, 0)';
-    //     context.fillText(text, document.documentElement.clientWidth / 2 - textWidth/2, 
-    //                      document.documentElement.clientHeight*0.6);
-    // }
+    renderHealth(context) {
+        // Draw health:
+        let text = "Health: " + mainCharacter.health;
+        context.font = "30px Times\ New\ Roman";
+        context.fillStyle = 'rgba(0, 0, 255, 1)';
+        context.fillText(text, 0.82 * document.documentElement.clientWidth, 70);
+    }
     
     renderScore(context) {
         // Create background box:
@@ -161,7 +239,6 @@ class GameView extends View {
                          0.05 * document.documentElement.clientHeight);
         
         // Draw score:
-        // let text = mainCharacter.score.toString();
         let text = "Score: " + mainCharacter.score;
         context.font = "30px Times\ New\ Roman";
         context.fillStyle = 'rgba(0, 0, 255, 1)';
@@ -172,12 +249,7 @@ class GameView extends View {
     renderSources(context) {
         for (let i = 0; i < sources.length; i++) {
             let source = sources[i];
-            var sourceImage = new Image();
-            sourceImage.src = source.imgUrl;
-            let x0 = source.x;
-            let y0 = source.y;
-    
-            context.drawImage(sourceImage, x0, y0, source.w, source.h);
+            source.draw(context);
         }
     }
 
@@ -187,14 +259,37 @@ class GameView extends View {
         context.fillStyle = 'rgba(0, 0, 255, 1)';
         context.fillText(scoreText, 0.1 * document.documentElement.clientWidth, 35);
     }
-    
-    renderScript(context) {
-        let scriptText = villanScripts[level - 1];
-        context.font = "24px Helvetica";
-        context.fillStyle = 'rgba(0, 0, 0)';
-        let x = document.documentElement.clientWidth / 2 - 
-                context.measureText(scriptText).width / 2;
-        context.fillText(scriptText, x, 35);
+
+}
+
+function partitionScript(script, context) {
+    context.save();
+    if (typeof script === 'undefined') {
+        console.error("Error found: script text is undefined.");
+        return;
     }
 
+    let maxWidth = document.documentElement.clientWidth / 2;
+    var words = script.split(" ");
+    var allLines = [];
+    var currentLine = words[0];
+    context.font = '20px Helvetica';
+
+    for (var i = 1; i < words.length; i++) {
+        var word = words[i];
+        var width = context.measureText(currentLine + " " + word).width;
+        if (width < maxWidth) {
+            currentLine += " " + word;
+        } else {
+            allLines.push(currentLine);
+            currentLine = word;
+        }
+    }
+    allLines.push(currentLine);
+    context.restore();
+
+    // height of the first line, but they should all be the same
+    let textMetrics = context.measureText(currentLine[0]);
+    let h = textMetrics.actualBoundingBoxAscent + textMetrics.actualBoundingBoxDescent;
+    return {lines: allLines, height: h}
 }
