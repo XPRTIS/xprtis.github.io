@@ -1,3 +1,9 @@
+/**
+ * This file contains all elements related to the game operations. This includes
+ * the initiating the game, handling key/mouse presses, timer functions, the
+ * main game loop, audio, etc.
+ */
+
 var timeElapsed = {
     hazard: 0,
     source: 0,
@@ -5,7 +11,10 @@ var timeElapsed = {
     allTime: 0
 }
 var stateStack = [];
+var audioEnabled = false;
 
+// Adds a new method to all arrays (arr.randomElement()) to return a random
+// element within the array. Helpful for several functions in this application.
 Array.prototype.randomElement = function () {
     return this[Math.floor((Math.random() * this.length))];
 }
@@ -19,7 +28,8 @@ function initCanvas() {
     window.onresize = () => resizeCanvas(canvas);
 
     // Technically some browsers don't support canvas, so make sure that 
-    // canvas.getContext exists first.
+    // canvas.getContext exists first. This is also helpful if JavaScript is
+    // disabled.
     if (canvas.getContext) {
         var context = canvas.getContext('2d');
         var startScreen = new StartScreenView();
@@ -31,10 +41,7 @@ function initCanvas() {
 
         var arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
         document.addEventListener("keydown", function(event) {
-            // Tip: You can use a combination of keyup, keydown, and boolean
-            // (true/false) flags to know whether or not a user is holding
-            // down a key.
-
+            if (event.code === 'KeyA') { enableOrDisableMusic(); }
             // Separate out to different views so that keys only work in their
             // respective views:
             if (stateStack[stateStack.length - 1].name === "StartScreenView") {
@@ -43,6 +50,12 @@ function initCanvas() {
                     // stateStack.push(levelView)
                     var gameView = new GameView();
                     stateStack.push(gameView);
+
+                    // Most browsers (notably Chrome and Safari) don't allow
+                    // autoplaying music until the page is interacted with in
+                    // some way, so we'll only enable background music once the
+                    // game starts. 
+                    enableOrDisableMusic();
                 }
             // } 
             // else if (stateStack[stateStack.length - 1].name === "LevelView") {
@@ -77,6 +90,9 @@ function initCanvas() {
 
         // Start the game by starting the main loop.
         mainLoop(context);
+    } else {
+        // Either browser doesn't support canvas or javascript is disabled.
+        fallbackToErrorMessage();
     }
 }
 
@@ -141,7 +157,7 @@ function update(dt) {
     }
 
     if (timeElapsed.directionUpdate > 3) {
-        // updateHazardDirection();
+        updateHazardDirection();
         timeElapsed.directionUpdate = 0;
     }
 }
@@ -214,4 +230,27 @@ function handleButtonClicks(x, y) {
         stateStack.pop();
     }
 
+}
+
+function enableOrDisableMusic() {
+    audioEnabled = !audioEnabled;
+    var audioElement = document.getElementById("bg-music");
+    if (audioEnabled) {
+        audioElement.play();
+    } else {
+        audioElement.pause();
+    }
+}
+
+function fallbackToErrorMessage() {
+    var noticeElement = document.createElement('h3');
+    noticeElement.innerHTML = "Either JavaScript is disabled or the " +
+                              "browser you are using does not support " + 
+                              "this game. Please enable JavaScript or " + 
+                              "use Google Chrome, which is supported.";
+    noticeElement.style = "text-align: center";
+
+    var boldWrapper = document.createElement('b');
+    boldWrapper.appendChild(noticeElement);
+    document.getElementById("wrapper").appendChild(noticeElement);
 }

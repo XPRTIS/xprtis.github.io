@@ -1,11 +1,14 @@
 class Bullet {
     constructor(angle) {
         this.angle = angle;
-        this.w = 30;
-        this.h = 10;
-        this.x = mainCharacter.x + this.w / 2;
-        this.y = mainCharacter.y;
+        this.w = 50;
+        this.h = 20;
+        this.x = mainCharacter.x;
+        this.y = mainCharacter.y + mainCharacter.h / 2;
         this.dx = 10;
+        this.imageUrl = 'assets/soap.png';
+        this.soapImage = new Image();
+        this.soapImage.src = this.imageUrl;
     }
 
     update() {
@@ -14,8 +17,7 @@ class Bullet {
     }
 
     draw(context) {
-        context.fillStyle = 'rgba(0, 0, 255, 1)';
-        context.fillRect(this.x, this.y, this.w, this.h);
+        context.drawImage(this.soapImage, this.x, this.y, this.w, this.h);
     }
 
     removeOffScreenBullets() {

@@ -2,6 +2,7 @@ class Hazard {
     // If a 'canSpawn' function is not defined, defaults to true (i.e. there are
     // no conditions to spawning this hazard):
     static canSpawn() { return true; }
+    static name = "Hazard";
 
     // Each hazard should have these fields:
     constructor(x, y, w, h, dx, dy, imgUrl, points, healthLoss) {
@@ -14,7 +15,9 @@ class Hazard {
         this.imgUrl = imgUrl;
         this.points = points;
         this.healthLoss = healthLoss;
-        this.invincible = false;
+        // If a hazard can't be hit by the soap bullets, the points field should
+        // be 0 and be marked as invincible. 
+        this.invincible = points === 0 ? true : false;
     }
 
     moveHazard() {
@@ -31,13 +34,14 @@ class Hazard {
 }
 
 class DirtyHand extends Hazard {
+    static name = "DirtyHand";
     constructor() {
         let x = 0;
         let yMin = document.documentElement.clientHeight * 0.1;
         let yMax = document.documentElement.clientHeight * 0.7;
-        let y = Math.floor(Math.random() * yMax + yMin);
-        let w = 400;
-        let h = 400;
+        let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
+        let w = document.documentElement.clientWidth * 0.1;
+        let h = w;
         let dx = 10;
         let dy = 0;
         let imgUrl = 'assets/dirty_hand.png';
@@ -52,13 +56,14 @@ class DirtyHand extends Hazard {
 // more food objects are added to this game, we should create a separate file
 // to split out the logic. 
 class Food extends Hazard {
+    static name = "Food";
     constructor() { // Each hazard should have these fields:
         let xMin = document.documentElement.clientWidth * 0.3;
         let xMax = document.documentElement.clientWidth * 0.7;
         let yMin = document.documentElement.clientHeight * 0.1;
         let yMax = document.documentElement.clientHeight * 0.7;
-        let x = Math.floor(Math.random() * xMax + xMin);
-        let y = Math.floor(Math.random() * yMax + yMin);
+        let x = Math.floor(Math.random() * (xMax - xMin) + xMin);
+        let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
         let dx = 0;
         let dy = 0;
         let w = 200;
@@ -67,11 +72,11 @@ class Food extends Hazard {
         let points = 0;
         let healthLoss = -1 * 5;
         super(x, y, w, h, dx, dy, imgUrl, points, healthLoss);
-        this.invincible = true;
     }
 }
 
 class Smoke extends Hazard {
+    static name = "Smoke";
     static canSpawn() {
         for (let i = 0; i < sources.length; i++) {
             let source = sources[i];
@@ -90,18 +95,18 @@ class Smoke extends Hazard {
         let points = 0;
         let healthLoss = 5;
         super(x, y, w, h, dx, dy, imgUrl, points, healthLoss);
-        this.invincible = true;
     }
 }
 
 class Poop extends Hazard {
+    static name = "Poop";
     constructor() {
         let xMin = document.documentElement.clientWidth * 0.4;
         let xMax = document.documentElement.clientWidth * 0.7;
         let yMin = document.documentElement.clientHeight * 0.1;
         let yMax = document.documentElement.clientHeight * 0.7;
-        let x = Math.floor(Math.random() * xMax + xMin);
-        let y = Math.floor(Math.random() * yMax + yMin);
+        let x = Math.floor(Math.random() * (xMax - xMin) + xMin);
+        let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
         let dx = 0;
         let dy = 0;
         let w = 200;
@@ -110,38 +115,49 @@ class Poop extends Hazard {
         let points = 0;
         let healthLoss = 10;
         super(x, y, w, h, dx, dy, imgUrl, points, healthLoss);
-        this.invincible = true;
     }
 }
-class Flies extends Hazard {}
+class Flies extends Hazard {
+    static name = "Flies";
+    
+    constructor() {
+        let xMin = document.documentElement.clientWidth * 0.4;
+        let xMax = document.documentElement.clientWidth * 0.7;
+        let yMin = document.documentElement.clientHeight * 0.1;
+        let yMax = document.documentElement.clientHeight * 0.7;
+        let x = Math.floor(Math.random() * (xMax - xMin) + xMin);
+        let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
+        let dx = 0;
+        let dy = 0;
+        let w = 200;
+        let h = 200;
+        let imgUrl = 'assets/flies.png';
+        let points = 0;
+        let healthLoss = 10;
+        super(x, y, w, h, dx, dy, imgUrl, points, healthLoss);
+    }
+}
 
-// STATIC VARIABLES FOR HAZARD NAMES
-DirtyHand.name = "DirtyHand";
-Smoke.name = "Smoke";
-Poop.name = "Poop";
-Flies.name = "Flies";
-Food.name = "Food";
-
+var allHazards = [DirtyHand, Food, Smoke, Poop, Flies];
+var hazardNameMappings = {};
+for (const hazard of allHazards) {
+    hazardNameMappings[hazard.name] = hazard;
+}
 
 function canSpawn(name) {
-    switch (name) {
-        case DirtyHand.name:
-            return true;
-        case Smoke.name:
-            return Smoke.canSpawn();
-        case Poop.name:
-            return Poop.canSpawn();
-        case Flies.name:
-            return Flies.canSpawn();
-        case Food.name:
-            return Food.canSpawn();
+    if (name in hazardNameMappings) {
+        return hazardNameMappings[name].canSpawn();
     }
 
-    return false; // Default return false.
+    return false; // Safety measure 
 }
+    
 
 function newInstanceFromName(name) {
     var res = null;
+
+    // It's safer to split the functionality here since some hazards may require
+    // specific fields, such as Smoke, which requires x and y coordinates. 
     switch (name) {
         case DirtyHand.name:
             res = new DirtyHand();
@@ -152,7 +168,7 @@ function newInstanceFromName(name) {
         case Smoke.name:
             let stoveSources = sources.filter(s => s instanceof Stove);
             let stove = stoveSources.randomElement();
-            res = new Smoke(stove.x, stove.y);
+            res = new Smoke(stove.x + (stove.w / 2), stove.y + (stove.h / 2));
             break;
         case Poop.name:
             res = new Poop();

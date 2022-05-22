@@ -5,7 +5,8 @@ class Source {
         this.y;
         this.w;
         this.h;
-        this.imgUrl;
+        this.imgUrlEnabled;
+        this.imgUrlDisabled;
         this.enabled;
     }
 
@@ -19,13 +20,8 @@ class Source {
 
     draw(context) {
         var sourceImage = new Image();
-        if (this.enabled) {
-            sourceImage.src = this.imgUrl;
-            context.drawImage(sourceImage, this.x, this.y, this.w, this.h);
-        } else {
-            sourceImage.src = this.imgUrl; // TO DO: replace with new image
-            context.drawImage(sourceImage, this.x, this.y, this.w, this.h);
-        }
+        sourceImage.src = this.enabled ? this.imgUrlEnabled : this.imgUrlDisabled;
+        context.drawImage(sourceImage, this.x, this.y, this.w, this.h);
     }
 }
 
@@ -37,7 +33,8 @@ class Stove extends Source {
         this.y = Math.floor(Math.random() * (document.documentElement.clientHeight * .75));
         this.w = 250;
         this.h = 250;
-        this.imgUrl = 'assets/stove.png';
+        this.imgUrlEnabled = 'assets/stove.png';
+        this.imgUrlDisabled = 'assets/stove.png'; // Update with new image
         this.enabled = true;
     }
 }

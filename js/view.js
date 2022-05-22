@@ -190,13 +190,13 @@ class GameView extends View {
         // Call all render functions. Remember that every call will overlap on
         // top of each other, so order matters. Adjust order as needed.
         this.renderBackground(context);
-        this.renderCharacter(context);
         this.renderBullets(context);
+        this.renderSources(context);
         this.renderHazards(context);
+        this.renderCharacter(context);
         this.renderScore(context);
         this.renderHealth(context);
         this.renderLevel(context);
-        this.renderSources(context);
     }
 
     renderBackground(context) {

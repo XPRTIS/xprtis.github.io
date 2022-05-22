@@ -59,7 +59,7 @@ function isLevelOver() {
 
 /* Returns true/false based on if two rectangles overlap.
    Each object needs to have the following fields:
-   {x, y, w, h} (where x and y are the TOP LEFT of the rectangle)
+   {x, y, w, h} (where x and y are the top left coords of the rectangle)
 */
 function collisionCheckRect(object1, object2) {
     if (object1.x + object1.w < object2.x) {
@@ -81,8 +81,8 @@ function collisionCheckRect(object1, object2) {
     return true;
 }
 
-// Should return an array of all bullets that had collisions, which can be used
-// to call removeBullets function from last session.
+// Returns an array of all bullets that had collisions with hazards, as well as
+// collisions with the mainCharacter and hazards.
 function checkAllCollisions(bullets, hazards) {
     var bulletRemoveList = Array();
     var hazardRemoveList = Array();
@@ -159,18 +159,10 @@ function handleSourceClicks(x, y) {
     }
 }
 
-// Return script for evil enemy based on which level we're on, where 
-// levelNum is an integer.
-function getScript(levelNum) {
-    return villanScripts[levelNum - 1];
-}
-
 function spawnHazard() {
     // Some hazards are spawned from sources. Use the "canSpawn" function
     // before choosing a random hazard to spawn.
     var allHazards = levelInfo.availableHazards.filter(name => canSpawn(name));
-    console.log(allHazards);
-
     if (allHazards.length > 0) {
         var hazardName = allHazards.randomElement();
         let result = newInstanceFromName(hazardName);
@@ -196,9 +188,28 @@ function spawnSource() {
     }
 }
 
-// Makes hazards follow player.
+function removeBullets(bullets, removeList) {
+    for (let i = 0; i < bullets.length; i++) {
+        let bullet = bullets[i];
+        if (removeList.some(elem => elem == bullet)) {
+            bullets.splice(i, 1);
+        }
+    }
+}
+
+function removeHazards(hazards, removeList) {
+    for (let i = 0; i < hazards.length; i++) {
+        let hazard = hazards[i];
+        if (removeList.some(elem => elem == hazard)) {
+            hazards.splice(i, 1);
+        }
+    }
+}
+
+// Makes hazards follow player. Currently after level 3 this function is
+// enabled.
 function updateHazardDirection() {
-    // First, calculate the angle between the character and the hazard:
+    if (!levelInfo.hazardFollowsPlayer) { return; }
     for (let i = 0; i < hazards.length; i++) {
         let hazard = hazards[i];
         // Don't change direction if it's already close to the end of the
@@ -206,11 +217,12 @@ function updateHazardDirection() {
         if (hazard.x >= 3 * document.documentElement.clientWidth / 4) {
             continue;
         }
+
+        // First, calculate the angle between the character and the hazard:
         let angle = Math.atan2(mainCharacter.y - hazard.y, 
                                mainCharacter.x - hazard.x);
         
-        console.log(angle * (180 / Math.PI));
-
+        // Then update the dx and dy using the angle:
         hazard.dx = hazard.speed * Math.cos(angle);
         hazard.dy = hazard.speed * Math.sin(angle);
     }
