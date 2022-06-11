@@ -36,11 +36,11 @@ class Hazard {
 class DirtyHand extends Hazard {
     static name = "DirtyHand";
     constructor() {
-        let x = 0;
         let yMin = document.documentElement.clientHeight * 0.1;
         let yMax = document.documentElement.clientHeight * 0.7;
         let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
         let w = document.documentElement.clientWidth * 0.1;
+        let x = w;
         let h = w;
         let dx = 10;
         let dy = 0;
@@ -58,16 +58,14 @@ class DirtyHand extends Hazard {
 class Food extends Hazard {
     static name = "Food";
     constructor() { // Each hazard should have these fields:
-        let xMin = document.documentElement.clientWidth * 0.3;
-        let xMax = document.documentElement.clientWidth * 0.7;
         let yMin = document.documentElement.clientHeight * 0.1;
         let yMax = document.documentElement.clientHeight * 0.7;
-        let x = Math.floor(Math.random() * (xMax - xMin) + xMin);
         let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
-        let dx = 0;
+        let dx = 10;
         let dy = 0;
         let w = 200;
         let h = 200;
+        let x = w;
         let imgUrl = 'assets/food.png';
         let points = 0;
         let healthLoss = -1 * 5;
@@ -98,6 +96,8 @@ class Smoke extends Hazard {
     }
 }
 
+// TODO: Figure out how we handle this hazard since it spawns flies but also
+// is a hazard itself.
 class Poop extends Hazard {
     static name = "Poop";
     constructor() {

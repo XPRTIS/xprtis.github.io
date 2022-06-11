@@ -1,8 +1,7 @@
 class Bullet {
-    constructor(angle) {
-        this.angle = angle;
+    constructor() {
         this.w = 50;
-        this.h = 20;
+        this.h = 30;
         this.x = mainCharacter.x;
         this.y = mainCharacter.y + mainCharacter.h / 2;
         this.dx = 10;
@@ -35,7 +34,7 @@ class Bullet {
 }
 
 function createBullet() {
-    // if (mainCharacter.bullets <= 0) return; // Turned off for testing.
+    // if (mainCharacter.bullets <= 0) return; // Commented out for testing.
     bullets.push(new Bullet());
     mainCharacter.bullets -= 1; 
 }

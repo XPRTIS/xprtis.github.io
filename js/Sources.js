@@ -14,7 +14,6 @@ class Source {
         if (x > this.x && x < this.x + this.w &&
                 y > this.y && y < this.y + this.h) {
                     this.enabled = false;
-                    console.log("Stove was clicked, disabling source.");
                 }
     }
 
@@ -26,6 +25,7 @@ class Source {
 }
 
 class Stove extends Source {
+    static name = "Stove";
     constructor() {
         super();
         this.sourceName = "Stove";
@@ -38,5 +38,3 @@ class Stove extends Source {
         this.enabled = true;
     }
 }
-
-Stove.name = "Stove";

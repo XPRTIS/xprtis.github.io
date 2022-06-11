@@ -22,32 +22,34 @@ class MainCharacter {
             case "ArrowDown":
                 this.moveCharacterDown();
                 break;
-            case "ArrowLeft":
-                this.moveCharacterLeft();
-                break;
+            case "ArrowLeft": // fall through
             case "ArrowRight":
-                this.moveCharacterRight();
                 break;
         }
     }
 
     moveCharacterUp() {
+        if (this.y <= 0) return;
         this.frameIndex = (this.frameIndex + 1) % this.numFrames;
         this.y -= this.speed;
     }
 
     moveCharacterDown() {
+        if (this.y + this.h >= document.documentElement.clientHeight) return;
         if (this.frameIndex === 0) { this.frameIndex = 3; }
         else { this.frameIndex -= 1; }
         this.y += this.speed;
     }
 
+    // Left + Right functionality leftover, can get rid of it if necessary.
     moveCharacterLeft() {
+        if (this.x <= 0) return;
         this.frameIndex = (this.frameIndex + 1) % this.numFrames;
         this.x -= this.speed;
     }
 
     moveCharacterRight() {
+        if (this.x + this.w >= document.documentElement.clientWidth) return;
         if (this.frameIndex === 0) { this.frameIndex = 3; }
         else { this.frameIndex -= 1; }
         this.x += this.speed;

@@ -8,15 +8,6 @@ var levelInfo = getLevelInfo(level);
 var hazards = [];
 var bullets = [];
 var sources = [];
-var villanScripts = ["",
-                    "He will run out of energy soon, and then my filthy hands will grab him!  I just hope he does not like fruits and vegetables!",
-                    "Curses, he does eat fruits and vegetables.  He knows smoke from fires hurts his eyes.  I hope he does not also know it hurts his lungs! As long as his family cooks on a traditional fire, that smoke helps me out!",
-                    "Zounds!  Even my dangerous smoke did not stop him.  Next round I’ll get him.  He won’t be able to avoid the poop on the ground.  And that poop carries worms that crawl into his bare feet and then live inside him!  They become my allies inside his body!",
-                    "Curses!  Those worms are too slow.  Happily, flies that land on outdoor poop also fly to his food!  When he eats food with poop and germs on it, I will have him!  Each villager doing his morning walk to the fields is now helping me spread disease!",
-                    "Even flies did not carry poop to him.  But he cannot avoid water!  Without boiling, chlorine or a filter, the water will carry poop and germs to him‼",
-                    "...",
-                    "Zounds!  He used chlorine [and a filter] to remove poop and germs from the water.  But there is no way to keep people with measles away from him.  He has not been immunized, so any nearby measles will spread to him quickly! ",
-                    ];
 
 let imageUrl = 'assets/walking_girl_spritesheet.png';
 let spriteImage = new Image();
@@ -33,13 +24,17 @@ function addToScore(points) {
     }
 
     if (isLevelOver()) {
-        level += 1;
-        levelInfo = getLevelInfo(level);
-        stateStack.push(new NextLevelView());
-        mainCharacter.score = 0;
-        hazards = [];
-        sources = [];
-        bullets = [];
+        if (levelInfo.lastLevel) {
+            stateStack.push(new GameOverView());
+        } else {
+            level += 1;
+            levelInfo = getLevelInfo(level);
+            stateStack.push(new NextLevelView());
+            mainCharacter.score = 0;
+            hazards = [];
+            sources = [];
+            bullets = [];
+        }
     }
     
 }
@@ -105,8 +100,7 @@ function checkAllCollisions(bullets, hazards) {
         if (collisionCheckRect(mainCharacter, hazard)) {
             hazardRemoveList.push(hazard);
             mainCharacter.health -= hazard.healthLoss;
-            console.log(mainCharacter);
-            console.log(hazard);
+            if (mainCharacter.health > 100) mainCharacter.health = 100;
         }
     }
 
@@ -132,15 +126,13 @@ function checkHazardsOffSceen(hazards) {
 
 function moveBullets() {
     for (let i = 0; i < bullets.length; i++) {
-        var bullet = bullets[i];
-        bullet.update();
+        bullets[i].update();
     }
 }
 
-// Check if game is over, whether they won OR lost.
 function isGameOver() {
     // Check if won:
-    if (isLevelOver() && levelInfo.hasNextLevel) {
+    if (isLevelOver() && levelInfo.lastLevel) {
         return true;
     }
 
@@ -153,20 +145,22 @@ function isGameOver() {
 }
 
 function handleSourceClicks(x, y) {
-    for (let i = 0; i < sources.length; i++) {
-        let source = sources[i];
-        source.wasClicked(x, y);
+    if (stateStack[stateStack.length - 1].name === "GameView") {
+        for (let i = 0; i < sources.length; i++) {
+            let source = sources[i];
+            source.wasClicked(x, y);
+        }
     }
 }
 
 function spawnHazard() {
-    // Some hazards are spawned from sources. Use the "canSpawn" function
-    // before choosing a random hazard to spawn.
+    // Some hazards are spawned from sources, which may not have appeared yet. 
+    // Use the "canSpawn" functionvbefore choosing a random hazard to spawn
     var allHazards = levelInfo.availableHazards.filter(name => canSpawn(name));
     if (allHazards.length > 0) {
         var hazardName = allHazards.randomElement();
         let result = newInstanceFromName(hazardName);
-        if (result != null) {
+        if (result !== null) {
             hazards.push(result);
         }
     }
@@ -179,6 +173,9 @@ function moveHazards() {
 }
 
 function spawnSource() {
+    // Limit how many sources are spawned at a given point:
+    if (sources.length > 5) return;
+
     if (levelInfo.availableSources.length > 0) {
         var sourceName = levelInfo.availableSources.randomElement();
         let result = newInstanceFromName(sourceName);
@@ -207,14 +204,15 @@ function removeHazards(hazards, removeList) {
 }
 
 // Makes hazards follow player. Currently after level 3 this function is
-// enabled.
+// enabled (see levels.js to make edits to this feature).
 function updateHazardDirection() {
     if (!levelInfo.hazardFollowsPlayer) { return; }
     for (let i = 0; i < hazards.length; i++) {
         let hazard = hazards[i];
         // Don't change direction if it's already close to the end of the
         // screen.
-        if (hazard.x >= 3 * document.documentElement.clientWidth / 4) {
+        let ratio = 3 / 5;
+        if (hazard.x >= document.documentElement.clientWidth * ratio) {
             continue;
         }
 

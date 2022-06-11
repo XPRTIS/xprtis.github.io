@@ -3,29 +3,31 @@
  * of the game to the attributes that are available for that level. 
  * 
  * Update this function with necessary level specific attributes if needed. The
- * game will end levelInfo.hasNextLevel is set to false and the level is
+ * game will end if levelInfo.lastLevel is set to false and the level is
  * completed.
  * 
  */
 
 function getLevelInfo(level) {
     var levelInfo = {
-        // list of all names of hazards available for a given level.
+        // List of all names of hazards available for a given level.
         availableHazards: [],
-        // list of all names of sources available for a given level.
+        // List of all names of sources available for a given level.
         availableSources: [],
-        // points needed to progress to the next level. note that Math.min()
+        // Points needed to progress to the next level. Note that Math.min()
         // returns "Infinity," meaning that if this field is not specified the
         // level will last forever.
         maxPoints: Math.min(),
+        // If set to true, hazards will shift towards player to increase
+        // difficulty.
         hazardsFollowPlayer: false,
-        hasNextLevel: true
+        lastLevel: false
     }
 
     switch (level) {
         case 1:
             levelInfo.availableHazards.push(DirtyHand.name);
-            levelInfo.maxPoints = 1; // Should be 16.
+            levelInfo.maxPoints = 1; // Should be 16, we set to 1 for testing purposes.
             break;
         case 2:
             levelInfo.availableHazards.push(DirtyHand.name, Smoke.name, 
@@ -46,7 +48,7 @@ function getLevelInfo(level) {
             levelInfo.availableSources.push(Stove.name);
             levelInfo.maxPoints = 35;
             levelInfo.hazardsFollowPlayer = true;
-            levelInfo.hasNextLevel = false;
+            levelInfo.lastLevel = true;
             break;
     }
     
