@@ -35,6 +35,8 @@ function addToScore(points) {
     if (isLevelOver()) {
         level += 1;
         levelInfo = getLevelInfo(level);
+        stateStack.push(new NextLevelView());
+        mainCharacter.score = 0;
     }
     
 }
