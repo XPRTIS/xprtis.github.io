@@ -1,7 +1,7 @@
 class Bullet {
     constructor() {
-        this.w = 50;
-        this.h = 30;
+        this.w = 30;
+        this.h = 18;
         this.x = mainCharacter.x;
         this.y = mainCharacter.y + mainCharacter.h / 2;
         this.dx = 10;

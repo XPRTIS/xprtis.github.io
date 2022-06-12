@@ -42,7 +42,7 @@ class DirtyHand extends Hazard {
         let w = document.documentElement.clientWidth * 0.1;
         let x = w;
         let h = w;
-        let dx = 10;
+        let dx = 6;
         let dy = 0;
         let imgUrl = 'assets/dirty_hand.png';
         let points = 1;
@@ -61,10 +61,10 @@ class Food extends Hazard {
         let yMin = document.documentElement.clientHeight * 0.1;
         let yMax = document.documentElement.clientHeight * 0.7;
         let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
-        let dx = 10;
+        let dx = 6;
         let dy = 0;
-        let w = 200;
-        let h = 200;
+        let w = document.documentElement.clientWidth * 0.1;
+        let h = w;
         let x = w;
         let imgUrl = 'assets/food.png';
         let points = 0;
@@ -85,9 +85,9 @@ class Smoke extends Hazard {
     }
 
     constructor(x, y) {
-        let w = 100;
-        let h = 100;
-        let dx = 10;
+        let w = document.documentElement.clientWidth * 0.1;
+        let h = w;
+        let dx = 6;
         let dy = 0;
         let imgUrl = 'assets/smoke.png';
         let points = 0;
@@ -109,8 +109,8 @@ class Poop extends Hazard {
         let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
         let dx = 0;
         let dy = 0;
-        let w = 200;
-        let h = 200;
+        let w = document.documentElement.clientWidth * 0.1;
+        let h = w;
         let imgUrl = 'assets/poop.png';
         let points = 0;
         let healthLoss = 10;
@@ -129,8 +129,8 @@ class Flies extends Hazard {
         let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
         let dx = 0;
         let dy = 0;
-        let w = 200;
-        let h = 200;
+        let w = document.documentElement.clientWidth * 0.1;
+        let h = w;
         let imgUrl = 'assets/flies.png';
         let points = 0;
         let healthLoss = 10;

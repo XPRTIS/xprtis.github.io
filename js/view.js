@@ -24,24 +24,27 @@ class NextLevelView extends View {
     }
 
     renderText(context) {
+        context.save();
         let text = gameText.congrats_text_next_level;
         var textWidth = context.measureText(text).width;
-        context.font = "64px Helvetica";
+        context.font = "24px Helvetica";
         context.fillStyle = 'rgba(0, 0, 0, 1)';
-        context.fillText(text, document.documentElement.clientWidth / 2 - textWidth / 2, 
+        context.textAlign = 'center';
+        context.fillText(text, document.documentElement.clientWidth / 2, 
                          document.documentElement.clientHeight * 0.35);
+        context.restore();
     }
 
     renderScript(context) {
         let scriptText = gameText.villian_scripts[level - 1];
         let partitionedScript = partitionScript(scriptText, context);
         if (partitionedScript != undefined && partitionedScript.lines.length > 0) {
-            context.font = "36px Helvetica";
+            context.font = "12px Helvetica";
             context.fillStyle = 'rgba(0, 0, 0, 1)';
             let x = document.documentElement.clientWidth / 2 - 
                     context.measureText(partitionedScript.lines[0]).width / 2;
             let y = document.documentElement.clientHeight * 0.45;
-            let margin = 10; // 10px margin
+            let margin = 5;
             for (let i = 0; i < partitionedScript.lines.length; i++) {
                 context.fillText(partitionedScript.lines[i], x, y)
                 y += partitionedScript.height + margin;
@@ -52,7 +55,7 @@ class NextLevelView extends View {
     renderNextLevelText(context) {
         let text = gameText.next_level_text;
         var textWidth = context.measureText(text).width;
-        context.font = "36px Helvetica";
+        context.font = "12px Helvetica";
         context.fillStyle = 'rgba(0, 0, 0, 1)';
         context.fillText(text, document.documentElement.clientWidth / 2 - textWidth / 2, 
                          document.documentElement.clientHeight * 0.65);
@@ -66,15 +69,15 @@ class PauseView extends View {
         // Restart
         let x = document.documentElement.clientWidth / 2;
         let y = document.documentElement.clientHeight / 2;
-        let w = 100;
-        let h = 30;
+        let w = 40;
+        let h = 15;
         let fontName = "Helvetica";
-        let fontSize = 24;
+        let fontSize = 12;
         let text = gameText.pause_text;
         this.buttons = [new Button(x, y, w, h, fontName, fontSize, text)];
 
         // Resume
-        y += 75;
+        y += 40;
         text = gameText.resume_text;
         this.buttons.push(new Button(x, y, w, h, fontName, fontSize, text));
     }
@@ -103,11 +106,11 @@ class StartScreenView extends View { // subclass of View
         super();
         this.name = "StartScreenView";
         this.buttons = [];
-        let margin = 20;
-        let w = document.documentElement.clientWidth * 0.02;
-        let h = document.documentElement.clientHeight * 0.02;
+        let margin = 10;
+        let w = document.documentElement.clientWidth * 0.1;
+        let h = document.documentElement.clientHeight * 0.05;
         let fontName = "Helvetica";
-        let fontSize = 20;
+        let fontSize = 12;
 
         for (let i = 0; i < supportedLanguages.length; i++) {
             let x = document.documentElement.clientWidth * 0.8;
@@ -131,16 +134,16 @@ class StartScreenView extends View { // subclass of View
         context.save();
         let text = gameText.press_to_play_text;
         var textWidth = context.measureText(text).width;
-        let margin = 50;
-        context.font = "30px Helvetica";
+        let margin = 15;
+        context.font = "12px Helvetica";
         context.fillStyle = 'rgba(255, 255, 255, 1)';
         context.textAlign = 'center';
-        context.fillText(text, document.documentElement.clientWidth / 2 - textWidth/2, 
+        context.fillText(text, document.documentElement.clientWidth / 2, 
                          document.documentElement.clientHeight*0.6);
         
         for (let i = 0; i < gameText.instructions.length; i++) {
             text = gameText.instructions[i];
-            context.fillText(text, document.documentElement.clientWidth / 2 - textWidth / 2, 
+            context.fillText(text, document.documentElement.clientWidth / 2, 
                          document.documentElement.clientHeight * 0.6 + (margin * (i + 1)));
         }
         context.restore();
@@ -213,7 +216,7 @@ class GameOverView extends View {
         let y = document.documentElement.clientHeight * 0.66;
         let w = 100;
         let h = 30;
-        let fontSize = 25;
+        let fontSize = 12;
         let fontName = "Helvetica";
         this.buttons = [new Button(x, y, w, h, fontName, fontSize, text)];
         this.gameWon = mainCharacter.health > 0 ? true : false;
@@ -330,14 +333,14 @@ class GameView extends View {
     renderHealth(context) {
         // Draw health:
         let text = gameText.health_text + ": " + mainCharacter.health;
-        context.font = "30px Times\ New\ Roman";
+        context.font = "16px Times\ New\ Roman";
         context.fillStyle = 'rgba(0, 0, 255, 1)';
-        context.fillText(text, 0.82 * document.documentElement.clientWidth, 70);
+        context.fillText(text, 0.82 * document.documentElement.clientWidth, 55);
     }
     
     renderScore(context) {        
         let text = gameText.score_text + ": " + mainCharacter.score;
-        context.font = "30px Times\ New\ Roman";
+        context.font = "16px Times\ New\ Roman";
         context.fillStyle = 'rgba(0, 0, 255, 1)';
         context.fillText(text, 0.82 * document.documentElement.clientWidth, 35);
     }
@@ -351,7 +354,7 @@ class GameView extends View {
 
     renderLevel(context) {
         let scoreText = "Level: " + level;
-        context.font = "30px Times\ New\ Roman";
+        context.font = "16px Times\ New\ Roman";
         context.fillStyle = 'rgba(0, 0, 255, 1)';
         context.fillText(scoreText, 0.1 * document.documentElement.clientWidth, 35);
     }

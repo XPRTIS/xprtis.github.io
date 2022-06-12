@@ -2,11 +2,11 @@ class MainCharacter {
     constructor(spriteImage) {
         this.x = (9 * document.documentElement.clientWidth) / 10;
         this.y = document.documentElement.clientHeight / 2;
-        this.speed = 50;
+        this.speed = 20;
         this.bullets = 10;
         this.spriteImage = spriteImage;
-        this.w = 2259 / (4 * 4);
-        this.h = 740 / 4;
+        this.w = 2259 / (4 * 10);
+        this.h = 740 / 10;
         this.frameIndex = 0;
         this.numFrames = 4;
         this.score = 0;
@@ -63,7 +63,7 @@ class MainCharacter {
             this.spriteImage.height,
             this.x,
             this.y,
-            this.spriteImage.width / this.numFrames / 4,
-            this.spriteImage.height / 4);
+            this.spriteImage.width / this.numFrames / 10,
+            this.spriteImage.height / 10);
     }
 }
