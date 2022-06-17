@@ -53,14 +53,7 @@ function initCanvas() {
             // respective views:
             if (stateStack[stateStack.length - 1].name === "StartScreenView") {
                 if (event.code === 'Space') {
-                    var gameView = new GameView();
-                    stateStack.push(gameView);
-
-                    // Most browsers (notably Chrome and Safari) don't allow
-                    // autoplaying music until the page is interacted with in
-                    // some way, so we'll only enable background music once the
-                    // game starts. 
-                    enableOrDisableMusic();
+                    changeToGameView();
                 }
 
             } else if (stateStack[stateStack.length - 1].name === "GameView") {
@@ -275,11 +268,18 @@ function handleButtonClicks(x, y) {
             }
         }
     } else if (currentState.name === "StartScreenView") {
+        var bgClicked = true;
         for (let i = 0; i < currentState.buttons.length; i++) {
             let currentButton = currentState.buttons[i];
-            console.log(currentButton.wasClicked(x, y));
-
+            // wasClicked will call the function associated with the button too
+            if (currentButton.wasClicked(x, y)) {
+                bgClicked = false;
+            }
         }
+
+        // If something was tapped but it wasn't a different button, start
+        // the game:
+        if (bgClicked) changeToGameView();
     }
 
 }
@@ -290,6 +290,19 @@ function enableOrDisableMusic() {
     audioEnabled ? audioElement.play() : audioElement.pause();
 }
 
+function changeToGameView() {
+    var gameView = new GameView();
+    stateStack.push(gameView);
+
+    // Most browsers (notably Chrome and Safari) don't allow
+    // autoplaying music until the page is interacted with in
+    // some way, so we'll only enable background music once the
+    // game starts. 
+    enableOrDisableMusic();
+}
+
+// In certain cases, we need to show an error message because canvas is not
+// supported on the browser.
 function fallbackToErrorMessage() {
     var noticeElement = document.createElement('h3');
     noticeElement.innerHTML = "Either JavaScript is disabled or the " +

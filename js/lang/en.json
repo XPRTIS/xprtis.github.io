@@ -26,5 +26,7 @@
     "health_text": "Health",
     "play_again_text": "Play again!",
     "final_score_text": "Final score",
-    "try_again_text": "Oh no! Health dropped to 0."
+    "try_again_text": "Oh no! Health dropped to 0.",
+    "level_text": "Level",
+    "title": "Hygiene Heros"
 }

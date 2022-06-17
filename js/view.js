@@ -133,8 +133,11 @@ class StartScreenView extends View { // subclass of View
     renderInstructions(context) {
         context.save();
         let text = gameText.press_to_play_text;
-        var textWidth = context.measureText(text).width;
         let margin = 15;
+        context.shadowColor = "#000";
+        context.shadowBlur = 5;
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 1;
         context.font = "12px Helvetica";
         context.fillStyle = 'rgba(255, 255, 255, 1)';
         context.textAlign = 'center';
@@ -142,6 +145,7 @@ class StartScreenView extends View { // subclass of View
                          document.documentElement.clientHeight*0.6);
         
         for (let i = 0; i < gameText.instructions.length; i++) {
+            
             text = gameText.instructions[i];
             context.fillText(text, document.documentElement.clientWidth / 2, 
                          document.documentElement.clientHeight * 0.6 + (margin * (i + 1)));
@@ -151,21 +155,25 @@ class StartScreenView extends View { // subclass of View
 
     renderBackground(context) {
         var bgImage = new Image();
-        bgImage.src = 'assets/mainBG.jpg';
+        bgImage.src = 'assets/bg.png';
         let bgWidth = document.documentElement.clientWidth;
         let bgHeight = document.documentElement.clientHeight;
         context.drawImage(bgImage, 0, 0, bgWidth, bgHeight);
-
     }
 
     renderTitle(context) {
-        var titleImage = new Image();
-        titleImage.src = 'assets/title.webp';
-        let titleWidth = document.documentElement.clientWidth / 4
-        let titleHeight = document.documentElement.clientHeight / 4 
-        let x0 = document.documentElement.clientWidth / 2 - titleWidth / 2
-        let y0 = document.documentElement.clientHeight * 0.3
-        context.drawImage(titleImage, x0, y0, titleWidth, titleHeight)
+        context.save();
+        context.shadowColor = "#000";
+        context.shadowBlur = 4;
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 3;
+        context.font = "600 64px Anek\ Malayalam";
+        context.fillStyle = "rgba(255, 255, 255, 1)";
+        context.textAlign = 'center';
+        context.fillText(gameText.title, 
+                         document.documentElement.clientWidth / 2, 
+                         document.documentElement.clientHeight / 2.5);
+        context.restore();
     }
 
     renderLanguageOptions(context) {
@@ -173,6 +181,10 @@ class StartScreenView extends View { // subclass of View
             let button = this.buttons[i];
             button.draw(context);
         }
+    }
+
+    renderPlayButton(context) {
+        
     }
 }
 
@@ -307,9 +319,11 @@ class GameView extends View {
     }
 
     renderBackground(context) {
-        context.fillStyle = 'rgba(0, 0, 0, 0.4)';
-        context.fillRect(0, 0, document.documentElement.clientWidth, 
-            document.documentElement.clientHeight);
+        var bgImage = new Image();
+        bgImage.src = 'assets/bg.png';
+        let bgWidth = document.documentElement.clientWidth;
+        let bgHeight = document.documentElement.clientHeight;
+        context.drawImage(bgImage, 0, 0, bgWidth, bgHeight);
     }
     
     renderCharacter(context) {
@@ -353,7 +367,7 @@ class GameView extends View {
     }
 
     renderLevel(context) {
-        let scoreText = "Level: " + level;
+        let scoreText = gameText.level_text + ": " + level;
         context.font = "16px Times\ New\ Roman";
         context.fillStyle = 'rgba(0, 0, 255, 1)';
         context.fillText(scoreText, 0.1 * document.documentElement.clientWidth, 35);
