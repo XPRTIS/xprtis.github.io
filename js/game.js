@@ -13,7 +13,7 @@ var timeElapsed = {
 }
 var stateStack = [];
 var audioEnabled = false;
-var supportedLanguages = ["en"]; // TODO: add Tamil once supported.
+var supportedLanguages = ["en", "ta"]; // TODO: add Tamil once supported.
 var languageMap = {
     "en": "English",
     "ta": "Tamil"
@@ -312,5 +312,5 @@ function fallbackToErrorMessage() {
 
     var boldWrapper = document.createElement('b');
     boldWrapper.appendChild(noticeElement);
-    document.getElementById("wrapper").appendChild(noticeElement);
+    document.getElementById("wrapper").appendChild(boldWrapper);
 }

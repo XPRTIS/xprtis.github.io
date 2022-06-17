@@ -73,7 +73,7 @@ class PauseView extends View {
         let h = 15;
         let fontName = "Helvetica";
         let fontSize = 12;
-        let text = gameText.pause_text;
+        let text = gameText.restart_text;
         this.buttons = [new Button(x, y, w, h, fontName, fontSize, text)];
 
         // Resume
@@ -106,9 +106,9 @@ class StartScreenView extends View { // subclass of View
         super();
         this.name = "StartScreenView";
         this.buttons = [];
-        let margin = 10;
-        let w = document.documentElement.clientWidth * 0.1;
-        let h = document.documentElement.clientHeight * 0.05;
+        let margin = 14;
+        let w = document.documentElement.clientWidth * 0.075;
+        let h = document.documentElement.clientHeight * 0.03;
         let fontName = "Helvetica";
         let fontSize = 12;
 
