@@ -9,6 +9,16 @@
 // Github repository.
 
 
+// Write the function moveHazards, which takes in hazards and updates them.
+
+function moveHazards() {
+    for (let i = 0; i < hazards.length; i++) {
+        var hazard = hazards[i];
+        if ('speed' in hazard) {
+            hazard.x += hazard.speed;
+        }
+    }
+}
 
     
 // Write a function that removes some bullets from list of all the bullets.
@@ -23,6 +33,8 @@ function isEqual(bullet1, bullet2) {
     return bullet1[0] == bullet2[0] && bullet1[1] == bullet2[1];
 }
 
+
+
 // a = [[1, 2], [4, 3]]
 // a.some(elem => isEqual(elem, [1, 2]))
 
@@ -31,24 +43,20 @@ function isEqual(bullet1, bullet2) {
 // a.splice(1, 1) -> a = [1, 3]
 
 function removeBullets(bullets, removeList) {
-    var result = false;
     for (let i = 0; i < bullets.length; i++) {
         // Check that bullet is in removeList
         let bullet = bullets[i];
-        if (removeList.some(elem => elem == bullet)) {
-            result = true;
+        if (removeList.some(elem => elem === bullet)) {
             bullets.splice(i, 1);
         }
     }
-
-    return result;
 }
 
 function removeHazards(hazards, removeList) {
     for (let i = 0; i < hazards.length; i++) {
+        // Check that bullet is in removeList
         let hazard = hazards[i];
-        if (removeList.some(elem => elem == hazard)) {
-            console.log("This is true");
+        if (removeList.some(elem => elem === hazard)) {
             hazards.splice(i, 1);
         }
     }

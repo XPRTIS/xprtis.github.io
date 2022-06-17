@@ -1,23 +1,40 @@
-class Stove { 
+class Source {
     constructor() {
-        this.sourceName = "Stove";
-        this.x = Math.floor(Math.random() * (document.documentElement.clientWidth * .75));
-        this.y = Math.floor(Math.random() * (document.documentElement.clientHeight * .75));
-        this.w = 400;
-        this.h = 400;
-        this.speed = 0;
-        this.imgUrl = 'assets/stove.png';
-        this.points = 1;
-        this.enabled = true;
+        this.sourceName;
+        this.x;
+        this.y;
+        this.w;
+        this.h;
+        this.imgUrlEnabled;
+        this.imgUrlDisabled;
+        this.enabled;
     }
 
     wasClicked(x, y) {
         if (x > this.x && x < this.x + this.w &&
                 y > this.y && y < this.y + this.h) {
                     this.enabled = false;
-                    console.log("Stove was clicked, disabling source.")
                 }
+    }
+
+    draw(context) {
+        var sourceImage = new Image();
+        sourceImage.src = this.enabled ? this.imgUrlEnabled : this.imgUrlDisabled;
+        context.drawImage(sourceImage, this.x, this.y, this.w, this.h);
     }
 }
 
-Stove.name = "Stove";
+class Stove extends Source {
+    static name = "Stove";
+    constructor() {
+        super();
+        this.sourceName = "Stove";
+        this.x = Math.floor(Math.random() * (document.documentElement.clientWidth * .75));
+        this.y = Math.floor(Math.random() * (document.documentElement.clientHeight * .75));
+        this.w = 60;
+        this.h = 60;
+        this.imgUrlEnabled = 'assets/stove.png';
+        this.imgUrlDisabled = 'assets/stove.png'; // Update with new image
+        this.enabled = true;
+    }
+}

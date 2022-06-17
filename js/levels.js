@@ -1,35 +1,54 @@
+/**
+ * This file contains one function: getLevelInfo. This converts the given level
+ * of the game to the attributes that are available for that level. 
+ * 
+ * Update this function with necessary level specific attributes if needed. The
+ * game will end if levelInfo.lastLevel is set to false and the level is
+ * completed.
+ * 
+ */
+
 function getLevelInfo(level) {
     var levelInfo = {
-        // list of all names of hazards available for a given level.
+        // List of all names of hazards available for a given level.
         availableHazards: [],
-        // list of all names of sources available for a given level.
+        // List of all names of sources available for a given level.
         availableSources: [],
-        // points needed to progress to the next level
+        // Points needed to progress to the next level. Note that Math.min()
+        // returns "Infinity," meaning that if this field is not specified the
+        // level will last forever.
         maxPoints: Math.min(),
-        hasNextLevel: true
+        // If set to true, hazards will shift towards player to increase
+        // difficulty.
+        hazardsFollowPlayer: false,
+        lastLevel: false
     }
 
     switch (level) {
         case 1:
             levelInfo.availableHazards.push(DirtyHand.name);
-            levelInfo.maxPoints = 1;
+            levelInfo.maxPoints = 2; // Should be 16, we set to 1 for testing purposes.
             break;
         case 2:
-            levelInfo.availableHazards.push(DirtyHand.name, Smoke.name);
+            levelInfo.availableHazards.push(DirtyHand.name, Smoke.name, 
+                                            Food.name);
             levelInfo.availableSources.push(Stove.name);
-            levelInfo.maxPoints = 20;
+            levelInfo.maxPoints = 3;
             break;
         case 3:
-            levelInfo.availableHazards.push(DirtyHand.name, Smoke.name);
-            levelInfo.availableSources.push(Stove.name, Poop.name);
-            levelInfo.maxPoints = 30;
+            levelInfo.availableHazards.push(DirtyHand.name, Smoke.name, 
+                                            Food.name, Poop.name);
+            levelInfo.availableSources.push(Stove.name);
+            levelInfo.maxPoints = 4;
+            levelInfo.hazardsFollowPlayer = true;
             break;
         case 4:
             levelInfo.availableHazards.push(DirtyHand.name, Smoke.name, 
-                Flies.name);
-            levelInfo.availableSources.push(Stove.name, Poop.name);
-            levelInfo.maxPoints = 35;
-            levelInfo.hasNextLevel = false;
+                Food.name, Flies.name, Poop.name);
+            levelInfo.availableSources.push(Stove.name);
+            levelInfo.maxPoints = 5;
+            levelInfo.hazardsFollowPlayer = true;
+            levelInfo.lastLevel = true;
             break;
     }
     
