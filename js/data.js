@@ -13,6 +13,7 @@ let imageUrl = 'assets/walking_girl_spritesheet.png';
 let spriteImage = new Image();
 spriteImage.src = imageUrl;
 var mainCharacter = new MainCharacter(spriteImage);
+var antagonist = new Antagonist();
 
 function addToScore(points) {
     if (points < 0 && mainCharacter.score + points >= 0) {
@@ -31,6 +32,7 @@ function addToScore(points) {
             levelInfo = getLevelInfo(level);
             stateStack.push(new NextLevelView());
             mainCharacter.score = 0;
+            mainCharacter.health = 100;
             hazards = [];
             sources = [];
             bullets = [];
@@ -86,15 +88,30 @@ function checkAllCollisions(bullets, hazards) {
         var bullet = bullets[i];
         for (let j = 0; j < hazards.length; j++) {
             var hazard = hazards[j];
+            var shouldRemove = true;
             if (!hazard.invincible && collisionCheckRect(bullet, hazard)) {
+                // In the case of food being hit, disable the effects so it 
+                // doesn't give any points for removal but don't remove it.
+                if (hazard instanceof Food) {
+                    console.log("hit food");
+                    hazard.disable();
+                    shouldRemove = false;
+                } else {
+                    console.log(hazard instanceof Food);
+                }
+
+                if (shouldRemove) {
+                    hazardRemoveList.push(hazard);
+                }
+
                 bulletRemoveList.push(bullet);
-                hazardRemoveList.push(hazard);
                 addToScore(hazard.points);
                 break;
             }
         }
     }
 
+    // Checks for collisions with the character. 
     for (let i = 0; i < hazards.length; i++) {
         var hazard = hazards[i];
         if (collisionCheckRect(mainCharacter, hazard)) {
@@ -102,6 +119,10 @@ function checkAllCollisions(bullets, hazards) {
             mainCharacter.health -= hazard.healthLoss;
             if (mainCharacter.health > 100) mainCharacter.health = 100;
         }
+    }
+
+    if (mainCharacter.health <= 0) {
+        stateStack.push(new GameOverView);
     }
 
     return { bulletRemoveList: bulletRemoveList, 

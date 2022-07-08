@@ -9,7 +9,8 @@ var timeElapsed = {
     source: 0,
     directionUpdate: 0,
     allTime: 0,
-    bullet: 0
+    bullet: 0,
+    bulletFired: 0
 }
 var stateStack = [];
 var audioEnabled = false;
@@ -19,6 +20,8 @@ var languageMap = {
     "ta": "Tamil"
 }
 var gameText;
+var BULLET_DELAY = 1; // Delay for how often you can fire bullets, in seconds.
+var KEEP_AUDIO_OFF = true;
 
 // Adds a new method to all arrays (arr.randomElement()) to return a random
 // element within the array. Helpful for several functions in this application.
@@ -41,6 +44,8 @@ function initCanvas() {
         var context = canvas.getContext('2d');
         var startScreen = new StartScreenView();
         stateStack.push(startScreen);
+        // Check to see if not in right orientation:
+        resizeCanvas(canvas); 
         canvas.addEventListener('click', (event) => {
             let mousePosition = getMousePosition(canvas, event);
             handleMousePressed(mousePosition, context);
@@ -66,7 +71,8 @@ function initCanvas() {
                 }
 
                 if (event.code === 'Space') {
-                    createBullet();
+                    // Create a delay for how often you can fire bullets:
+                    shootBullet();
                 }
 
                 if (arrowKeys.includes(event.code)) {
@@ -115,15 +121,12 @@ function mainLoop(context) {
 }
 
 function update(dt) {
-    // To do: we use timeElapsed only for spawning hazards. We might need
-    // more for other time based events such as spawning sources, hazards
-    // from sources, etc.
     timeElapsed.hazard += dt;
     timeElapsed.source += dt;
     timeElapsed.directionUpdate += dt;
     timeElapsed.bullet += dt;
+    timeElapsed.bulletFired += dt;
 
-    // If we have information we need to update for every frame, write it here.
     moveBullets();
     moveHazards();
 
@@ -162,10 +165,27 @@ function update(dt) {
 function resizeCanvas(canvas) {
     canvas.width = document.documentElement.clientWidth;
     canvas.height = document.documentElement.clientHeight;
+
+    if (stateStack.length == 0) return; 
+    var currState = stateStack[stateStack.length - 1];
+    if (canvas.height > canvas.width && currState.name != "PortraitView") {
+        stateStack.push(new PortraitView());
+    } else if (stateStack[stateStack.length - 1].name == "PortraitView") {
+        stateStack.pop();
+    }
+
+    // Reset all buttons in the views after resizing canvas because coordinates 
+    // may have changed after resize:
+    for (let i = 0; i < stateStack.length; i++) {
+        if (stateStack[i].name === "StartScreenView") {
+            stateStack[i] = stateStack[i].create();
+            break;
+        }
+    }
 }
 
 $(document).ready(function () { // Once the page is loaded...
-    configureLanguageAndStartGame();
+    configureLanguageAndStartGame();    
 });
 
 // https://stackoverflow.com/questions/46008760/how-to-build-multiple-language-website-using-pure-html-js-jquery
@@ -197,6 +217,13 @@ function setGameLanguage(languageCode) {
         console.error(error);
         // Fallback to english:
         localStorage.setItem('lang', 'en');
+    }
+}
+
+function shootBullet() {
+    if (timeElapsed.bulletFired > BULLET_DELAY) {
+        createBullet();
+        timeElapsed.bulletFired = 0;
     }
 }
 
@@ -243,19 +270,9 @@ function handleButtonClicks(x, y) {
     var currentState = stateStack[stateStack.length - 1];
     if (currentState.name === "PauseView") {
         for (let i = 0; i < currentState.buttons.length; i++) {
-            let currentButton = currentState.buttons[i];
-            if (currentButton.wasClicked(x, y)) {
-                // Restart game
-                if (i === 0) {
-                    stateStack.pop();
-                    stateStack.pop(); // Pop twice to get to the main screen.
-                    // Restart any data
-                    resetGame();
-                } else if (i === 1) {
-                    stateStack.pop();
-                }
-            }
+            currentState.buttons[i].wasClicked(x, y);
         }
+
     } else if (currentState.name === "GameOverView") {
         for (let i = 0; i < currentState.buttons.length; i++) {
             let currentButton = currentState.buttons[i];
@@ -267,6 +284,7 @@ function handleButtonClicks(x, y) {
                 }
             }
         }
+
     } else if (currentState.name === "StartScreenView") {
         var bgClicked = true;
         for (let i = 0; i < currentState.buttons.length; i++) {
@@ -280,11 +298,19 @@ function handleButtonClicks(x, y) {
         // If something was tapped but it wasn't a different button, start
         // the game:
         if (bgClicked) changeToGameView();
+
+    } else if (currentState.name === "GameView") {
+        for (let i = 0; i < currentState.buttons.length; i++) {
+            currentState.buttons[i].wasClicked(x, y);
+        }
+    } else if (currentState.name === "NextLevelView") {
+        stateStack.pop();
     }
 
 }
 
 function enableOrDisableMusic() {
+    if (KEEP_AUDIO_OFF) return;
     audioEnabled = !audioEnabled;
     var audioElement = document.getElementById("bg-music");
     audioEnabled ? audioElement.play() : audioElement.pause();
@@ -307,7 +333,8 @@ function fallbackToErrorMessage() {
     var noticeElement = document.createElement('h3');
     noticeElement.innerHTML = "Either JavaScript is disabled or the " +
         "browser you are using does not support this game. Please enable " +
-        "JavaScript or use Google Chrome, which is supported.";
+        "JavaScript or use the latest version of Google Chrome, which is" + 
+        "currently supported.";
     noticeElement.style = "text-align: center";
 
     var boldWrapper = document.createElement('b');

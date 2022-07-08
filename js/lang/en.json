@@ -17,7 +17,7 @@
         "Press P to pause the game at any time.",
         "Press A to toggle background music."
     ],
-    "next_level_text": "Press Space to go to next level.",
+    "next_level_text": "Press anywhere to go to next level.",
     "restart_text": "Restart",
     "pause_text": "Pause",
     "resume_text": "Resume",
@@ -28,5 +28,6 @@
     "final_score_text": "Final score",
     "try_again_text": "Oh no! Health dropped to 0.",
     "level_text": "Level",
-    "title": "Hygiene Heros"
+    "title": "Hygiene Heros",
+    "rotate_phone_text": "Please rotate your phone to continue playing..."
 }

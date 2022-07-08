@@ -16,8 +16,12 @@ class Hazard {
         this.points = points;
         this.healthLoss = healthLoss;
         // If a hazard can't be hit by the soap bullets, the points field should
-        // be 0 and be marked as invincible. 
-        this.invincible = points === 0 ? true : false;
+        // be 0 and be marked as invincible, unless it's food:
+        if (this instanceof Food) {
+            this.invincible = false;
+        } else {
+            this.invincible = points === 0 ? true : false;
+        }
     }
 
     moveHazard() {
@@ -30,7 +34,6 @@ class Hazard {
         hazardImage.src = this.imgUrl;
         context.drawImage(hazardImage, this.x, this.y, this.w, this.h);
     }
-
 }
 
 class DirtyHand extends Hazard {
@@ -70,6 +73,15 @@ class Food extends Hazard {
         let points = 0;
         let healthLoss = -1 * 5;
         super(x, y, w, h, dx, dy, imgUrl, points, healthLoss);
+    }
+
+    disable() {
+        // If a player hits the Food with a bullet, this function is invoked. 
+        // This changes the health "loss" to be 0 so that instead of gaining
+        // health it has no effect. We change the imgUrl so that the player
+        // can tell it's no longer "edible."
+        this.healthLoss = 0;
+        this.imgUrl = 'assets/food.png'; // TODO: change to a different picture.
     }
 }
 
@@ -131,7 +143,7 @@ class Flies extends Hazard {
         let dy = 0;
         let w = document.documentElement.clientWidth * 0.1;
         let h = w;
-        let imgUrl = 'assets/flies.png';
+        let imgUrl = 'assets/flies.png'; // TODO: find image of flies.
         let points = 0;
         let healthLoss = 10;
         super(x, y, w, h, dx, dy, imgUrl, points, healthLoss);
