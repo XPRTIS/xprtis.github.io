@@ -29,8 +29,8 @@ class Stove extends Source {
     constructor() {
         super();
         this.sourceName = "Stove";
-        this.x = Math.floor(Math.random() * (document.documentElement.clientWidth * .6));
-        this.y = Math.floor(Math.random() * (document.documentElement.clientHeight * .6));
+        this.x = Math.floor(Math.random() * (document.documentElement.clientWidth * .4));
+        this.y = Math.floor(Math.random() * (document.documentElement.clientHeight * .8));
         this.w = 60;
         this.h = 60;
         this.imgUrlEnabled = 'assets/stove.png';

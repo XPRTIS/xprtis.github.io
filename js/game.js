@@ -21,7 +21,8 @@ var languageMap = {
 }
 var gameText;
 var BULLET_DELAY = 1; // Delay for how often you can fire bullets, in seconds.
-var KEEP_AUDIO_OFF = true;
+var KEEP_AUDIO_OFF = false; // Debug variable for keeping audio always off.
+var audioManager = new AudioManager();
 
 // Adds a new method to all arrays (arr.randomElement()) to return a random
 // element within the array. Helpful for several functions in this application.
@@ -46,6 +47,10 @@ function initCanvas() {
         stateStack.push(startScreen);
         // Check to see if not in right orientation:
         resizeCanvas(canvas); 
+
+        // Load all audio files:
+        loadAudioFiles();
+
         canvas.addEventListener('click', (event) => {
             let mousePosition = getMousePosition(canvas, event);
             handleMousePressed(mousePosition, context);
@@ -53,7 +58,7 @@ function initCanvas() {
 
         var arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
         document.addEventListener("keydown", function (event) {
-            if (event.code === 'KeyA') { enableOrDisableMusic(); }
+            if (event.code === 'KeyA') { audioManager.muteOrUnmuteAllAudio(); }
             // Separate out to different views so that keys only work in their
             // respective views:
             if (stateStack[stateStack.length - 1].name === "StartScreenView") {
@@ -143,7 +148,7 @@ function update(dt) {
         timeElapsed.hazard = 0;
     }
 
-    if (timeElapsed.source > 5 && sources.length === 0) {
+    if (timeElapsed.source > 5) {
         spawnSource();
         timeElapsed.source = 0;
     }
@@ -224,6 +229,7 @@ function shootBullet() {
     if (timeElapsed.bulletFired > BULLET_DELAY) {
         createBullet();
         timeElapsed.bulletFired = 0;
+        audioManager.playSound("bullet");
     }
 }
 
@@ -305,15 +311,10 @@ function handleButtonClicks(x, y) {
         }
     } else if (currentState.name === "NextLevelView") {
         stateStack.pop();
+    } else if (currentState.name === "LevelClearScreen") {
+        stateStack.push(new NextLevelView());
     }
 
-}
-
-function enableOrDisableMusic() {
-    if (KEEP_AUDIO_OFF) return;
-    audioEnabled = !audioEnabled;
-    var audioElement = document.getElementById("bg-music");
-    audioEnabled ? audioElement.play() : audioElement.pause();
 }
 
 function changeToGameView() {
@@ -324,7 +325,17 @@ function changeToGameView() {
     // autoplaying music until the page is interacted with in
     // some way, so we'll only enable background music once the
     // game starts. 
-    enableOrDisableMusic();
+    audioManager.enableOrDisableMusic("bg");
+}
+
+function loadAudioFiles() { 
+    var allAudioElements = document.getElementById("audio-wrapper").children;
+    for (const audioElement of allAudioElements) {
+        var isBgMusic = false;
+        if (audioElement.getAttribute("name") == "bg") isBgMusic = true;
+        audioManager.addSound(audioElement.id, 
+            audioElement.getAttribute("name"), isBgMusic);
+    }
 }
 
 // In certain cases, we need to show an error message because canvas is not

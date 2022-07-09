@@ -10,6 +10,27 @@ class View {
     renderAll(context) {}
 }
 
+class LevelClearScreen extends View {
+    constructor() {
+        super();
+        this.name = "LevelClearScreen";
+    }
+
+    renderAll(context) {
+        super.renderAll(context);
+        this.renderBackground(context);
+        this.renderText(context);
+    }
+
+    renderBackground(context) {
+
+    }
+
+    renderText(context) {
+
+    }
+}
+
 class NextLevelView extends View {
     constructor() {
         super();
@@ -130,10 +151,9 @@ class StartScreenView extends View { // subclass of View
         context.fillStyle = 'rgba(255, 255, 255, 1)';
         context.textAlign = 'center';
         context.fillText(text, document.documentElement.clientWidth / 2, 
-                         document.documentElement.clientHeight*0.6);
+                         document.documentElement.clientHeight * 0.6);
         
         for (let i = 0; i < gameText.instructions.length; i++) {
-            
             text = gameText.instructions[i];
             context.fillText(text, document.documentElement.clientWidth / 2, 
                          document.documentElement.clientHeight * 0.6 + (margin * (i + 1)));
@@ -177,37 +197,6 @@ class StartScreenView extends View { // subclass of View
 
     create() {
         return new StartScreenView();
-    }
-}
-
-class LevelView extends View {
-    constructor() {
-        super();
-        this.name = "LevelView";
-    }
-
-    renderAll(context) {
-        super.renderAll(context);
-        this.renderBackground(context);
-        this.renderLv1(context);
-
-    }
-
-    renderBackground(context) {
-        context.fillStyle = 'rgba(0, 0, 0, 0.4)';
-        context.fillRect(0, 0, document.documentElement.clientWidth, 
-            document.documentElement.clientHeight);
-    }
-
-    renderLv1(context) {
-        context.fillStyle = 'rgba(255, 255, 255, 1)'
-        let imgWidth = document.documentElement.clientWidth / 10
-        let imgHeight = document.documentElement.clientHeight / 6 
-        let x0 = document.documentElement.clientWidth *1 / 7 - imgWidth*1 / 7
-        let y0 = document.documentElement.clientHeight * 0.1
-        context.fillRect(x0, y0, imgWidth, imgHeight)
-        context.fillStyle = 'rgba(0, 0, 0, 1)'
-        context.fillText('1', x0, y0)
     }
 }
 

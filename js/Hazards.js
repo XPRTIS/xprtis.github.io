@@ -34,6 +34,12 @@ class Hazard {
         hazardImage.src = this.imgUrl;
         context.drawImage(hazardImage, this.x, this.y, this.w, this.h);
     }
+
+    playCollisionAudio() {
+        if (typeof this.audio !== "undefined") {
+            audioManager.playSound(this.audio);
+        }
+    }
 }
 
 class DirtyHand extends Hazard {
@@ -73,6 +79,7 @@ class Food extends Hazard {
         let points = 0;
         let healthLoss = -1 * 5;
         super(x, y, w, h, dx, dy, imgUrl, points, healthLoss);
+        this.audio = "salad";
     }
 
     disable() {
@@ -105,6 +112,7 @@ class Smoke extends Hazard {
         let points = 0;
         let healthLoss = 5;
         super(x, y, w, h, dx, dy, imgUrl, points, healthLoss);
+        this.audio = "cough";
     }
 }
 

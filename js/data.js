@@ -25,6 +25,7 @@ function addToScore(points) {
     }
 
     if (isLevelOver()) {
+        audioManager.playSound("level_clear");
         if (levelInfo.lastLevel) {
             stateStack.push(new GameOverView());
         } else {
@@ -93,11 +94,8 @@ function checkAllCollisions(bullets, hazards) {
                 // In the case of food being hit, disable the effects so it 
                 // doesn't give any points for removal but don't remove it.
                 if (hazard instanceof Food) {
-                    console.log("hit food");
                     hazard.disable();
                     shouldRemove = false;
-                } else {
-                    console.log(hazard instanceof Food);
                 }
 
                 if (shouldRemove) {
@@ -118,6 +116,7 @@ function checkAllCollisions(bullets, hazards) {
             hazardRemoveList.push(hazard);
             mainCharacter.health -= hazard.healthLoss;
             if (mainCharacter.health > 100) mainCharacter.health = 100;
+            hazard.playCollisionAudio();
         }
     }
 
@@ -195,7 +194,7 @@ function moveHazards() {
 
 function spawnSource() {
     // Limit how many sources are spawned at a given point:
-    if (sources.length > 5) return;
+    if (sources.length >= 5) return;
 
     if (levelInfo.availableSources.length > 0) {
         var sourceName = levelInfo.availableSources.randomElement();
