@@ -31,7 +31,7 @@ function addToScore(points) {
         } else {
             level += 1;
             levelInfo = getLevelInfo(level);
-            stateStack.push(new NextLevelView());
+            stateStack.push(new LevelClearView());
             mainCharacter.score = 0;
             mainCharacter.health = 100;
             hazards = [];

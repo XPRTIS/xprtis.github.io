@@ -311,7 +311,8 @@ function handleButtonClicks(x, y) {
         }
     } else if (currentState.name === "NextLevelView") {
         stateStack.pop();
-    } else if (currentState.name === "LevelClearScreen") {
+        stateStack.pop();
+    } else if (currentState.name === "LevelClearView") {
         stateStack.push(new NextLevelView());
     }
 

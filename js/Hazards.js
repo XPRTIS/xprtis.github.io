@@ -88,7 +88,7 @@ class Food extends Hazard {
         // health it has no effect. We change the imgUrl so that the player
         // can tell it's no longer "edible."
         this.healthLoss = 0;
-        this.imgUrl = 'assets/food.png'; // TODO: change to a different picture.
+        this.imgUrl = 'assets/food_bad.png'; // TODO: change to a different picture.
     }
 }
 

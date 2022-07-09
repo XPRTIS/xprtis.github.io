@@ -10,27 +10,6 @@ class View {
     renderAll(context) {}
 }
 
-class LevelClearScreen extends View {
-    constructor() {
-        super();
-        this.name = "LevelClearScreen";
-    }
-
-    renderAll(context) {
-        super.renderAll(context);
-        this.renderBackground(context);
-        this.renderText(context);
-    }
-
-    renderBackground(context) {
-
-    }
-
-    renderText(context) {
-
-    }
-}
-
 class NextLevelView extends View {
     constructor() {
         super();
@@ -429,6 +408,7 @@ class PauseView extends GameView {
         for (var button of this.buttons) {
             button.fn = null;
         }
+
         this.buttons.push(new Button(x, y, w, h, buttonColor, textColor, 
             fontName, fontSize, text, true, () => {
                 stateStack.pop();
@@ -477,38 +457,6 @@ class PauseView extends GameView {
     }
 }
 
-function partitionScript(script, context) {
-    context.save();
-    if (typeof script === 'undefined') {
-        console.error("Error found: script text is undefined.");
-        return;
-    }
-
-    let maxWidth = document.documentElement.clientWidth / 2;
-    var words = script.split(" ");
-    var allLines = [];
-    var currentLine = words[0];
-    context.font = '20px Helvetica';
-
-    for (var i = 1; i < words.length; i++) {
-        var word = words[i];
-        var width = context.measureText(currentLine + " " + word).width;
-        if (width < maxWidth) {
-            currentLine += " " + word;
-        } else {
-            allLines.push(currentLine);
-            currentLine = word;
-        }
-    }
-    allLines.push(currentLine);
-    context.restore();
-
-    // height of the first line, but they should all be the same
-    let textMetrics = context.measureText(currentLine[0]);
-    let h = textMetrics.actualBoundingBoxAscent + textMetrics.actualBoundingBoxDescent;
-    return {lines: allLines, height: h}
-}
-
 class PortraitView extends View {
     constructor() {
         super();
@@ -550,6 +498,75 @@ class PortraitView extends View {
         }        
         context.restore();
 
+    }
+}
+
+class LevelClearView extends GameView {
+    constructor() {
+        super();
+        this.name = "LevelClearView";
+        // Don't let buttons work while paused:
+        for (var button of this.buttons) {
+            button.fn = null;
+        }
+    }
+
+    renderAll(context) {
+        super.renderAll(context);
+        this.renderGameButtons(context);
+        this.renderBackgroundBlur(context);
+        this.renderRectangle(context);
+        this.renderText(context);
+    }
+
+    renderGameButtons(context) {
+        for (let i = 0; i < this.buttons.length; i++) {
+            // Game buttons have no functionality, i.e. no function:
+            if (this.buttons[i].fn === null) {
+                this.buttons[i].draw(context);
+            }
+        }
+    }
+
+    renderBackgroundBlur(context) {
+        context.fillStyle = 'rgba(0, 0, 0, .5)';
+        context.fillRect(0, 0, document.documentElement.clientWidth, 
+            document.documentElement.clientHeight);
+    }
+
+    renderRectangle(context) {
+        context.save();
+        context.shadowColor = "#000000";
+        context.shadowBlur = 10;
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0;
+        context.fillStyle = '#FFFFFF';
+        let w = document.documentElement.clientWidth;
+        let h = document.documentElement.clientHeight;
+        context.fillRect(w * 0.2, h * 0.2, w * 0.6, h * 0.6);
+        context.restore();
+
+    }
+
+    renderText(context) {
+        context.save();
+        let text = gameText.congrats_text_next_level;
+        context.font = "600 32px Anek\ Malayalam";
+        context.fillStyle = '#000000';
+        context.textAlign = 'center';
+        context.fillText(text, document.documentElement.clientWidth / 2, 
+                         document.documentElement.clientHeight * 0.40);
+
+        context.font = "300 24px Anek\ Malayalam";
+        text = gameText.level_clear_text;
+        context.fillText(text, document.documentElement.clientWidth / 2, 
+                         document.documentElement.clientHeight * 0.50)
+
+        context.font = "300 16px Anek\ Malayalam";
+        text = gameText.next_level_text;
+        context.fillText(text, document.documentElement.clientWidth / 2, 
+                         document.documentElement.clientHeight * 0.70)
+        context.restore();
     }
 }
 
@@ -612,4 +629,36 @@ class Button {
 
         return false;
     }
+}
+
+function partitionScript(script, context) {
+    context.save();
+    if (typeof script === 'undefined') {
+        console.error("Error found: script text is undefined.");
+        return;
+    }
+
+    let maxWidth = document.documentElement.clientWidth / 2;
+    var words = script.split(" ");
+    var allLines = [];
+    var currentLine = words[0];
+    context.font = '20px Helvetica';
+
+    for (var i = 1; i < words.length; i++) {
+        var word = words[i];
+        var width = context.measureText(currentLine + " " + word).width;
+        if (width < maxWidth) {
+            currentLine += " " + word;
+        } else {
+            allLines.push(currentLine);
+            currentLine = word;
+        }
+    }
+    allLines.push(currentLine);
+    context.restore();
+
+    // height of the first line, but they should all be the same
+    let textMetrics = context.measureText(currentLine[0]);
+    let h = textMetrics.actualBoundingBoxAscent + textMetrics.actualBoundingBoxDescent;
+    return {lines: allLines, height: h}
 }

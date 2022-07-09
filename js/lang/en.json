@@ -29,5 +29,6 @@
     "try_again_text": "Oh no! Health dropped to 0.",
     "level_text": "Level",
     "title": "Hygiene Heroes",
-    "rotate_phone_text": "Please rotate your phone to continue playing..."
+    "rotate_phone_text": "Please rotate your phone to continue playing...",
+    "level_clear_text": "You cleared this level!"
 }
