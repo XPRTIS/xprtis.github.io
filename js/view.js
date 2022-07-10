@@ -97,7 +97,7 @@ class StartScreenView extends View { // subclass of View
         }
 
         this.bgImage = new Image();
-        this.bgImage.src = 'assets/bg.png';
+        this.bgImage.src = 'assets/village_bg.jpg';
     }
 
     renderAll(context) {
