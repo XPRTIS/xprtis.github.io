@@ -21,7 +21,7 @@ var languageMap = {
 }
 var gameText;
 var BULLET_DELAY = 1; // Delay for how often you can fire bullets, in seconds.
-var KEEP_AUDIO_OFF = false; // Debug variable for keeping audio always off.
+var KEEP_AUDIO_OFF = true; // Debug variable for keeping audio always off.
 var audioManager = new AudioManager();
 
 // Adds a new method to all arrays (arr.randomElement()) to return a random

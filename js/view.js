@@ -358,11 +358,25 @@ class GameView extends View {
         context.restore();
     }
 
-    // TODO: Make into health bar.
     renderHealth(context) {
-        // Draw health:
-        let text = gameText.health_text + ": " + mainCharacter.health;
+        let text = gameText.health_text + ": ";
         context.font = "300 16px Anek\ Malayalam";
+        let metrics = context.measureText(text);
+        let textWidth = metrics.width;
+        let textHeight = metrics.actualBoundingBoxAscent + 
+                         metrics.actualBoundingBoxDescent;
+        // Draw health bar:
+        let x = 0.1 * document.documentElement.clientWidth + textWidth;
+        let y = 65;
+        let width = 75; 
+        let height = textHeight;
+        context.fillStyle = 'rgba(255, 255, 255, 1)';
+        context.fillRect(x, y, width, height);
+
+        context.fillStyle = 'rgba(255, 0, 0, 1)';
+        context.fillRect(x, y, width * (mainCharacter.health / 100), height);
+
+        // Draw health:
         context.save();
         context.shadowColor = "#000";
         context.shadowBlur = 3;
