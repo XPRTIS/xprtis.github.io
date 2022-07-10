@@ -9,11 +9,12 @@ var hazards = [];
 var bullets = [];
 var sources = [];
 
+var antagonist = new Antagonist();
 let imageUrl = 'assets/walking_girl_spritesheet.png';
 let spriteImage = new Image();
 spriteImage.src = imageUrl;
 var mainCharacter = new MainCharacter(spriteImage);
-var antagonist = new Antagonist();
+
 
 function addToScore(points) {
     if (points < 0 && mainCharacter.score + points >= 0) {
@@ -26,8 +27,10 @@ function addToScore(points) {
 
     if (isLevelOver()) {
         audioManager.playSound("level_clear");
+        mainCharacter.finalScore += mainCharacter.score;
         if (levelInfo.lastLevel) {
             stateStack.push(new GameOverView());
+            antagonist.gameWon();
         } else {
             level += 1;
             levelInfo = getLevelInfo(level);
@@ -122,6 +125,7 @@ function checkAllCollisions(bullets, hazards) {
 
     if (mainCharacter.health <= 0) {
         stateStack.push(new GameOverView);
+        antagonist.gameLost();
     }
 
     return { bulletRemoveList: bulletRemoveList, 

@@ -12,6 +12,7 @@ class MainCharacter {
         this.score = 0;
         this.health = 100;
         this.items = [];
+        this.finalScore = 0;
     }
 
     moveCharacter(dir) {

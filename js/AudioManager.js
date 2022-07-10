@@ -41,17 +41,14 @@ class AudioManager {
         this.muted = !this.muted;
         if (this.muted) {
             for (const soundName in this.audioMapping) {
-                var sound = this.audioMapping[soundName];
-                if (sound.isBackgroundMusic && sound.audioEnabled) {
-                    // Disables music if the background music is playing:
-                    sound.enableOrDisableMusic();
-                }
+                this.audioMapping[soundName].pauseSound();
             }
         } else {
             for (const soundName in this.audioMapping) {
                 var sound = this.audioMapping[soundName];
+                // Enables music if the background music was paused, but
+                // don't enable other sounds until they're invoked:
                 if (sound.isBackgroundMusic && !sound.audioEnabled) {
-                    // Enables music if the background music was paused:
                     sound.enableOrDisableMusic();
                 }
             }
@@ -86,5 +83,13 @@ class Sound {
         } else {
             this.audioElement.play();
         }
+    }
+
+    pauseSound() {
+        if (this.isBackgroundMusic) {
+            this.audioEnabled = false;
+        }
+
+        this.audioElement.pause();
     }
 }

@@ -14,25 +14,24 @@ class NextLevelView extends View {
     constructor() {
         super();
         this.name = "NextLevelView";
+        this.bgImage = new Image();
+        // Image credit: https://www.freepik.com/vectors/slum
+        this.bgImage.src = 'assets/village_bg.jpg';
     }
 
     renderAll(context) {
         super.renderAll(context);
         this.renderBackground(context);
         // TO DO: Uncomment once antagonist asset is supplied:
-        // this.renderAntagonist(context);
-        this.renderText(context);
+        this.renderAntagonist(context);
         this.renderScript(context);
         this.renderNextLevelText(context);
     }
 
     renderBackground(context) {
-        // Image credit: https://www.freepik.com/vectors/slum
-        var bgImage = new Image();
-        bgImage.src = 'assets/village_bg.jpg';
         let bgWidth = document.documentElement.clientWidth;
         let bgHeight = document.documentElement.clientHeight;
-        context.drawImage(bgImage, 0, 0, bgWidth, bgHeight);
+        context.drawImage(this.bgImage, 0, 0, bgWidth, bgHeight);
 
         context.save();
         context.fillStyle = 'rgba(0, 0, 0, 0.3)';
@@ -42,33 +41,21 @@ class NextLevelView extends View {
     }
 
     renderAntagonist(context) {
-        let x = document.documentElement.clientWidth / 4;
+        let x = document.documentElement.clientWidth / 5;
         let y = document.documentElement.clientHeight / 2 - (antagonist.h / 2);
-        antagonist.draw(x, y, context);
-    }
-
-    renderText(context) {
-        context.save();
-        let text = gameText.congrats_text_next_level;
-        var textWidth = context.measureText(text).width;
-        context.font = "24px Helvetica bold";
-        context.fillStyle = 'rgba(255, 255, 255, 1)';
-        context.textAlign = 'center';
-        context.fillText(text, document.documentElement.clientWidth / 2, 
-                         document.documentElement.clientHeight * 0.35);
-        context.restore();
+        antagonist.draw(context, x, y);
     }
 
     renderScript(context) {
         let scriptText = gameText.villian_scripts[level - 1];
         let partitionedScript = partitionScript(scriptText, context);
         if (partitionedScript != undefined && partitionedScript.lines.length > 0) {
-            context.font = "12px Helvetica bold";
+            context.font = "600 20px Anek\ Malayalam";
             context.fillStyle = 'rgba(255, 255, 255, 1)';
-            let x = document.documentElement.clientWidth / 2 - 
+            let x = document.documentElement.clientWidth * 0.64 - 
                     context.measureText(partitionedScript.lines[0]).width / 2;
             let y = document.documentElement.clientHeight * 0.45;
-            let margin = 5;
+            let margin = 15;
             for (let i = 0; i < partitionedScript.lines.length; i++) {
                 context.fillText(partitionedScript.lines[i], x, y)
                 y += partitionedScript.height + margin;
@@ -81,7 +68,7 @@ class NextLevelView extends View {
         var textWidth = context.measureText(text).width;
         context.font = "12px Helvetica";
         context.fillStyle = 'rgba(255, 255, 255, 1)';
-        context.fillText(text, document.documentElement.clientWidth / 2 - textWidth / 2, 
+        context.fillText(text, document.documentElement.clientWidth * 0.64 - textWidth / 2, 
                          document.documentElement.clientHeight * 0.75);
     }
 }
@@ -108,6 +95,9 @@ class StartScreenView extends View { // subclass of View
                     setGameLanguageAndReload(supportedLanguages[i]);
                 }));
         }
+
+        this.bgImage = new Image();
+        this.bgImage.src = 'assets/bg.png';
     }
 
     renderAll(context) {
@@ -141,11 +131,9 @@ class StartScreenView extends View { // subclass of View
     }
 
     renderBackground(context) {
-        var bgImage = new Image();
-        bgImage.src = 'assets/bg.png';
         let bgWidth = document.documentElement.clientWidth;
         let bgHeight = document.documentElement.clientHeight;
-        context.drawImage(bgImage, 0, 0, bgWidth, bgHeight);
+        context.drawImage(this.bgImage, 0, 0, bgWidth, bgHeight);
     }
 
     renderTitle(context) {
@@ -205,11 +193,13 @@ class GameOverView extends View {
             this.renderTryAgainText(context);
         this.renderRestartGameButton(context);
         this.renderScore(context);
+        this.renderAntagonist(context);
         this.renderLeaderboard(context);
     }
 
     renderTryAgainText(context) {
         context.fillStyle = 'rgba(0, 0, 0, 1)';
+        context.font = "600 32px Anek\ Malayalam";
         let text = gameText.try_again_text;
         let x = document.documentElement.clientWidth / 2;
         let y = document.documentElement.clientHeight * 0.3;
@@ -223,20 +213,20 @@ class GameOverView extends View {
 
     renderCongratsText(context) {
         context.fillStyle = 'rgba(0, 0, 0, 1)';
+        context.font = "600 32px Anek\ Malayalam";
         let text = gameText.congrats_text;
-        let x = document.documentElement.clientWidth / 2;
-        let y = document.documentElement.clientHeight * 0.3;
+        let x = document.documentElement.clientWidth * 0.4;
+        let y = document.documentElement.clientHeight * 0.35;
         let metrics = context.measureText(text);
-        let textWidth = metrics.width;
         let textHeight = metrics.actualBoundingBoxAscent + 
                          metrics.actualBoundingBoxDescent;
 
-        context.fillText(text, x - textWidth / 2, y + textHeight / 2);
+        context.fillText(text, x, y + textHeight / 2);
     }
 
     renderBackground(context) {
         if (this.gameWon) {
-            context.fillStyle = '#98BF64';
+            context.fillStyle = '#ddd';
         } else {
             context.fillStyle = '#909090';
         }
@@ -251,20 +241,25 @@ class GameOverView extends View {
     }
 
     renderScore(context) {
-        let text = gameText.final_score_text + ": " + mainCharacter.score;
-        let x = document.documentElement.clientWidth * 0.5;
+        let text = gameText.final_score_text + ": " + mainCharacter.finalScore;
+        let x = document.documentElement.clientWidth * 0.4;
         let y = document.documentElement.clientHeight * 0.5;
 
-        context.font = "32px Helvetica";
+        context.font = "600 32px Anek\ Malayalam";
         context.fillStyle = "rgba(0, 0, 0, 1)";
         let metrics = context.measureText(text);
-        let textWidth = metrics.width;
         let textHeight = metrics.actualBoundingBoxAscent + 
                          metrics.actualBoundingBoxDescent;
-        context.fillText(text, x - textWidth / 2, y + textHeight / 2);
+        context.fillText(text, x, y + textHeight / 2);
     }
 
-    // TODO: Render some sort of leaderboard. 
+    renderAntagonist(context) {
+        let x = document.documentElement.clientWidth / 6;
+        let y = document.documentElement.clientHeight / 2 - (antagonist.h / 2);
+        antagonist.draw(context, x, y);
+    }
+
+    // TODO: Render some sort of leaderboard if needed. 
     renderLeaderboard(context) {}
 
 }
@@ -309,6 +304,8 @@ class GameView extends View {
             });
         
         this.buttons = [upButton, downButton, shootButton, pauseButton];
+        this.bgImage = new Image();
+        this.bgImage.src = 'assets/bg.png';
     }
 
     renderAll(context) {
@@ -325,11 +322,9 @@ class GameView extends View {
     }
 
     renderBackground(context) {
-        var bgImage = new Image();
-        bgImage.src = 'assets/bg.png';
         let bgWidth = document.documentElement.clientWidth;
         let bgHeight = document.documentElement.clientHeight;
-        context.drawImage(bgImage, 0, 0, bgWidth, bgHeight);
+        context.drawImage(this.bgImage, 0, 0, bgWidth, bgHeight);
     }
     
     renderCharacter(context) {
@@ -352,26 +347,44 @@ class GameView extends View {
 
     renderLevel(context) {
         let text = gameText.level_text + ": " + level;
-        context.font = "16px Times\ New\ Roman";
-        context.fillStyle = 'rgba(0, 0, 255, 1)';
-        context.fillText(text, 0.1 * document.documentElement.clientWidth, 35)
+        context.save();
+        context.font = "300 16px Anek\ Malayalam";
+        context.shadowColor = "#000";
+        context.shadowBlur = 3;
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0;
+        context.fillStyle = 'rgba(255, 255, 255, 1)';
+        context.fillText(text, 0.1 * document.documentElement.clientWidth, 35);
+        context.restore();
     }
 
     // TODO: Make into health bar.
     renderHealth(context) {
         // Draw health:
         let text = gameText.health_text + ": " + mainCharacter.health;
-        context.font = "16px Times\ New\ Roman";
-        context.fillStyle = 'rgba(0, 0, 255, 1)';
+        context.font = "300 16px Anek\ Malayalam";
+        context.save();
+        context.shadowColor = "#000";
+        context.shadowBlur = 3;
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0;
+        context.fillStyle = 'rgba(255, 255, 255, 1)';
         context.fillText(text, 0.1 * document.documentElement.clientWidth, 75);
+        context.restore();
     }
     
     renderScore(context) {        
         let text = gameText.score_text + ": " + mainCharacter.score + 
                    '/' + levelInfo.maxPoints;
-        context.font = "16px Times\ New\ Roman";
-        context.fillStyle = 'rgba(0, 0, 255, 1)';
+        context.save();
+        context.shadowColor = "#000";
+        context.shadowBlur = 3;
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0;
+        context.font = "300 16px Anek\ Malayalam";
+        context.fillStyle = 'rgba(255, 255, 255, 1)';
         context.fillText(text, 0.1 * document.documentElement.clientWidth, 55);
+        context.restore();
     }
     
     renderSources(context) {
@@ -460,7 +473,9 @@ class PauseView extends GameView {
 class PortraitView extends View {
     constructor() {
         super();
-        this.name = "PortraitView"
+        this.name = "PortraitView";
+        this.bgImage = new Image();
+        this.bgImage.src = 'assets/bg.png';
     }
 
     renderAll(context) {
@@ -470,11 +485,9 @@ class PortraitView extends View {
     }
 
     renderBackground(context) {
-        var bgImage = new Image();
-        bgImage.src = 'assets/bg.png';
         let bgWidth = document.documentElement.clientWidth;
         let bgHeight = document.documentElement.clientHeight;
-        context.drawImage(bgImage, 0, 0, bgHeight, bgHeight);
+        context.drawImage(this.bgImage, 0, 0, bgHeight, bgHeight);
     }
 
     renderMessage(context) {
@@ -642,7 +655,7 @@ function partitionScript(script, context) {
     var words = script.split(" ");
     var allLines = [];
     var currentLine = words[0];
-    context.font = '20px Helvetica';
+    context.font = '20px Anek\ Malayalam';
 
     for (var i = 1; i < words.length; i++) {
         var word = words[i];
