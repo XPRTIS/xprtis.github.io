@@ -42,6 +42,8 @@ function initCanvas() {
     // canvas.getContext exists first. This is also helpful if JavaScript is
     // disabled.
     if (canvas.getContext) {
+        const ratio = Math.ceil(window.devicePixelRatio);
+        console.log(ratio)
         var context = canvas.getContext('2d');
         var startScreen = new StartScreenView();
         stateStack.push(startScreen);
@@ -279,7 +281,12 @@ function handleButtonClicks(x, y) {
             currentState.buttons[i].wasClicked(x, y);
         }
 
-    } else if (currentState.name === "GameOverView") {
+    } 
+    else if(currentState.name === "LevelClearView")
+    {
+        currentState.nextLevelButton.wasClicked(x, y);
+    }
+    else if (currentState.name === "GameOverView") {
         for (let i = 0; i < currentState.buttons.length; i++) {
             let currentButton = currentState.buttons[i];
             if (currentButton.wasClicked(x, y)) {
@@ -291,7 +298,10 @@ function handleButtonClicks(x, y) {
             }
         }
 
-    } else if (currentState.name === "StartScreenView") {
+    } else if(currentState.name === "InstructionsView"){
+        currentState.closeButton.wasClicked(x, y);
+    }
+    else if (currentState.name === "StartScreenView") {
         var bgClicked = true;
         for (let i = 0; i < currentState.buttons.length; i++) {
             let currentButton = currentState.buttons[i];
@@ -299,26 +309,112 @@ function handleButtonClicks(x, y) {
             if (currentButton.wasClicked(x, y)) {
                 bgClicked = false;
             }
+            
+        }
+
+        currentState.instructionsButton.wasClicked(x, y);
+
+        this.characterImage1 = new Image();
+        this.characterImage2 = new Image();
+        this.characterImage3 = new Image();
+        this.characterImage4 = new Image();
+        this.characterImage1.src = 'assets/character1.png';
+        this.characterImage2.src = 'assets/character2.png';
+        this.characterImage3.src = 'assets/character3.png';
+        this.characterImage4.src = 'assets/character4.png';
+
+        if(x > (document.documentElement.clientWidth / 2) - ((this.characterImage1.width / 4 / 10) * 2) &&
+            x < (document.documentElement.clientWidth / 2) - ((this.characterImage1.width / 4 / 10) * 2) + (this.characterImage1.width / 5 / 10) &&
+            y > document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30) && 
+            y < (document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30)) + this.characterImage1.height / 10
+        )
+        {
+            changeToGameView('character1');
+        }
+        if(x > (document.documentElement.clientWidth / 2) - ((this.characterImage2.width / 4 / 10) * 1) &&
+            x < (document.documentElement.clientWidth / 2) - ((this.characterImage2.width / 4 / 10) * 1) + (this.characterImage2.width / 5 / 10) &&
+            y > document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30) && 
+            y < (document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30)) + this.characterImage2.height / 10
+        )
+        {
+            changeToGameView('character2');
+        }
+        if(x > (document.documentElement.clientWidth / 2) &&
+            x < (document.documentElement.clientWidth / 2) + (this.characterImage3.width / 5 / 10) &&
+            y > document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30) && 
+            y < (document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30)) + this.characterImage3.height / 10
+        )
+        {
+            changeToGameView('character3');
+        }
+        if(x > (document.documentElement.clientWidth / 2) + ((this.characterImage4.width / 4 / 10) * 1) &&
+            x < (document.documentElement.clientWidth / 2) + ((this.characterImage4.width / 4 / 10) * 1) + (this.characterImage4.width / 5 / 10) &&
+            y > document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30) && 
+            y < (document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30)) + this.characterImage4.height / 10
+        )
+        {
+            changeToGameView('character4');
         }
 
         // If something was tapped but it wasn't a different button, start
         // the game:
-        if (bgClicked) changeToGameView();
+        // if (bgClicked) 
 
     } else if (currentState.name === "GameView") {
         for (let i = 0; i < currentState.buttons.length; i++) {
             currentState.buttons[i].wasClicked(x, y);
         }
+        currentState.pauseButton.wasClicked(x, y);
     } else if (currentState.name === "NextLevelView") {
         stateStack.pop();
         stateStack.pop();
-    } else if (currentState.name === "LevelClearView") {
-        stateStack.push(new NextLevelView());
-    }
+        if(level == 2)
+        {
+            stateStack[stateStack.length - 1].changeBackground('assets/background3.png');
+        }
+        else if(level == 3)
+        {
+            stateStack[stateStack.length - 1].changeBackground('assets/background2.png');
+        }
+
+    } 
+    // else if (currentState.name === "LevelClearView") {
+    //     stateStack.push(new NextLevelView());
+    // }
 
 }
 
-function changeToGameView() {
+function changeToGameView(character) {
+    if(character == "character1")
+    {
+        let imageUrl = 'assets/character1.png';
+        let spriteImage = new Image();
+        spriteImage.src = imageUrl;
+        mainCharacter.changeImage(spriteImage, 200);
+    }
+    else if(character == "character2")
+    {
+        let imageUrl = 'assets/character2.png';
+        let spriteImage = new Image();
+        spriteImage.src = imageUrl;
+        mainCharacter.changeImage(spriteImage, 200);
+    }
+    else if(character == "character3")
+    {
+        let imageUrl = 'assets/character3.png';
+        let spriteImage = new Image();
+        spriteImage.src = imageUrl;
+        mainCharacter.changeImage(spriteImage, 250);
+    }
+    else if(character == "character4")
+    {
+        let imageUrl = 'assets/character4.png';
+        let spriteImage = new Image();
+        spriteImage.src = imageUrl;
+        mainCharacter.changeImage(spriteImage, 230);
+    }
+
+
     var gameView = new GameView();
     stateStack.push(gameView);
 

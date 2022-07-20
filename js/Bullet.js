@@ -5,7 +5,7 @@ class Bullet {
         this.x = mainCharacter.x;
         this.y = mainCharacter.y + mainCharacter.h / 2;
         this.dx = 10;
-        this.imageUrl = 'assets/soap.png';
+        this.imageUrl = 'assets/soap1.png';
         this.soapImage = new Image();
         this.soapImage.src = this.imageUrl;
     }

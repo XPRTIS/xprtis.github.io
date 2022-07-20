@@ -2,6 +2,20 @@
 
 // This is the main view. Only put rendering/updating code in here that will
 // persist throughout the entire experience.
+
+CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+    if (w < 2 * r) r = w / 2;
+    if (h < 2 * r) r = h / 2;
+    this.beginPath();
+    this.moveTo(x+r, y);
+    this.arcTo(x+w, y,   x+w, y+h, r);
+    this.arcTo(x+w, y+h, x,   y+h, r);
+    this.arcTo(x,   y+h, x,   y,   r);
+    this.arcTo(x,   y,   x+w, y,   r);
+    this.closePath();
+    return this;
+  }
+
 class View {
     constructor() {
         this.name = "View";
@@ -50,7 +64,7 @@ class NextLevelView extends View {
         let scriptText = gameText.villian_scripts[level - 1];
         let partitionedScript = partitionScript(scriptText, context);
         if (partitionedScript != undefined && partitionedScript.lines.length > 0) {
-            context.font = "600 20px Anek\ Malayalam";
+            context.font = "600 20px 'Roboto', sans-serif";
             context.fillStyle = 'rgba(255, 255, 255, 1)';
             let x = document.documentElement.clientWidth * 0.64 - 
                     context.measureText(partitionedScript.lines[0]).width / 2;
@@ -73,6 +87,333 @@ class NextLevelView extends View {
     }
 }
 
+class InstructionsView extends View {
+    constructor() {
+        super();
+        this.name = "InstructionsView";
+
+        let closeWidth;
+        let closeHeight;
+        let closeX;
+        let closeY;
+        let fontName;
+        if(document.documentElement.clientWidth > 1000)
+        {
+            closeWidth = 80;
+            closeHeight = 30;
+            closeX = document.documentElement.clientWidth - closeWidth - 10;
+            closeY = closeHeight + 10;
+            fontName = "'Roboto', sans-serif;";
+        }
+        else
+        {
+            closeWidth = 40;
+            closeHeight = 15;
+            closeX = document.documentElement.clientWidth - closeWidth - 10;
+            closeY = closeHeight + 10;
+            fontName = "'Roboto', sans-serif;";
+        }
+        this.closeButton = new Button(closeX, closeY, closeWidth, closeHeight, '#FFF', '#000', fontName, 20, "Close", true, () => {
+            stateStack.pop();
+        });
+
+
+        this.bgImage = new Image();
+        this.bgImage.src = 'assets/village_bg.jpg';
+    }
+
+    renderAll(context) {
+        super.renderAll(context);
+        this.renderBackground(context);
+        this.renderTitle(context);
+        this.renderInstructions(context);
+        this.renderButton(context);
+        // this.renderLanguageOptions(context);
+    }
+
+    renderBackground(context) {
+        let bgWidth = document.documentElement.clientWidth;
+        let bgHeight = document.documentElement.clientHeight;
+        context.drawImage(this.bgImage, 0, 0, bgWidth, bgHeight);
+    }
+
+    renderInstructions(context) {
+        context.save();
+        // let text = gameText.press_to_play_text;
+        // let margin = 20;
+        if(document.documentElement.clientWidth > 1000)
+        {
+            context.fillColor = 'rgba(0, 0, 0, 1)';
+            context.globalAlpha = 0.8;
+            /// get width of text
+            var width = document.documentElement.clientWidth * 0.50;
+            var height = document.documentElement.clientHeight * 0.50;
+            context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
+            document.documentElement.clientHeight * 0.35, width, height, 20).fill();
+            context.globalAlpha = 1;
+            let food1 = new Image();
+            let food2 = new Image();
+            let food3 = new Image();
+            food1.src = 'assets/food1.png';
+            food2.src = 'assets/food2.png';
+            food3.src = 'assets/food3.png';
+            context.drawImage(food1, (document.documentElement.clientWidth / 2) - width/2 + 10, 
+            document.documentElement.clientHeight * 0.35, 50, 50);
+            context.drawImage(food2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
+            document.documentElement.clientHeight * 0.35, 50, 50);
+            context.drawImage(food3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            document.documentElement.clientHeight * 0.35, 50, 50);
+
+            context.font = "500 15px 'Roboto', sans-serif";
+            context.fillStyle = '#FFF';
+            context.textAlign = 'left';
+            context.fillText("Eating food allows you to regain health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.35 + 30);
+
+            let rottenFood1 = new Image();
+            let rottenFood2 = new Image();
+            let rottenFood3 = new Image();
+            rottenFood1.src = 'assets/food1-rotten.png';
+            rottenFood2.src = 'assets/food2-rotten.png';
+            rottenFood3.src = 'assets/food3-rotten.png';
+            context.drawImage(rottenFood1, (document.documentElement.clientWidth / 2) - width/2 + 10, 
+            document.documentElement.clientHeight * 0.35 + 60, 50, 50);
+            context.drawImage(rottenFood2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
+            document.documentElement.clientHeight * 0.35 + 60, 50, 50);
+            context.drawImage(rottenFood3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            document.documentElement.clientHeight * 0.35 + 60, 50, 50);
+
+            context.font = "500 15px 'Roboto', sans-serif";
+            context.fillStyle = '#FFF';
+            context.fillText("If you accidently shoot food, it will become rotten.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.35 + 80);
+            context.fillText("If you eat rotten food, you will lose health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.35 + 100);
+
+            let stove = new Image();
+            let smoke = new Image();
+            stove.src = 'assets/stove.png';
+            smoke.src = 'assets/smoke.png';
+            context.drawImage(stove, (document.documentElement.clientWidth / 2) - width/2 + 10, 
+            document.documentElement.clientHeight * 0.35 + 120, 50, 50);
+            context.drawImage(smoke, (document.documentElement.clientWidth / 2) - width/2 + 60, 
+            document.documentElement.clientHeight * 0.35 + 120, 50, 50);
+
+            context.fillText("Fire causes smoke, and getting hit by smoke will make you lose health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.35 + 150);
+            context.fillText("Smoke cannot be hit by soap.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.35 + 170);
+
+            let hand1 = new Image();
+            let hand2 = new Image();
+            let hand3 = new Image();
+            hand1.src = "assets/hand1.png";
+            hand2.src = "assets/hand2.png";
+            hand3.src = "assets/hand3.png";
+            context.drawImage(hand1, (document.documentElement.clientWidth / 2) - width/2 + 10, 
+            document.documentElement.clientHeight * 0.35 + 180, 50, 50);
+            context.drawImage(hand2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
+            document.documentElement.clientHeight * 0.35 + 180, 50, 50);
+            context.drawImage(hand3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            document.documentElement.clientHeight * 0.35 + 180, 50, 50);
+
+            context.fillText("Getting hit by a hand will make you lose health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.35 + 200);
+            context.fillText("The more germs on a hand, the more times you need to hit the hand.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.35 + 220);
+
+            let germ1 = new Image();
+            let germ2 = new Image();
+            let germ3 = new Image();
+            let germ4 = new Image();
+            germ1.src = "assets/germ1.png";
+            germ2.src = "assets/germ2.png";
+            germ3.src = "assets/germ3.png";
+            germ4.src = "assets/germ4.png";
+
+            context.drawImage(germ1, (document.documentElement.clientWidth / 2) - width/2 + 10, 
+            document.documentElement.clientHeight * 0.35 + 240, 50, 50);
+            context.drawImage(germ2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
+            document.documentElement.clientHeight * 0.35 + 240, 50, 50);
+            context.drawImage(germ3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            document.documentElement.clientHeight * 0.35 + 240, 50, 50);
+            context.drawImage(germ4, (document.documentElement.clientWidth / 2) - width/2+ 160, 
+            document.documentElement.clientHeight * 0.35 + 240, 50, 50);
+            context.fillText("Getting by germs also makes you lose health.", (document.documentElement.clientWidth / 2) - width/2 + 230, 
+            document.documentElement.clientHeight * 0.35 + 260);
+            context.fillText("One hit by soap will kill a germ.", (document.documentElement.clientWidth / 2) - width/2 + 230, 
+            document.documentElement.clientHeight * 0.35 + 280);
+                        
+        }
+        else
+        {
+            context.fillColor = 'rgba(0, 0, 0, 1)';
+            context.globalAlpha = 0.8;
+            /// get width of text
+            var width = document.documentElement.clientWidth * 0.90;
+            var height = document.documentElement.clientHeight * 0.80;
+            context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
+            document.documentElement.clientHeight * 0.15, width, height, 20).fill();
+            context.globalAlpha = 1;
+            let food1 = new Image();
+            let food2 = new Image();
+            let food3 = new Image();
+            food1.src = 'assets/food1.png';
+            food2.src = 'assets/food2.png';
+            food3.src = 'assets/food3.png';
+            context.drawImage(food1, (document.documentElement.clientWidth / 2) - width/2 + 10, 
+            document.documentElement.clientHeight * 0.15, 50, 50);
+            context.drawImage(food2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
+            document.documentElement.clientHeight * 0.15, 50, 50);
+            context.drawImage(food3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            document.documentElement.clientHeight * 0.15, 50, 50);
+    
+            context.font = "500 12px 'Roboto', sans-serif";
+            context.fillStyle = '#FFF';
+            context.textAlign = 'left';
+            context.fillText("Eating food allows you to regain health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.15 + 30);
+    
+            let rottenFood1 = new Image();
+            let rottenFood2 = new Image();
+            let rottenFood3 = new Image();
+            rottenFood1.src = 'assets/food1-rotten.png';
+            rottenFood2.src = 'assets/food2-rotten.png';
+            rottenFood3.src = 'assets/food3-rotten.png';
+            context.drawImage(rottenFood1, (document.documentElement.clientWidth / 2) - width/2 + 10, 
+            document.documentElement.clientHeight * 0.15 + 60, 50, 50);
+            context.drawImage(rottenFood2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
+            document.documentElement.clientHeight * 0.15 + 60, 50, 50);
+            context.drawImage(rottenFood3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            document.documentElement.clientHeight * 0.15 + 60, 50, 50);
+    
+            context.font = "500 12px 'Roboto', sans-serif";
+            context.fillStyle = '#FFF';
+            context.fillText("If you accidently shoot food, it will become rotten.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.15 + 80);
+            context.fillText("If you eat rotten food, you will lose health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.15 + 100);
+    
+            let stove = new Image();
+            let smoke = new Image();
+            stove.src = 'assets/stove.png';
+            smoke.src = 'assets/smoke.png';
+            context.drawImage(stove, (document.documentElement.clientWidth / 2) - width/2 + 10, 
+            document.documentElement.clientHeight * 0.15 + 120, 50, 50);
+            context.drawImage(smoke, (document.documentElement.clientWidth / 2) - width/2 + 60, 
+            document.documentElement.clientHeight * 0.15 + 120, 50, 50);
+    
+            context.fillText("Fire causes smoke, and getting hit by smoke will make you lose health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.15 + 150);
+            context.fillText("Smoke cannot be hit by soap.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.15 + 170);
+    
+            let hand1 = new Image();
+            let hand2 = new Image();
+            let hand3 = new Image();
+            hand1.src = "assets/hand1.png";
+            hand2.src = "assets/hand2.png";
+            hand3.src = "assets/hand3.png";
+            context.drawImage(hand1, (document.documentElement.clientWidth / 2) - width/2 + 10, 
+            document.documentElement.clientHeight * 0.15 + 180, 50, 50);
+            context.drawImage(hand2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
+            document.documentElement.clientHeight * 0.15 + 180, 50, 50);
+            context.drawImage(hand3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            document.documentElement.clientHeight * 0.15 + 180, 50, 50);
+    
+            context.fillText("Getting hit by a hand will make you lose health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.15 + 200);
+            context.fillText("The more germs on a hand, the more times you need to hit the hand.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.15 + 220);
+    
+            let germ1 = new Image();
+            let germ2 = new Image();
+            let germ3 = new Image();
+            let germ4 = new Image();
+            germ1.src = "assets/germ1.png";
+            germ2.src = "assets/germ2.png";
+            germ3.src = "assets/germ3.png";
+            germ4.src = "assets/germ4.png";
+    
+            context.drawImage(germ1, (document.documentElement.clientWidth / 2) - width/2 + 10, 
+            document.documentElement.clientHeight * 0.15 + 240, 50, 50);
+            context.drawImage(germ2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
+            document.documentElement.clientHeight * 0.15 + 240, 50, 50);
+            context.drawImage(germ3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            document.documentElement.clientHeight * 0.15 + 240, 50, 50);
+            context.drawImage(germ4, (document.documentElement.clientWidth / 2) - width/2+ 160, 
+            document.documentElement.clientHeight * 0.15 + 240, 50, 50);
+            context.fillText("Getting by germs also makes you lose health.", (document.documentElement.clientWidth / 2) - width/2 + 230, 
+            document.documentElement.clientHeight * 0.15 + 260);
+            context.fillText("One hit by soap will kill a germ.", (document.documentElement.clientWidth / 2) - width/2 + 230, 
+            document.documentElement.clientHeight * 0.15 + 280);
+        }
+        // context.shadowColor = "#000";
+        // context.shadowBlur = 5;
+        // context.shadowOffsetX = 0;
+        // context.shadowOffsetY = 1;
+        // context.globalAlpha = 1;
+        // context.font = "500 17px 'Roboto', sans-serif";
+        // context.fillStyle = 'rgba(255, 255, 255, 1)';
+        // context.textAlign = 'center';
+        // context.fillText(text, document.documentElement.clientWidth / 2, 
+        //                  document.documentElement.clientHeight * 0.35 + 30);
+        
+        // context.font = "500 13px 'Roboto', sans-serif";
+        // for (let i = 0; i < gameText.instructions.length; i++) {
+        //     text = gameText.instructions[i];
+        //     context.fillText(text, document.documentElement.clientWidth / 2, 
+        //                  document.documentElement.clientHeight * 0.35 + (margin * (i + 1) + 30));
+        // }
+
+        context.restore();
+    }
+
+    renderTitle(context) {
+        context.save();
+        if(document.documentElement.clientWidth > 1000)
+        {
+            context.shadowColor = "#000";
+            context.shadowBlur = 4;
+            context.shadowOffsetX = 0;
+            context.shadowOffsetY = 3;
+            context.font = "900 64px 'Roboto', sans-serif";
+            context.fillStyle = "rgba(255, 255, 255, 1)";
+            context.textAlign = 'center';
+            context.fillText("Instructions", 
+                             document.documentElement.clientWidth / 2, 
+                             document.documentElement.clientHeight / 4);
+        }
+        else
+        {
+            context.shadowColor = "#000";
+            context.shadowBlur = 4;
+            context.shadowOffsetX = 0;
+            context.shadowOffsetY = 3;
+            context.font = "900 30px 'Roboto', sans-serif";
+            context.fillStyle = "rgba(255, 255, 255, 1)";
+            context.textAlign = 'center';
+            context.fillText("Instructions", 
+                             document.documentElement.clientWidth / 2, 
+                             document.documentElement.clientHeight / 8);
+        }
+
+        context.restore();
+    }
+
+    renderButton(context) {
+        context.save();
+
+        context.font = "700 15px 'Roboto', sans-serif";
+        context.textAlign = 'left';
+        if (this.closeButton.fn !== null) {
+            this.closeButton.draw(context);
+        }  
+        
+        context.restore();
+    }
+}
+
 class StartScreenView extends View { // subclass of View
     constructor() {
         super();
@@ -81,7 +422,7 @@ class StartScreenView extends View { // subclass of View
         let margin = 14;
         let w = document.documentElement.clientWidth * 0.075;
         let h = document.documentElement.clientHeight * 0.03;
-        let fontName = "Helvetica";
+        let fontName = "'Roboto', sans-serif;";
         let fontSize = 12;
         let buttonColor = "rgba(255, 255, 255, 1)";
         let textColor = "rgba(0, 0, 0, 1)";
@@ -96,6 +437,30 @@ class StartScreenView extends View { // subclass of View
                 }));
         }
 
+        let instructionsWidth;
+        let instructionsHeight;
+        let instructionsX;
+        let instructionsY;
+        if(document.documentElement.clientWidth > 1000)
+        {
+            instructionsWidth = 80;
+            instructionsHeight = 30;
+            instructionsX = document.documentElement.clientWidth - instructionsWidth - 10;
+            instructionsY = instructionsHeight + 10;
+            fontName = "'Roboto', sans-serif;";
+        }
+        else
+        {
+            instructionsWidth = 50;
+            instructionsHeight = 15;
+            instructionsX = document.documentElement.clientWidth - instructionsWidth - 10;
+            instructionsY = instructionsHeight + 10;
+            fontName = "'Roboto', sans-serif;";
+        }
+        this.instructionsButton = new Button(instructionsX, instructionsY, instructionsWidth, instructionsHeight, '#FFF', '#000', fontName, 20, "Game Elements", true, () => {
+            stateStack.push(new InstructionsView());
+        });
+
         this.bgImage = new Image();
         this.bgImage.src = 'assets/village_bg.jpg';
     }
@@ -105,30 +470,109 @@ class StartScreenView extends View { // subclass of View
         this.renderBackground(context);
         this.renderTitle(context);
         this.renderInstructions(context);
-        this.renderLanguageOptions(context);
+        this.renderCharacter(context);
+        // this.renderLanguageOptions(context);
+    }
+
+    renderCharacter(context) {
+        context.save();
+        this.characterImage1 = new Image();
+        this.characterImage2 = new Image();
+        this.characterImage3 = new Image();
+        this.characterImage4 = new Image();
+        this.characterImage1.src = 'assets/character1.png';
+        this.characterImage2.src = 'assets/character2.png';
+        this.characterImage3.src = 'assets/character3.png';
+        this.characterImage4.src = 'assets/character4.png';
+        context.drawImage(this.characterImage1, 
+            ((1 * this.characterImage1.width) / 5) + 200, 
+            0, 
+            this.characterImage1.width / 5, 
+            this.characterImage1.height, 
+            (document.documentElement.clientWidth / 2) - ((this.characterImage1.width / 4 / 10) * 2), 
+            document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30), 
+            this.characterImage1.width / 5 / 10, 
+            this.characterImage1.height / 10)
+        context.drawImage(this.characterImage2, 
+            ((1 * this.characterImage2.width) / 5) + 200, 
+            0, 
+            this.characterImage1.width / 5, 
+            this.characterImage1.height, 
+            (document.documentElement.clientWidth / 2) - ((this.characterImage1.width / 4 / 10) * 1), 
+            document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30), 
+            this.characterImage1.width / 5 / 10, 
+            this.characterImage1.height / 10)
+        context.drawImage(this.characterImage3, 
+            ((1 * this.characterImage3.width) / 5) + 250, 
+            0, 
+            this.characterImage1.width / 5, 
+            this.characterImage1.height, 
+            document.documentElement.clientWidth / 2, 
+            document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30), 
+            this.characterImage1.width / 5 / 10, 
+            this.characterImage1.height / 10)
+        context.drawImage(this.characterImage4, 
+            ((1 * this.characterImage4.width) / 5) + 200, 
+            0, 
+            this.characterImage1.width / 5, 
+            this.characterImage1.height, 
+            (document.documentElement.clientWidth / 2) + ((this.characterImage1.width / 4 / 10) * 1), 
+            document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30), 
+            this.characterImage1.width / 5 / 10, 
+            this.characterImage1.height / 10)
+        context.restore();
     }
 
     renderInstructions(context) {
         context.save();
         let text = gameText.press_to_play_text;
-        let margin = 15;
-        context.shadowColor = "#000";
-        context.shadowBlur = 5;
-        context.shadowOffsetX = 0;
-        context.shadowOffsetY = 1;
-        context.font = "12px Helvetica";
+        let margin = 20;
+        context.fillColor = 'rgba(0, 0, 0, 1)';
+        context.globalAlpha = 0.8;
+        /// get width of text
+        var width = 400;
+        context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
+        document.documentElement.clientHeight * 0.35, width, 230, 20).fill()
+        // context.shadowColor = "#000";
+        // context.shadowBlur = 5;
+        // context.shadowOffsetX = 0;
+        // context.shadowOffsetY = 1;
+        context.globalAlpha = 1;
+        context.font = "500 17px 'Roboto', sans-serif";
         context.fillStyle = 'rgba(255, 255, 255, 1)';
         context.textAlign = 'center';
         context.fillText(text, document.documentElement.clientWidth / 2, 
-                         document.documentElement.clientHeight * 0.6);
+                         document.documentElement.clientHeight * 0.35 + 30);
         
+        context.font = "500 13px 'Roboto', sans-serif";
         for (let i = 0; i < gameText.instructions.length; i++) {
             text = gameText.instructions[i];
             context.fillText(text, document.documentElement.clientWidth / 2, 
-                         document.documentElement.clientHeight * 0.6 + (margin * (i + 1)));
+                         document.documentElement.clientHeight * 0.35 + (margin * (i + 1) + 30));
         }
+
+
+        if(document.documentElement.clientWidth > 1000)
+        {
+            context.font = "700 15px 'Roboto', sans-serif";
+        }
+        else
+        {
+            context.font = "700 12px 'Roboto', sans-serif";
+        }
+        context.textAlign = 'left';
+        if (this.instructionsButton.fn !== null) {
+            this.instructionsButton.draw(context);
+        }  
+        
         context.restore();
     }
+
+    // renderInstructionsBackground(context) {
+    //     context.save();
+    //     context.fillRect(document.documentElement.clientWidth / 2, 
+    //     document.documentElement.clientHeight * 0.6, 100,)
+    // }
 
     renderBackground(context) {
         let bgWidth = document.documentElement.clientWidth;
@@ -142,12 +586,12 @@ class StartScreenView extends View { // subclass of View
         context.shadowBlur = 4;
         context.shadowOffsetX = 0;
         context.shadowOffsetY = 3;
-        context.font = "600 64px Anek\ Malayalam";
+        context.font = "900 64px 'Roboto', sans-serif";
         context.fillStyle = "rgba(255, 255, 255, 1)";
         context.textAlign = 'center';
         context.fillText(gameText.title, 
                          document.documentElement.clientWidth / 2, 
-                         document.documentElement.clientHeight / 2.5);
+                         document.documentElement.clientHeight / 4);
         context.restore();
     }
 
@@ -199,7 +643,7 @@ class GameOverView extends View {
 
     renderTryAgainText(context) {
         context.fillStyle = 'rgba(0, 0, 0, 1)';
-        context.font = "600 32px Anek\ Malayalam";
+        context.font = "600 32px 'Roboto', sans-serif";
         let text = gameText.try_again_text;
         let x = document.documentElement.clientWidth / 2;
         let y = document.documentElement.clientHeight * 0.3;
@@ -213,7 +657,7 @@ class GameOverView extends View {
 
     renderCongratsText(context) {
         context.fillStyle = 'rgba(0, 0, 0, 1)';
-        context.font = "600 32px Anek\ Malayalam";
+        context.font = "600 32px 'Roboto', sans-serif";
         let text = gameText.congrats_text;
         let x = document.documentElement.clientWidth * 0.4;
         let y = document.documentElement.clientHeight * 0.35;
@@ -245,7 +689,7 @@ class GameOverView extends View {
         let x = document.documentElement.clientWidth * 0.4;
         let y = document.documentElement.clientHeight * 0.5;
 
-        context.font = "600 32px Anek\ Malayalam";
+        context.font = "600 32px 'Roboto', sans-serif";
         context.fillStyle = "rgba(0, 0, 0, 1)";
         let metrics = context.measureText(text);
         let textHeight = metrics.actualBoundingBoxAscent + 
@@ -269,11 +713,11 @@ class GameView extends View {
         super();
         this.name = "GameView";
         
-        let x = document.documentElement.clientWidth * 0.75;
-        let y = document.documentElement.clientHeight * 0.75;
-        let w = 15;
-        let h = 15;
-        let fontName = "Helvetica";
+        let x = document.documentElement.clientWidth * 0.60;
+        let y = document.documentElement.clientHeight * 0.80;
+        let w = 30;
+        let h = 20;
+        let fontName = "'Roboto', sans-serif";
         let fontSize = 10;
         let buttonColor = "rgba(255, 255, 255, 1)";
         let textColor = "rgba(0, 0, 0, 1)";
@@ -283,12 +727,12 @@ class GameView extends View {
                 mainCharacter.moveCharacterUp()
             });
 
-        let downButton = new Button(x, y + 50, w, h, buttonColor, textColor,
+        let downButton = new Button(x + 140, y , w, h, buttonColor, textColor,
             fontName, fontSize, "Down", true, () => {
                 mainCharacter.moveCharacterDown();
             });
         
-        let shootButton = new Button (x + w + 40, y + 25, 2 * w, h + 25, 
+        let shootButton = new Button (x + 70, y, w, h + 20, 
             buttonColor, textColor, fontName, fontSize, "Shoot", true, () => {
                 shootBullet();
             });
@@ -298,14 +742,14 @@ class GameView extends View {
         w = 50;
         h = 15;
     
-        let pauseButton = new Button (x, y, w, h, buttonColor, textColor, 
+        this.pauseButton = new Button (x, y, w, h, buttonColor, textColor, 
             fontName, fontSize, "Pause", true, () => {
                 stateStack.push(new PauseView());
             });
         
-        this.buttons = [upButton, downButton, shootButton, pauseButton];
+        this.buttons = [upButton, downButton, shootButton];
         this.bgImage = new Image();
-        this.bgImage.src = 'assets/bg.png';
+        this.bgImage.src = 'assets/background1.png';
     }
 
     renderAll(context) {
@@ -348,7 +792,7 @@ class GameView extends View {
     renderLevel(context) {
         let text = gameText.level_text + ": " + level;
         context.save();
-        context.font = "300 16px Anek\ Malayalam";
+        context.font = "300 16px 'Roboto', sans-serif";
         context.shadowColor = "#000";
         context.shadowBlur = 3;
         context.shadowOffsetX = 0;
@@ -360,7 +804,7 @@ class GameView extends View {
 
     renderHealth(context) {
         let text = gameText.health_text + ": ";
-        context.font = "300 16px Anek\ Malayalam";
+        context.font = "300 16px 'Roboto', sans-serif";
         let metrics = context.measureText(text);
         let textWidth = metrics.width;
         let textHeight = metrics.actualBoundingBoxAscent + 
@@ -395,7 +839,7 @@ class GameView extends View {
         context.shadowBlur = 3;
         context.shadowOffsetX = 0;
         context.shadowOffsetY = 0;
-        context.font = "300 16px Anek\ Malayalam";
+        context.font = "300 16px 'Roboto', sans-serif";
         context.fillStyle = 'rgba(255, 255, 255, 1)';
         context.fillText(text, 0.1 * document.documentElement.clientWidth, 55);
         context.restore();
@@ -409,9 +853,17 @@ class GameView extends View {
     }
 
     renderButtons(context) {
-        for (let i = 0; i < this.buttons.length; i++) {
-            this.buttons[i].draw(context);
+        if(document.documentElement.clientWidth < 1000)
+        {
+            for (let i = 0; i < this.buttons.length; i++) {
+                this.buttons[i].draw(context);
+            }
         }
+        this.pauseButton.draw(context);
+    }
+
+    changeBackground(background) {
+        this.bgImage.src = background;
     }
 
 }
@@ -422,13 +874,13 @@ class PauseView extends GameView {
         this.name = "PauseView";
         // Restart
         let x = document.documentElement.clientWidth / 2;
-        let y = document.documentElement.clientHeight / 2;
-        let w = 40;
-        let h = 15;
-        let buttonColor = "rgba(255, 255, 255, 1)";
-        let textColor = "rgba(0, 0, 0, 1)";
-        let fontName = "Helvetica";
-        let fontSize = 12;
+        let y = document.documentElement.clientHeight * 0.35 + 110;
+        let w = 60;
+        let h = 20;
+        let buttonColor = "#3c4fff";
+        let textColor = "#fff";
+        let fontName = "'Roboto', sans-serif";
+        let fontSize = 20;
         let text = gameText.restart_text;
 
         // Don't let buttons work while paused:
@@ -445,7 +897,7 @@ class PauseView extends GameView {
             }));
 
         // Resume
-        y += 40;
+        y += 60;
         text = gameText.resume_text;
         this.buttons.push(new Button(x, y, w, h, buttonColor, textColor, 
             fontName, fontSize, text, true, () => { stateStack.pop(); }));
@@ -455,18 +907,8 @@ class PauseView extends GameView {
         super.renderAll(context);
         // First render buttons related to the game. Then apply the blur, and
         // lastly render the pause view buttons:
-        this.renderGameButtons(context);
         this.renderBackgroundBlur(context);
         this.renderButtons(context);
-    }
-
-    renderGameButtons(context) {
-        for (let i = 0; i < this.buttons.length; i++) {
-            // Game buttons have no functionality, i.e. no function:
-            if (this.buttons[i].fn === null) {
-                this.buttons[i].draw(context);
-            }
-        }
     }
 
     renderBackgroundBlur(context) {
@@ -476,11 +918,26 @@ class PauseView extends GameView {
     }
 
     renderButtons(context) {
+        context.save();
+        context.fillStyle = 'rgba(255, 255, 255, 1)';
+        context.globalAlpha = 1;
+        /// get width of text
+        var width = 400;
+        context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
+        document.documentElement.clientHeight * 0.35, width, 230, 20).fill();
+
         for (let i = 0; i < this.buttons.length; i++) {
             if (this.buttons[i].fn !== null) {
                 this.buttons[i].draw(context);
             }  
         }
+
+        context.font = "700 35px 'Roboto', sans-serif";
+        context.fillStyle = 'rgba(0, 0, 0, 1)';
+        context.textAlign = 'center';
+        context.fillText("Game Paused", document.documentElement.clientWidth / 2, 
+                         document.documentElement.clientHeight * 0.35 + 70);
+        context.restore();
     }
 }
 
@@ -536,6 +993,29 @@ class LevelClearView extends GameView {
         for (var button of this.buttons) {
             button.fn = null;
         }
+
+        let x = document.documentElement.clientWidth / 2;
+        let y = document.documentElement.clientHeight * 0.65;
+        let w = 200;
+        let h = 30;
+        let buttonColor = "#3c4fff";
+        let textColor = "#fff";
+        let fontName = "'Roboto', sans-serif";
+        let fontSize = 20;
+        let text = "Press here to go to next level.";
+
+        this.nextLevelButton = new Button(x, y, w, h, buttonColor, textColor, 
+            fontName, fontSize, text, true, () => {
+                stateStack.pop();
+                if(level == 2)
+                {
+                    stateStack[stateStack.length - 1].changeBackground('assets/background3.png');
+                }
+                else if(level == 3)
+                {
+                    stateStack[stateStack.length - 1].changeBackground('assets/background2.png');
+                }
+            })
     }
 
     renderAll(context) {
@@ -570,29 +1050,34 @@ class LevelClearView extends GameView {
         context.fillStyle = '#FFFFFF';
         let w = document.documentElement.clientWidth;
         let h = document.documentElement.clientHeight;
-        context.fillRect(w * 0.2, h * 0.2, w * 0.6, h * 0.6);
+        context.roundRect(w * 0.2, h * 0.2, w * 0.6, h * 0.6, 20);
+        context.clip();
+        let nextLevelImage = new Image();
+        nextLevelImage.src = "assets/village_bg.jpg";
+        context.drawImage(nextLevelImage, w * 0.2, h * 0.2, w * 0.6, h * 0.6);
         context.restore();
 
     }
 
     renderText(context) {
         context.save();
+        if (this.nextLevelButton.fn !== null) {
+            this.nextLevelButton.draw(context);
+        }  
+
         let text = gameText.congrats_text_next_level;
-        context.font = "600 32px Anek\ Malayalam";
-        context.fillStyle = '#000000';
+        context.font = "900 32px 'Roboto', sans-serif";
+        context.fillStyle = '#FFF';
         context.textAlign = 'center';
         context.fillText(text, document.documentElement.clientWidth / 2, 
                          document.documentElement.clientHeight * 0.40);
 
-        context.font = "300 24px Anek\ Malayalam";
-        text = gameText.level_clear_text;
+        context.font = "600 24px 'Roboto', sans-serif";
+        text = "You cleared this level!";
         context.fillText(text, document.documentElement.clientWidth / 2, 
                          document.documentElement.clientHeight * 0.50)
 
-        context.font = "300 16px Anek\ Malayalam";
-        text = gameText.next_level_text;
-        context.fillText(text, document.documentElement.clientWidth / 2, 
-                         document.documentElement.clientHeight * 0.70)
+
         context.restore();
     }
 }
@@ -624,8 +1109,11 @@ class Button {
             context.shadowOffsetX = 0;
             context.shadowOffsetY = 1;
         }
-        context.fillRect(this.x - this.w, this.y - this.h,
-                         this.w * 2, this.h * 2);
+
+        context.roundRect(this.x - this.w, this.y - this.h,
+            this.w * 2, this.h * 2, 10).fill()
+        // context.fillRect(this.x - this.w, this.y - this.h,
+        //                  this.w * 2, this.h * 2);
 
         if (this.hasShadow) context.restore();
         
@@ -669,7 +1157,7 @@ function partitionScript(script, context) {
     var words = script.split(" ");
     var allLines = [];
     var currentLine = words[0];
-    context.font = '20px Anek\ Malayalam';
+    context.font = "20px 'Roboto', sans-serif";
 
     for (var i = 1; i < words.length; i++) {
         var word = words[i];

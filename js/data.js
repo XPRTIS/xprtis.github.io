@@ -10,7 +10,7 @@ var bullets = [];
 var sources = [];
 
 var antagonist = new Antagonist();
-let imageUrl = 'assets/walking_girl_spritesheet.png';
+let imageUrl = 'assets/character1.png';
 let spriteImage = new Image();
 spriteImage.src = imageUrl;
 var mainCharacter = new MainCharacter(spriteImage);
@@ -102,11 +102,25 @@ function checkAllCollisions(bullets, hazards) {
                 }
 
                 if (shouldRemove) {
-                    hazardRemoveList.push(hazard);
+                    console.log(hazard.name)
+                    if(hazard.name === "Dirty Hand")
+                    {
+                        hazard.reduceHealth(10)
+                        console.log(hazard.hazardHealth)
+                        if(hazard.hazardHealth <= 0)
+                        {
+                            addToScore(hazard.points);
+                            hazardRemoveList.push(hazard);
+                        }
+                    }
+                    else if(hazard.name === "Germ")
+                    {
+                        addToScore(hazard.points);
+                        hazardRemoveList.push(hazard);
+                    }
                 }
 
                 bulletRemoveList.push(bullet);
-                addToScore(hazard.points);
                 break;
             }
         }
