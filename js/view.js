@@ -788,6 +788,7 @@ class GameOverView extends View {
     }
 
     renderTryAgainText(context) {
+        context.save();
         context.shadowColor = "#000";
         context.shadowBlur = 4;
         context.shadowOffsetX = 0;
@@ -804,9 +805,11 @@ class GameOverView extends View {
                          metrics.actualBoundingBoxDescent;
 
         context.fillText(text, x, y + textHeight / 2);
+        context.restore();
     }
 
     renderCongratsText(context) {
+        context.save();
         context.shadowColor = "#000";
         context.shadowBlur = 4;
         context.shadowOffsetX = 0;
@@ -822,6 +825,7 @@ class GameOverView extends View {
                          metrics.actualBoundingBoxDescent;
 
         context.fillText(text, x, y + textHeight / 2);
+        context.restore();
     }
 
     renderBackground(context) {
@@ -831,6 +835,7 @@ class GameOverView extends View {
     }
 
     renderRestartGameButton(context) {
+        context.save();
         context.shadowColor = "#000";
         context.shadowBlur = 0;
         context.shadowOffsetX = 0;
@@ -844,9 +849,11 @@ class GameOverView extends View {
         if (this.leaderboardButton.fn !== null) {
             this.leaderboardButton.draw(context);
         }  
+        context.restore();
     }
 
     renderScore(context) {
+        context.save();
         let text = gameText.final_score_text + ": " + mainCharacter.finalScore;
         let x = document.documentElement.clientWidth * 0.5;
         let y = document.documentElement.clientHeight * 0.5;
@@ -861,6 +868,7 @@ class GameOverView extends View {
         let textHeight = metrics.actualBoundingBoxAscent + 
                          metrics.actualBoundingBoxDescent;
         context.fillText(text, x, y + textHeight / 2);
+        context.restore();
     }
 
     renderAntagonist(context) {
@@ -980,6 +988,7 @@ class GameView extends View {
     }
 
     renderHealth(context) {
+        context.save();
         let text = gameText.health_text + ": ";
         context.font = "300 16px 'Roboto', sans-serif";
         let metrics = context.measureText(text);
@@ -998,7 +1007,6 @@ class GameView extends View {
         context.fillRect(x, y, width * (mainCharacter.health / 100), height);
 
         // Draw health:
-        context.save();
         context.shadowColor = "#000";
         context.shadowBlur = 3;
         context.shadowOffsetX = 0;
