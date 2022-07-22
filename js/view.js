@@ -1108,9 +1108,11 @@ class PauseView extends GameView {
     }
 
     renderBackgroundBlur(context) {
+        context.save();
         context.fillStyle = 'rgba(0, 0, 0, .5)';
         context.fillRect(0, 0, document.documentElement.clientWidth, 
             document.documentElement.clientHeight);
+        context.restore();
     }
 
     renderButtons(context) {
@@ -1278,9 +1280,11 @@ class LevelClearView extends GameView {
     }
 
     renderBackgroundBlur(context) {
+        context.save();
         context.fillStyle = 'rgba(0, 0, 0, .5)';
         context.fillRect(0, 0, document.documentElement.clientWidth, 
             document.documentElement.clientHeight);
+        context.restore();
     }
 
     renderRectangle(context) {
