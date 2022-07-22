@@ -484,86 +484,178 @@ class StartScreenView extends View { // subclass of View
         this.characterImage2.src = 'assets/character2.png';
         this.characterImage3.src = 'assets/character3.png';
         this.characterImage4.src = 'assets/character4.png';
-        context.drawImage(this.characterImage1, 
-            ((1 * this.characterImage1.width) / 5) + 200, 
-            0, 
-            this.characterImage1.width / 5, 
-            this.characterImage1.height, 
-            (document.documentElement.clientWidth / 2) - ((this.characterImage1.width / 4 / 10) * 2), 
-            document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30), 
-            this.characterImage1.width / 5 / 10, 
-            this.characterImage1.height / 10)
-        context.drawImage(this.characterImage2, 
-            ((1 * this.characterImage2.width) / 5) + 200, 
-            0, 
-            this.characterImage1.width / 5, 
-            this.characterImage1.height, 
-            (document.documentElement.clientWidth / 2) - ((this.characterImage1.width / 4 / 10) * 1), 
-            document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30), 
-            this.characterImage1.width / 5 / 10, 
-            this.characterImage1.height / 10)
-        context.drawImage(this.characterImage3, 
-            ((1 * this.characterImage3.width) / 5) + 250, 
-            0, 
-            this.characterImage1.width / 5, 
-            this.characterImage1.height, 
-            document.documentElement.clientWidth / 2, 
-            document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30), 
-            this.characterImage1.width / 5 / 10, 
-            this.characterImage1.height / 10)
-        context.drawImage(this.characterImage4, 
-            ((1 * this.characterImage4.width) / 5) + 200, 
-            0, 
-            this.characterImage1.width / 5, 
-            this.characterImage1.height, 
-            (document.documentElement.clientWidth / 2) + ((this.characterImage1.width / 4 / 10) * 1), 
-            document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30), 
-            this.characterImage1.width / 5 / 10, 
-            this.characterImage1.height / 10)
+
+        if(document.documentElement.clientWidth < 1000)
+        {
+            context.drawImage(this.characterImage1, 
+                ((1 * this.characterImage1.width) / 5) + 200, 
+                0, 
+                this.characterImage1.width / 5, 
+                this.characterImage1.height, 
+                (document.documentElement.clientWidth / 2) - ((this.characterImage1.width / 4 / 10) * 2), 
+                document.documentElement.clientHeight * 0.20 + (20 * (4 + 1) + 30), 
+                this.characterImage1.width / 5 / 10, 
+                this.characterImage1.height / 10)
+            context.drawImage(this.characterImage2, 
+                ((1 * this.characterImage2.width) / 5) + 200, 
+                0, 
+                this.characterImage1.width / 5, 
+                this.characterImage1.height, 
+                (document.documentElement.clientWidth / 2) - ((this.characterImage1.width / 4 / 10) * 1), 
+                document.documentElement.clientHeight * 0.20 + (20 * (4 + 1) + 30), 
+                this.characterImage1.width / 5 / 10, 
+                this.characterImage1.height / 10)
+            context.drawImage(this.characterImage3, 
+                ((1 * this.characterImage3.width) / 5) + 250, 
+                0, 
+                this.characterImage1.width / 5, 
+                this.characterImage1.height, 
+                document.documentElement.clientWidth / 2, 
+                document.documentElement.clientHeight * 0.20 + (20 * (4 + 1) + 30), 
+                this.characterImage1.width / 5 / 10, 
+                this.characterImage1.height / 10)
+            context.drawImage(this.characterImage4, 
+                ((1 * this.characterImage4.width) / 5) + 200, 
+                0, 
+                this.characterImage1.width / 5, 
+                this.characterImage1.height, 
+                (document.documentElement.clientWidth / 2) + ((this.characterImage1.width / 4 / 10) * 1), 
+                document.documentElement.clientHeight * 0.20 + (20 * (4 + 1) + 30), 
+                this.characterImage1.width / 5 / 10, 
+                this.characterImage1.height / 10)
+        }
+        else
+        {
+            context.drawImage(this.characterImage1, 
+                ((1 * this.characterImage1.width) / 5) + 200, 
+                0, 
+                this.characterImage1.width / 5, 
+                this.characterImage1.height, 
+                (document.documentElement.clientWidth / 2) - ((this.characterImage1.width / 4 / 10) * 2), 
+                document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30), 
+                this.characterImage1.width / 5 / 10, 
+                this.characterImage1.height / 10)
+            context.drawImage(this.characterImage2, 
+                ((1 * this.characterImage2.width) / 5) + 200, 
+                0, 
+                this.characterImage1.width / 5, 
+                this.characterImage1.height, 
+                (document.documentElement.clientWidth / 2) - ((this.characterImage1.width / 4 / 10) * 1), 
+                document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30), 
+                this.characterImage1.width / 5 / 10, 
+                this.characterImage1.height / 10)
+            context.drawImage(this.characterImage3, 
+                ((1 * this.characterImage3.width) / 5) + 250, 
+                0, 
+                this.characterImage1.width / 5, 
+                this.characterImage1.height, 
+                document.documentElement.clientWidth / 2, 
+                document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30), 
+                this.characterImage1.width / 5 / 10, 
+                this.characterImage1.height / 10)
+            context.drawImage(this.characterImage4, 
+                ((1 * this.characterImage4.width) / 5) + 200, 
+                0, 
+                this.characterImage1.width / 5, 
+                this.characterImage1.height, 
+                (document.documentElement.clientWidth / 2) + ((this.characterImage1.width / 4 / 10) * 1), 
+                document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30), 
+                this.characterImage1.width / 5 / 10, 
+                this.characterImage1.height / 10)
+        }
+
+
         context.restore();
     }
 
     renderInstructions(context) {
         context.save();
-        let text = gameText.press_to_play_text;
-        let margin = 20;
-        context.fillColor = 'rgba(0, 0, 0, 1)';
-        context.globalAlpha = 0.8;
-        /// get width of text
-        var width = 400;
-        context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
-        document.documentElement.clientHeight * 0.35, width, 230, 20).fill()
-        // context.shadowColor = "#000";
-        // context.shadowBlur = 5;
-        // context.shadowOffsetX = 0;
-        // context.shadowOffsetY = 1;
-        context.globalAlpha = 1;
-        context.font = "500 17px 'Roboto', sans-serif";
-        context.fillStyle = 'rgba(255, 255, 255, 1)';
-        context.textAlign = 'center';
-        context.fillText(text, document.documentElement.clientWidth / 2, 
-                         document.documentElement.clientHeight * 0.35 + 30);
-        
-        context.font = "500 13px 'Roboto', sans-serif";
-        for (let i = 0; i < gameText.instructions.length; i++) {
-            text = gameText.instructions[i];
-            context.fillText(text, document.documentElement.clientWidth / 2, 
-                         document.documentElement.clientHeight * 0.35 + (margin * (i + 1) + 30));
-        }
-
-
-        if(document.documentElement.clientWidth > 1000)
+        if(document.documentElement.clientWidth < 1000)
         {
-            context.font = "700 15px 'Roboto', sans-serif";
+            let text = gameText.press_to_play_text;
+            let margin = 20;
+            context.fillColor = 'rgba(0, 0, 0, 1)';
+            context.globalAlpha = 0.8;
+            /// get width of text
+            var width = 400;
+            context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
+            document.documentElement.clientHeight * 0.20, width, 230, 20).fill()
+            // context.shadowColor = "#000";
+            // context.shadowBlur = 5;
+            // context.shadowOffsetX = 0;
+            // context.shadowOffsetY = 1;
+            context.globalAlpha = 1;
+            context.font = "500 17px 'Roboto', sans-serif";
+            context.fillStyle = 'rgba(255, 255, 255, 1)';
+            context.textAlign = 'center';
+            context.fillText(text, document.documentElement.clientWidth / 2, 
+                             document.documentElement.clientHeight * 0.20 + 30);
+            
+            context.font = "500 13px 'Roboto', sans-serif";
+            for (let i = 0; i < gameText.instructions.length; i++) {
+                text = gameText.instructions[i];
+                context.fillText(text, document.documentElement.clientWidth / 2, 
+                             document.documentElement.clientHeight * 0.20 + (margin * (i + 1) + 30));
+            }
+    
+    
+            if(document.documentElement.clientWidth > 1000)
+            {
+                context.font = "700 15px 'Roboto', sans-serif";
+            }
+            else
+            {
+                context.font = "700 12px 'Roboto', sans-serif";
+            }
+            context.textAlign = 'left';
+            if (this.instructionsButton.fn !== null) {
+                this.instructionsButton.draw(context);
+            }  
         }
         else
         {
-            context.font = "700 12px 'Roboto', sans-serif";
+            let text = gameText.press_to_play_text;
+            let margin = 20;
+            context.fillColor = 'rgba(0, 0, 0, 1)';
+            context.globalAlpha = 0.8;
+            /// get width of text
+            var width = 400;
+            context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
+            document.documentElement.clientHeight * 0.35, width, 230, 20).fill()
+            // context.shadowColor = "#000";
+            // context.shadowBlur = 5;
+            // context.shadowOffsetX = 0;
+            // context.shadowOffsetY = 1;
+            context.globalAlpha = 1;
+            context.font = "500 17px 'Roboto', sans-serif";
+            context.fillStyle = 'rgba(255, 255, 255, 1)';
+            context.textAlign = 'center';
+            context.fillText(text, document.documentElement.clientWidth / 2, 
+                             document.documentElement.clientHeight * 0.35 + 30);
+            
+            context.font = "500 13px 'Roboto', sans-serif";
+            for (let i = 0; i < gameText.instructions.length; i++) {
+                text = gameText.instructions[i];
+                context.fillText(text, document.documentElement.clientWidth / 2, 
+                             document.documentElement.clientHeight * 0.35 + (margin * (i + 1) + 30));
+            }
+    
+    
+            if(document.documentElement.clientWidth > 1000)
+            {
+                context.font = "700 15px 'Roboto', sans-serif";
+            }
+            else
+            {
+                context.font = "700 12px 'Roboto', sans-serif";
+            }
+            context.textAlign = 'left';
+            if (this.instructionsButton.fn !== null) {
+                this.instructionsButton.draw(context);
+            }  
         }
-        context.textAlign = 'left';
-        if (this.instructionsButton.fn !== null) {
-            this.instructionsButton.draw(context);
-        }  
+
+        
         
         context.restore();
     }
@@ -586,12 +678,26 @@ class StartScreenView extends View { // subclass of View
         context.shadowBlur = 4;
         context.shadowOffsetX = 0;
         context.shadowOffsetY = 3;
-        context.font = "900 64px 'Roboto', sans-serif";
-        context.fillStyle = "rgba(255, 255, 255, 1)";
-        context.textAlign = 'center';
-        context.fillText(gameText.title, 
-                         document.documentElement.clientWidth / 2, 
-                         document.documentElement.clientHeight / 4);
+        if(document.documentElement.clientWidth < 1000)
+        {
+            context.font = "900 40px 'Roboto', sans-serif";
+            context.fillStyle = "rgba(255, 255, 255, 1)";
+            context.textAlign = 'center';
+            context.fillText(gameText.title, 
+                            document.documentElement.clientWidth / 2, 
+                            document.documentElement.clientHeight / 8);
+        }
+        else
+        {
+            context.font = "900 64px 'Roboto', sans-serif";
+            context.fillStyle = "rgba(255, 255, 255, 1)";
+            context.textAlign = 'center';
+            context.fillText(gameText.title, 
+                            document.documentElement.clientWidth / 2, 
+                            document.documentElement.clientHeight / 4);
+        }
+        
+        
         context.restore();
     }
 
@@ -627,22 +733,67 @@ class GameOverView extends View {
         this.buttons = [new Button(x, y, w, h, buttonColor, textColor, fontName,
                                    fontSize, text, true)];
         this.gameWon = mainCharacter.health > 0 ? true : false;
+        this.bgImage = new Image();
+        this.bgImage.src = this.gameWon ? "assets/win.png" : "assets/gameover.png";
+
+        let leaderboardWidth;
+        let leaderboardHeight;
+        let leaderboardX;
+        let leaderboardY;
+        if(document.documentElement.clientWidth > 1000)
+        {
+            leaderboardWidth = 80;
+            leaderboardHeight = 30;
+            leaderboardX = document.documentElement.clientWidth - leaderboardWidth - 10;
+            leaderboardY = leaderboardHeight + 10;
+            fontName = "'Roboto', sans-serif;";
+        }
+        else
+        {
+            leaderboardWidth = 50;
+            leaderboardHeight = 15;
+            leaderboardX = document.documentElement.clientWidth - leaderboardWidth - 10;
+            leaderboardY = leaderboardHeight + 10;
+            fontName = "'Roboto', sans-serif;";
+        }
+        $('#myModal').modal('toggle');
+        this.leaderboardButton = new Button(leaderboardX, leaderboardY, leaderboardWidth, leaderboardHeight, '#FFF', '#000', fontName, 20, "Leaderboard", true, () => {
+            const highScores = JSON.parse(localStorage.getItem('highscores')) ?? [];
+            const highScoreList = document.getElementById('leaderboardBody');
+
+            highScoreList.innerHTML = `<table class="table">` +
+            `<thead>` +
+            `<tr><th scope="col">#</th><th scope="col">Name</th><th score="col">Score</th>` +
+            `<tbody>` +
+            highScores.map((score, ind) => 
+            `<tr><th scope="row">${ind + 1}</th><td>${score.name}</td><td>${score.score}</td></tr>`
+            ).join("") +
+            `</tbody>` +
+            `</table>`;
+            $('#leaderboardModal').modal('toggle');
+        });
     }
 
     renderAll(context) {
         super.renderAll(context);
         this.renderBackground(context);
+
+        this.renderRestartGameButton(context);
         this.gameWon ? 
             this.renderCongratsText(context) :
             this.renderTryAgainText(context);
-        this.renderRestartGameButton(context);
         this.renderScore(context);
-        this.renderAntagonist(context);
+        // this.renderAntagonist(context);
         this.renderLeaderboard(context);
     }
 
     renderTryAgainText(context) {
-        context.fillStyle = 'rgba(0, 0, 0, 1)';
+        context.shadowColor = "#000";
+        context.shadowBlur = 4;
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 3;
+        context.fillStyle = '#FFF';
+        context.textAlign = "center";
         context.font = "600 32px 'Roboto', sans-serif";
         let text = gameText.try_again_text;
         let x = document.documentElement.clientWidth / 2;
@@ -652,14 +803,19 @@ class GameOverView extends View {
         let textHeight = metrics.actualBoundingBoxAscent + 
                          metrics.actualBoundingBoxDescent;
 
-        context.fillText(text, x - textWidth / 2, y + textHeight / 2);
+        context.fillText(text, x, y + textHeight / 2);
     }
 
     renderCongratsText(context) {
-        context.fillStyle = 'rgba(0, 0, 0, 1)';
+        context.shadowColor = "#000";
+        context.shadowBlur = 4;
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 3;
+        context.fillStyle = '#FFF';
+        context.textAlign = "center";
         context.font = "600 32px 'Roboto', sans-serif";
         let text = gameText.congrats_text;
-        let x = document.documentElement.clientWidth * 0.4;
+        let x = document.documentElement.clientWidth * 0.5;
         let y = document.documentElement.clientHeight * 0.35;
         let metrics = context.measureText(text);
         let textHeight = metrics.actualBoundingBoxAscent + 
@@ -669,28 +825,38 @@ class GameOverView extends View {
     }
 
     renderBackground(context) {
-        if (this.gameWon) {
-            context.fillStyle = '#ddd';
-        } else {
-            context.fillStyle = '#909090';
-        }
-        context.fillRect(0, 0, document.documentElement.clientWidth,
-            document.documentElement.clientHeight);
+        let bgWidth = document.documentElement.clientWidth;
+        let bgHeight = document.documentElement.clientHeight;
+        context.drawImage(this.bgImage, 0, 0, bgWidth, bgHeight);
     }
 
     renderRestartGameButton(context) {
+        context.shadowColor = "#000";
+        context.shadowBlur = 0;
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 0;
+        context.textAlign = "left";
         for (let i = 0; i < this.buttons.length; i++) {
             this.buttons[i].draw(context);
         }
+
+        context.textAlign = 'left';
+        if (this.leaderboardButton.fn !== null) {
+            this.leaderboardButton.draw(context);
+        }  
     }
 
     renderScore(context) {
         let text = gameText.final_score_text + ": " + mainCharacter.finalScore;
-        let x = document.documentElement.clientWidth * 0.4;
+        let x = document.documentElement.clientWidth * 0.5;
         let y = document.documentElement.clientHeight * 0.5;
-
+        context.shadowColor = "#000";
+        context.shadowBlur = 4;
+        context.shadowOffsetX = 0;
+        context.shadowOffsetY = 3;
         context.font = "600 32px 'Roboto', sans-serif";
-        context.fillStyle = "rgba(0, 0, 0, 1)";
+        context.fillStyle = "#FFF";
+        context.textAlign = "center";
         let metrics = context.measureText(text);
         let textHeight = metrics.actualBoundingBoxAscent + 
                          metrics.actualBoundingBoxDescent;
@@ -749,7 +915,18 @@ class GameView extends View {
         
         this.buttons = [upButton, downButton, shootButton];
         this.bgImage = new Image();
-        this.bgImage.src = 'assets/background1.png';
+        if(level == 1)
+        {
+            this.bgImage.src = 'assets/background1.png';
+        }
+        else if(level == 2)
+        {
+            this.bgImage.src = 'assets/background3.png';
+        }
+        else
+        {
+            this.bgImage.src = 'assets/background2.png';
+        }
     }
 
     renderAll(context) {
@@ -873,8 +1050,19 @@ class PauseView extends GameView {
         super();
         this.name = "PauseView";
         // Restart
-        let x = document.documentElement.clientWidth / 2;
-        let y = document.documentElement.clientHeight * 0.35 + 110;
+        let x;
+        let y;
+        if(document.documentElement.clientWidth < 1000)
+        {
+            x = document.documentElement.clientWidth / 2;
+            y = document.documentElement.clientHeight * 0.15 + 110;
+        }
+        else
+        {
+            x = document.documentElement.clientWidth / 2;
+            y = document.documentElement.clientHeight * 0.35 + 110;
+        }
+        
         let w = 60;
         let h = 20;
         let buttonColor = "#3c4fff";
@@ -919,24 +1107,49 @@ class PauseView extends GameView {
 
     renderButtons(context) {
         context.save();
-        context.fillStyle = 'rgba(255, 255, 255, 1)';
-        context.globalAlpha = 1;
-        /// get width of text
-        var width = 400;
-        context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
-        document.documentElement.clientHeight * 0.35, width, 230, 20).fill();
-
-        for (let i = 0; i < this.buttons.length; i++) {
-            if (this.buttons[i].fn !== null) {
-                this.buttons[i].draw(context);
-            }  
+        if(document.documentElement.clientWidth < 1000)
+        {
+            context.fillStyle = 'rgba(255, 255, 255, 1)';
+            context.globalAlpha = 1;
+            /// get width of text
+            var width = 400;
+            context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
+            document.documentElement.clientHeight * 0.10, width, 230, 20).fill();
+    
+            for (let i = 0; i < this.buttons.length; i++) {
+                if (this.buttons[i].fn !== null) {
+                    this.buttons[i].draw(context);
+                }  
+            }
+    
+            context.font = "700 35px 'Roboto', sans-serif";
+            context.fillStyle = 'rgba(0, 0, 0, 1)';
+            context.textAlign = 'center';
+            context.fillText("Game Paused", document.documentElement.clientWidth / 2, 
+                             document.documentElement.clientHeight * 0.10 + 70);
+        }
+        else
+        {
+            context.fillStyle = 'rgba(255, 255, 255, 1)';
+            context.globalAlpha = 1;
+            /// get width of text
+            var width = 400;
+            context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
+            document.documentElement.clientHeight * 0.35, width, 230, 20).fill();
+    
+            for (let i = 0; i < this.buttons.length; i++) {
+                if (this.buttons[i].fn !== null) {
+                    this.buttons[i].draw(context);
+                }  
+            }
+    
+            context.font = "700 35px 'Roboto', sans-serif";
+            context.fillStyle = 'rgba(0, 0, 0, 1)';
+            context.textAlign = 'center';
+            context.fillText("Game Paused", document.documentElement.clientWidth / 2, 
+                             document.documentElement.clientHeight * 0.35 + 70);
         }
 
-        context.font = "700 35px 'Roboto', sans-serif";
-        context.fillStyle = 'rgba(0, 0, 0, 1)';
-        context.textAlign = 'center';
-        context.fillText("Game Paused", document.documentElement.clientWidth / 2, 
-                         document.documentElement.clientHeight * 0.35 + 70);
         context.restore();
     }
 }
@@ -994,15 +1207,36 @@ class LevelClearView extends GameView {
             button.fn = null;
         }
 
-        let x = document.documentElement.clientWidth / 2;
-        let y = document.documentElement.clientHeight * 0.65;
-        let w = 200;
-        let h = 30;
+        let x;
+        let y;
+        let w;
+        let h;
+        let fontSize;
+
+        if(document.documentElement.clientWidth < 1000)
+        {
+            x = document.documentElement.clientWidth / 2;
+            y = document.documentElement.clientHeight * 0.80;
+            w = 150;
+            h = 20;
+            fontSize = 15;
+        }
+        else
+        {
+            x = document.documentElement.clientWidth / 2;
+            y = document.documentElement.clientHeight * 0.70;
+            w = 200;
+            h = 30;
+            fontSize = 20;
+        }
+
         let buttonColor = "#3c4fff";
         let textColor = "#fff";
         let fontName = "'Roboto', sans-serif";
-        let fontSize = 20;
         let text = "Press here to go to next level.";
+
+        var randomNum = Math.floor(Math.random() * 15) + 1;
+        this.infoText = infoText[randomNum].split("\n");
 
         this.nextLevelButton = new Button(x, y, w, h, buttonColor, textColor, 
             fontName, fontSize, text, true, () => {
@@ -1050,11 +1284,24 @@ class LevelClearView extends GameView {
         context.fillStyle = '#FFFFFF';
         let w = document.documentElement.clientWidth;
         let h = document.documentElement.clientHeight;
-        context.roundRect(w * 0.2, h * 0.2, w * 0.6, h * 0.6, 20);
-        context.clip();
-        let nextLevelImage = new Image();
-        nextLevelImage.src = "assets/village_bg.jpg";
-        context.drawImage(nextLevelImage, w * 0.2, h * 0.2, w * 0.6, h * 0.6);
+        
+        if(document.documentElement.clientWidth < 1000)
+        {
+            context.roundRect(w * 0.1, h * 0.1, w * 0.8, h * 0.8, 20);
+            context.clip();
+            let nextLevelImage = new Image();
+            nextLevelImage.src = "assets/village_bg.jpg";
+            context.drawImage(nextLevelImage, w * 0.1, h * 0.1, w * 0.8, h * 0.8);
+        }
+        else
+        {
+            context.roundRect(w * 0.2, h * 0.2, w * 0.6, h * 0.6, 20);
+            context.clip();
+            let nextLevelImage = new Image();
+            nextLevelImage.src = "assets/village_bg.jpg";
+            context.drawImage(nextLevelImage, w * 0.2, h * 0.2, w * 0.6, h * 0.6);
+        }
+        
         context.restore();
 
     }
@@ -1065,17 +1312,97 @@ class LevelClearView extends GameView {
             this.nextLevelButton.draw(context);
         }  
 
-        let text = gameText.congrats_text_next_level;
-        context.font = "900 32px 'Roboto', sans-serif";
-        context.fillStyle = '#FFF';
-        context.textAlign = 'center';
-        context.fillText(text, document.documentElement.clientWidth / 2, 
-                         document.documentElement.clientHeight * 0.40);
+        if(document.documentElement.clientWidth < 1000)
+        {
+            let text = gameText.congrats_text_next_level;
+            context.shadowColor = "#000";
+            context.shadowBlur = 4;
+            context.shadowOffsetX = 0;
+            context.shadowOffsetY = 3;
+            context.font = "900 28px 'Roboto', sans-serif";
+            context.fillStyle = '#FFF';
+            context.textAlign = 'center';
+            context.fillText(text, document.documentElement.clientWidth / 2, 
+                            document.documentElement.clientHeight * 0.20);
 
-        context.font = "600 24px 'Roboto', sans-serif";
-        text = "You cleared this level!";
-        context.fillText(text, document.documentElement.clientWidth / 2, 
-                         document.documentElement.clientHeight * 0.50)
+            context.font = "600 20px 'Roboto', sans-serif";
+            text = "You cleared this level!";
+            context.fillText(text, document.documentElement.clientWidth / 2, 
+                            document.documentElement.clientHeight * 0.28);
+
+            context.fillColor = 'rgba(0, 0, 0, 0.8)';
+            context.fillStyle = 'rgba(0, 0, 0, 0.8)';
+            context.globalAlpha = 0.8;
+            /// get width of text
+            var width = document.documentElement.clientWidth * 0.7;
+            context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
+            document.documentElement.clientHeight * 0.35, width, 140, 20).fill();
+
+            context.font = "600 20px 'Roboto', sans-serif";
+            context.fillStyle = '#FFF';
+            context.globalAlpha = 1;
+            text = "Fun Fact";
+            context.fillText(text, document.documentElement.clientWidth / 2, 
+                             document.documentElement.clientHeight * 0.45);
+    
+            context.font = "600 12px 'Roboto', sans-serif";
+    
+            var lineheight = 25;
+            for(var i = 0; i < this.infoText.length; i++)
+            {
+                context.fillText(this.infoText[i], document.documentElement.clientWidth / 2, 
+                document.documentElement.clientHeight * 0.52 + (i * lineheight));
+            }
+           
+        }
+        else
+        {
+            let text = gameText.congrats_text_next_level;
+            context.shadowColor = "#000";
+            context.shadowBlur = 4;
+            context.shadowOffsetX = 0;
+            context.shadowOffsetY = 3;
+            context.font = "900 32px 'Roboto', sans-serif";
+            context.fillStyle = '#FFF';
+            context.textAlign = 'center';
+            context.fillText(text, document.documentElement.clientWidth / 2, 
+                            document.documentElement.clientHeight * 0.30);
+
+            context.font = "600 24px 'Roboto', sans-serif";
+            text = "You cleared this level!";
+            context.fillText(text, document.documentElement.clientWidth / 2, 
+                            document.documentElement.clientHeight * 0.35);
+
+            context.fillColor = 'rgba(0, 0, 0, 0.8)';
+            context.fillStyle = 'rgba(0, 0, 0, 0.8)';
+            context.globalAlpha = 0.8;
+            /// get width of text
+            var width = document.documentElement.clientWidth * 0.55;
+            context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
+            document.documentElement.clientHeight * 0.40, width, 180, 20).fill();
+
+            context.font = "600 24px 'Roboto', sans-serif";
+            context.fillStyle = '#FFF';
+            context.globalAlpha = 1;
+            text = "Fun Fact";
+            context.fillText(text, document.documentElement.clientWidth / 2, 
+                             document.documentElement.clientHeight * 0.45);
+    
+            context.font = "600 16px 'Roboto', sans-serif";
+    
+            var lineheight = 25;
+            for(var i = 0; i < this.infoText.length; i++)
+            {
+                context.fillText(this.infoText[i], document.documentElement.clientWidth / 2, 
+                document.documentElement.clientHeight * 0.50 + (i * lineheight));
+            }
+           
+        }
+        
+
+
+
+
 
 
         context.restore();

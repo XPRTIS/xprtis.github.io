@@ -68,7 +68,7 @@ class DirtyHand extends Hazard {
         }
 
         let points = 1;
-        let healthLoss = 5;
+        let healthLoss = 20;
         super(name, x, y, w, h, dx, dy, imgUrl, points, healthLoss);
 
         this.hazardHealth = type == 1 ? 20 : type == 2 ? 30 : 40;
@@ -126,7 +126,7 @@ class Germ extends Hazard {
         }
 
         let points = 1;
-        let healthLoss = 5;
+        let healthLoss = 30;
         super(name, x, y, w, h, dx, dy, imgUrl, points, healthLoss);
     }
 }
@@ -205,7 +205,7 @@ class Smoke extends Hazard {
         let dy = 0;
         let imgUrl = 'assets/smoke.png';
         let points = 0;
-        let healthLoss = 5;
+        let healthLoss = 50;
         super(name, x, y, w, h, dx, dy, imgUrl, points, healthLoss);
         this.audio = "cough";
     }

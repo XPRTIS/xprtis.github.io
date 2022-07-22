@@ -23,6 +23,7 @@ var gameText;
 var BULLET_DELAY = 1; // Delay for how often you can fire bullets, in seconds.
 var KEEP_AUDIO_OFF = true; // Debug variable for keeping audio always off.
 var audioManager = new AudioManager();
+var infoText;
 
 // Adds a new method to all arrays (arr.randomElement()) to return a random
 // element within the array. Helpful for several functions in this application.
@@ -37,6 +38,14 @@ function initCanvas() {
     document.getElementById('wrapper').appendChild(canvas);
     // Add resizeCanvas function to resize so that it changes dynamically:
     window.onresize = () => resizeCanvas(canvas);
+
+    // Get info json file
+    fetch('./js/lang/info.json')
+        .then(response => response.json())
+        .then(data => {
+            infoText = data;
+        })
+        .catch(error => console.error(error));
 
     // Technically some browsers don't support canvas, so make sure that 
     // canvas.getContext exists first. This is also helpful if JavaScript is
@@ -297,6 +306,7 @@ function handleButtonClicks(x, y) {
                 }
             }
         }
+        currentState.leaderboardButton.wasClicked(x, y);
 
     } else if(currentState.name === "InstructionsView"){
         currentState.closeButton.wasClicked(x, y);
@@ -323,38 +333,77 @@ function handleButtonClicks(x, y) {
         this.characterImage3.src = 'assets/character3.png';
         this.characterImage4.src = 'assets/character4.png';
 
-        if(x > (document.documentElement.clientWidth / 2) - ((this.characterImage1.width / 4 / 10) * 2) &&
+        if(document.documentElement.clientWidth < 1000)
+        {
+            if(x > (document.documentElement.clientWidth / 2) - ((this.characterImage1.width / 4 / 10) * 2) &&
+                x < (document.documentElement.clientWidth / 2) - ((this.characterImage1.width / 4 / 10) * 2) + (this.characterImage1.width / 5 / 10) &&
+                y > document.documentElement.clientHeight * 0.20 + (20 * (4 + 1) + 30) && 
+                y < (document.documentElement.clientHeight * 0.20 + (20 * (4 + 1) + 30)) + this.characterImage1.height / 10
+            )
+            {
+                changeToGameView('character1');
+            }
+            if(x > (document.documentElement.clientWidth / 2) - ((this.characterImage2.width / 4 / 10) * 1) &&
+                x < (document.documentElement.clientWidth / 2) - ((this.characterImage2.width / 4 / 10) * 1) + (this.characterImage2.width / 5 / 10) &&
+                y > document.documentElement.clientHeight * 0.20 + (20 * (4 + 1) + 30) && 
+                y < (document.documentElement.clientHeight * 0.20 + (20 * (4 + 1) + 30)) + this.characterImage2.height / 10
+            )
+            {
+                changeToGameView('character2');
+            }
+            if(x > (document.documentElement.clientWidth / 2) &&
+                x < (document.documentElement.clientWidth / 2) + (this.characterImage3.width / 5 / 10) &&
+                y > document.documentElement.clientHeight * 0.20 + (20 * (4 + 1) + 30) && 
+                y < (document.documentElement.clientHeight * 0.20 + (20 * (4 + 1) + 30)) + this.characterImage3.height / 10
+            )
+            {
+                changeToGameView('character3');
+            }
+            if(x > (document.documentElement.clientWidth / 2) + ((this.characterImage4.width / 4 / 10) * 1) &&
+                x < (document.documentElement.clientWidth / 2) + ((this.characterImage4.width / 4 / 10) * 1) + (this.characterImage4.width / 5 / 10) &&
+                y > document.documentElement.clientHeight * 0.20 + (20 * (4 + 1) + 30) && 
+                y < (document.documentElement.clientHeight * 0.20 + (20 * (4 + 1) + 30)) + this.characterImage4.height / 10
+            )
+            {
+                changeToGameView('character4');
+            }
+        }
+        else
+        {
+            if(x > (document.documentElement.clientWidth / 2) - ((this.characterImage1.width / 4 / 10) * 2) &&
             x < (document.documentElement.clientWidth / 2) - ((this.characterImage1.width / 4 / 10) * 2) + (this.characterImage1.width / 5 / 10) &&
             y > document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30) && 
             y < (document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30)) + this.characterImage1.height / 10
-        )
-        {
-            changeToGameView('character1');
+            )
+            {
+                changeToGameView('character1');
+            }
+            if(x > (document.documentElement.clientWidth / 2) - ((this.characterImage2.width / 4 / 10) * 1) &&
+                x < (document.documentElement.clientWidth / 2) - ((this.characterImage2.width / 4 / 10) * 1) + (this.characterImage2.width / 5 / 10) &&
+                y > document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30) && 
+                y < (document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30)) + this.characterImage2.height / 10
+            )
+            {
+                changeToGameView('character2');
+            }
+            if(x > (document.documentElement.clientWidth / 2) &&
+                x < (document.documentElement.clientWidth / 2) + (this.characterImage3.width / 5 / 10) &&
+                y > document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30) && 
+                y < (document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30)) + this.characterImage3.height / 10
+            )
+            {
+                changeToGameView('character3');
+            }
+            if(x > (document.documentElement.clientWidth / 2) + ((this.characterImage4.width / 4 / 10) * 1) &&
+                x < (document.documentElement.clientWidth / 2) + ((this.characterImage4.width / 4 / 10) * 1) + (this.characterImage4.width / 5 / 10) &&
+                y > document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30) && 
+                y < (document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30)) + this.characterImage4.height / 10
+            )
+            {
+                changeToGameView('character4');
+            }
         }
-        if(x > (document.documentElement.clientWidth / 2) - ((this.characterImage2.width / 4 / 10) * 1) &&
-            x < (document.documentElement.clientWidth / 2) - ((this.characterImage2.width / 4 / 10) * 1) + (this.characterImage2.width / 5 / 10) &&
-            y > document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30) && 
-            y < (document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30)) + this.characterImage2.height / 10
-        )
-        {
-            changeToGameView('character2');
-        }
-        if(x > (document.documentElement.clientWidth / 2) &&
-            x < (document.documentElement.clientWidth / 2) + (this.characterImage3.width / 5 / 10) &&
-            y > document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30) && 
-            y < (document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30)) + this.characterImage3.height / 10
-        )
-        {
-            changeToGameView('character3');
-        }
-        if(x > (document.documentElement.clientWidth / 2) + ((this.characterImage4.width / 4 / 10) * 1) &&
-            x < (document.documentElement.clientWidth / 2) + ((this.characterImage4.width / 4 / 10) * 1) + (this.characterImage4.width / 5 / 10) &&
-            y > document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30) && 
-            y < (document.documentElement.clientHeight * 0.35 + (20 * (4 + 1) + 30)) + this.characterImage4.height / 10
-        )
-        {
-            changeToGameView('character4');
-        }
+
 
         // If something was tapped but it wasn't a different button, start
         // the game:
