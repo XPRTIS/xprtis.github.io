@@ -87,7 +87,7 @@
                 $('#saveName').on('click', function() {
                     var newScore = {
                         name: $('#nameInput').val(),
-                        score: mainCharacter.score
+                        score: mainCharacter.finalScore
                     }
                     var highscores = JSON.parse(localStorage.getItem('highscores'));
                     if(highscores)
