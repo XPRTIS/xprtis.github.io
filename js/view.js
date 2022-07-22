@@ -1335,8 +1335,9 @@ class LevelClearView extends GameView {
             context.globalAlpha = 0.8;
             /// get width of text
             var width = document.documentElement.clientWidth * 0.7;
+            let h = document.documentElement.clientHeight;
             context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
-            document.documentElement.clientHeight * 0.35, width, 140, 20).fill();
+            document.documentElement.clientHeight * 0.35, width, h*0.35, 20).fill();
 
             context.font = "600 20px 'Roboto', sans-serif";
             context.fillStyle = '#FFF';
@@ -1378,8 +1379,9 @@ class LevelClearView extends GameView {
             context.globalAlpha = 0.8;
             /// get width of text
             var width = document.documentElement.clientWidth * 0.55;
+            let h = document.documentElement.clientHeight;
             context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
-            document.documentElement.clientHeight * 0.40, width, 180, 20).fill();
+            document.documentElement.clientHeight * 0.40, width, h*0.25, 20).fill();
 
             context.font = "600 24px 'Roboto', sans-serif";
             context.fillStyle = '#FFF';
