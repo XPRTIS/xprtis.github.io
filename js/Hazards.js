@@ -100,6 +100,10 @@ class DirtyHand extends Hazard {
         {
             this.imgUrl = 'assets/hand1.png';
         }
+        else if(this.imgUrl == 'assets/hand1.png')
+        {
+            this.imgUrl = 'assets/hand0.png';
+        }
     }
 }
 
