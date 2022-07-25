@@ -31,7 +31,6 @@ function getLevelInfo(level) {
             break;
         case 2:
             levelInfo.availableHazards.push(DirtyHand.name, Food.name);
-            levelInfo.availableSources.push(Stove.name);
             levelInfo.maxPoints = 10;
             break;
         case 3:
