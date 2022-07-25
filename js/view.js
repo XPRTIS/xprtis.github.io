@@ -735,6 +735,7 @@ class GameOverView extends View {
         this.gameWon = mainCharacter.health > 0 ? true : false;
         this.bgImage = new Image();
         this.bgImage.src = this.gameWon ? "assets/win.png" : "assets/gameover.png";
+        audioManager.enableOrDisableMusic("bg");
 
         let leaderboardWidth;
         let leaderboardHeight;
