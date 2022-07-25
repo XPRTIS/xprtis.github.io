@@ -1087,10 +1087,20 @@ class PauseView extends GameView {
 
         this.buttons.push(new Button(x, y, w, h, buttonColor, textColor, 
             fontName, fontSize, text, true, () => {
-                stateStack.pop();
-                stateStack.pop(); // Pop twice to get to the main screen.
-                // Restart any data
-                resetGame();    
+                this.buttons.push(new Button(x, y, w, h, buttonColor, textColor, 
+                    fontName, fontSize, text, true, () => {
+                        stateStack.pop();
+                        stateStack.pop();
+                        stateStack.pop(); // Pop thrice to get to the main screen.
+                        // Restart any data
+                        resetGame();    
+                    }));
+
+                // Return
+                y += 60;
+                text = "No";
+                this.buttons.push(new Button(x, y, w, h, buttonColor, textColor, 
+                    fontName, fontSize, text, true, () => { stateStack.pop(); }));
             }));
 
         // Resume
