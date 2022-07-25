@@ -53,6 +53,7 @@ function resetGame() {
     bullets = [];
     sources = [];
     mainCharacter = new MainCharacter(spriteImage);
+    audioManager.enableOrDisableMusic("bg");
 }
 
 function isLevelOver() {
