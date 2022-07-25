@@ -39,14 +39,6 @@ function initCanvas() {
     // Add resizeCanvas function to resize so that it changes dynamically:
     window.onresize = () => resizeCanvas(canvas);
 
-    // Get info json file
-    fetch('./js/lang/info.json')
-        .then(response => response.json())
-        .then(data => {
-            infoText = data;
-        })
-        .catch(error => console.error(error));
-
     // Technically some browsers don't support canvas, so make sure that 
     // canvas.getContext exists first. This is also helpful if JavaScript is
     // disabled.
