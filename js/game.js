@@ -286,7 +286,6 @@ function handleButtonClicks(x, y) {
     else if(currentState.name === "LevelClearView")
     {
         currentState.nextLevelButton.wasClicked(x, y);
-        audioManager.enableOrDisableMusic("bg");
     }
     else if (currentState.name === "GameOverView") {
         for (let i = 0; i < currentState.buttons.length; i++) {
