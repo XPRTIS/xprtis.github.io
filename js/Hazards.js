@@ -92,6 +92,14 @@ class DirtyHand extends Hazard {
 
     reduceHealth(damage) {
         this.hazardHealth -= damage;
+        if(this.imgUrl == 'assets/hand3.png')
+        {
+            this.imgUrl = 'assets/hand2.png';
+        }
+        else if(this.imgUrl == 'assets/hand2.png')
+        {
+            this.imgUrl = 'assets/hand1.png';
+        }
     }
 }
 
