@@ -26,7 +26,8 @@ function addToScore(points) {
     }
 
     if (isLevelOver()) {
-        audioManager.playSound("level_clear");
+       audioManager.enableOrDisableMusic(); 
+       audioManager.playSound("level_clear");
         mainCharacter.finalScore += mainCharacter.score;
         if (levelInfo.lastLevel) {
             stateStack.push(new GameOverView());
