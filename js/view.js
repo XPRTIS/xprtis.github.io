@@ -185,9 +185,9 @@ class InstructionsView extends View {
 
             context.font = "500 15px 'Roboto', sans-serif";
             context.fillStyle = '#FFF';
-            context.fillText("If you accidently shoot food, it will become rotten.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText("If you accidently shoot food, it will go bad.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.35 + 80);
-            context.fillText("If you eat rotten food, you will lose health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText("If you eat rotten food, you will not gain any health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.35 + 100);
 
             let stove = new Image();
@@ -289,9 +289,9 @@ class InstructionsView extends View {
     
             context.font = "500 12px 'Roboto', sans-serif";
             context.fillStyle = '#FFF';
-            context.fillText("If you accidently shoot food, it will become rotten.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText("If you accidently shoot food, it will go bad.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.15 + 80);
-            context.fillText("If you eat rotten food, you will lose health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText("If you eat rotten food, you will not gain any health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.15 + 100);
     
             let stove = new Image();
@@ -1243,7 +1243,7 @@ class LevelClearView extends GameView {
         let buttonColor = "#3c4fff";
         let textColor = "#fff";
         let fontName = "'Roboto', sans-serif";
-        let text = "Press here to go to next level.";
+        let text = "Press here to go to the next level.";
 
         var randomNum = Math.floor(Math.random() * 15) + 1;
         this.infoText = infoText[randomNum].split("\n");
