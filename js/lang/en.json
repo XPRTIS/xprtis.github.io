@@ -1,5 +1,5 @@
 {
-    "villian_scripts": [
+    "villian_scripts_male": [
         "Look at him, he seems to be a perfect place for me to live in! He will run out of energy soon, and then my filthy hands will grab him!",
         "Curses, how did he know I'm weak against soap? I just hope he does not like fruits and vegetables!",
         "Curses, he does eat fruits and vegetables. He knows smoke from fires hurts his eyes. I hope he does not also know it hurts his lungs! As long as his family cooks on a traditional fire, that smoke helps me out!",
@@ -8,7 +8,7 @@
         "Even flies did not carry poop to him. But he cannot avoid water! Without boiling, chlorine or a filter, the water will carry poop and germs to him‼",
         "...",
         "Zounds! He used chlorine [and a filter] to remove poop and germs from the water. But there is no way to keep people with measles away from him.  He has not been immunized, so any nearby measles will spread to him quickly!",
-        "How does he know all the ways to keep him healthy? There's no way I could get him..."
+        "How does he know all the ways to keep him healthy? There's no way I could get him...",
         "Ha ha, I finally got him! He'll be sick forever!"
     ],
     "villian_scripts_female": [
@@ -19,8 +19,8 @@
         "Curses! Those worms are too slow. Happily, flies that land on outdoor poop also fly to her food! When she eats food with poop and germs on it, I will have her! Each villager doing her morning walk to the fields is now helping me spread disease!",
         "Even flies did not carry poop to her. But she cannot avoid water! Without boiling, chlorine or a filter, the water will carry poop and germs to her‼",
         "...",
-        "Zounds! She used chlorine [and a filter] to remove poop and germs from the water. But there is no way to keep people with measles away from her.  She has not been immunized, so any nearby measles will spread to her quickly!"
-        "How does she know all the ways to keep her healthy? There's no way I could get her..."
+        "Zounds! She used chlorine [and a filter] to remove poop and germs from the water. But there is no way to keep people with measles away from her.  She has not been immunized, so any nearby measles will spread to her quickly!",
+        "How does she know all the ways to keep her healthy? There's no way I could get her...",
         "Ha ha, I finally got her! She'll be sick forever!"
     ],
     "info": [
