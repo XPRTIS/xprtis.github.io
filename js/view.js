@@ -1245,7 +1245,7 @@ class LevelClearView extends GameView {
         let fontName = "'Roboto', sans-serif";
         let text = "Press here to go to the next level.";
 
-        var randomNum = Math.floor(Math.random() * 15) + 1;
+        var randomNum = Math.floor(Math.random() * gameText.info.length) + 1;
         this.infoText = gameText.info[randomNum].split("\n");
 
         this.nextLevelButton = new Button(x, y, w, h, buttonColor, textColor, 
