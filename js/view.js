@@ -1087,7 +1087,6 @@ class PauseView extends GameView {
 
         this.buttons.push(new Button(x, y, w, h, buttonColor, textColor, 
             fontName, fontSize, text, true, () => {
-            y -= 60;
             text = "test";
             this.buttons.push(new Button(x, y, w, h, buttonColor, textColor, 
                     fontName, fontSize, text, true, () => {
