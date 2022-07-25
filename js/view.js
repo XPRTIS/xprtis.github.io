@@ -1252,6 +1252,7 @@ class LevelClearView extends GameView {
         this.nextLevelButton = new Button(x, y, w, h, buttonColor, textColor, 
             fontName, fontSize, text, true, () => {
                 stateStack.pop();
+                audioManager.enableOrDisableMusic("bg");
                 if(level == 2)
                 {
                     stateStack[stateStack.length - 1].changeBackground('assets/background3.png');
