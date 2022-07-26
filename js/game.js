@@ -432,6 +432,7 @@ function changeToGameView(character) {
         let spriteImage = new Image();
         spriteImage.src = imageUrl;
         mainCharacter.changeImage(spriteImage, 200);
+        mainCharacter.gender = female;
     }
     else if(character == "character2")
     {
@@ -439,6 +440,7 @@ function changeToGameView(character) {
         let spriteImage = new Image();
         spriteImage.src = imageUrl;
         mainCharacter.changeImage(spriteImage, 200);
+        mainCharacter.gender = male;
     }
     else if(character == "character3")
     {
@@ -446,6 +448,7 @@ function changeToGameView(character) {
         let spriteImage = new Image();
         spriteImage.src = imageUrl;
         mainCharacter.changeImage(spriteImage, 250);
+        mainCharacter.gender = male;
     }
     else if(character == "character4")
     {
@@ -453,6 +456,7 @@ function changeToGameView(character) {
         let spriteImage = new Image();
         spriteImage.src = imageUrl;
         mainCharacter.changeImage(spriteImage, 230);
+        mainCharacter.gender = female;
     }
 
 
