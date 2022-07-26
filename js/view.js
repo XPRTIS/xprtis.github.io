@@ -1254,7 +1254,7 @@ class LevelClearView extends GameView {
         let buttonColor = "#3c4fff";
         let textColor = "#fff";
         let fontName = "'Roboto', sans-serif";
-        let text = "Press here to go to the next level.";
+        let text = gameText.level_clear_press;
 
         var randomNum = Math.floor(Math.random() * gameText.info.length) + 1;
         this.infoText = gameText.info[randomNum].split("\n");
@@ -1282,14 +1282,14 @@ class LevelClearView extends GameView {
         this.renderText(context);
     }
 
-//    renderGameButtons(context) {
-//        for (let i = 0; i < this.buttons.length; i++) {
-//            // Game buttons have no functionality, i.e. no function:
-//            if (this.buttons[i].fn === null) {
-//                this.buttons[i].draw(context);
-//            }
-//        }
-//    }
+    renderGameButtons(context) {
+        for (let i = 0; i < this.buttons.length; i++) {
+            // Game buttons have no functionality, i.e. no function:
+            if (this.buttons[i].fn !== null) {
+                this.buttons[i].draw(context);
+            }
+        }
+    }
 
     renderBackgroundBlur(context) {
         context.save();
