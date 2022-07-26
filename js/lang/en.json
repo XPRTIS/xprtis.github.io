@@ -23,7 +23,7 @@
         "How does she know all the ways to keep her healthy? There's no way I could get her...",
         "Ha ha, I finally got her! She'll be sick forever!"
     ],
-    "instructions": [
+    "elements": [
         "Eating food allows you to regain health.",
         "If you accidently shoot food, it will go bad.",
         "If you eat rotten food, you will not gain any health.",
