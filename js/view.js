@@ -467,7 +467,7 @@ class StartScreenView extends View { // subclass of View
         });
         
         for (let i = 0; i < supportedLanguages.length; i++) {
-            let x = instructionsX - 100;
+            let x = instructionsX - 200;
             let y = instructionsY + instructionsHeight * i + 40 * i;
             let text = languageMap[supportedLanguages[i]];
             this.buttons.push(new Button(x, y, instructionsWidth, instructionsHeight, buttonColor, textColor, 
