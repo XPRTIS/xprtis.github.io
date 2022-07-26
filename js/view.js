@@ -161,7 +161,7 @@ class InstructionsView extends View {
             document.documentElement.clientHeight * 0.35, 50, 50);
             context.drawImage(food2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
             document.documentElement.clientHeight * 0.35, 50, 50);
-            context.drawImage(food3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            context.drawImage(food3, (document.documentElement.clientWidth / 2) - width/2 + 110, 
             document.documentElement.clientHeight * 0.35, 50, 50);
 
             context.font = "500 15px 'Roboto', sans-serif";
@@ -180,7 +180,7 @@ class InstructionsView extends View {
             document.documentElement.clientHeight * 0.35 + 60, 50, 50);
             context.drawImage(rottenFood2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
             document.documentElement.clientHeight * 0.35 + 60, 50, 50);
-            context.drawImage(rottenFood3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            context.drawImage(rottenFood3, (document.documentElement.clientWidth / 2) - width/2 + 110, 
             document.documentElement.clientHeight * 0.35 + 60, 50, 50);
 
             context.font = "500 15px 'Roboto', sans-serif";
@@ -204,22 +204,26 @@ class InstructionsView extends View {
             context.fillText(gameText.elements[4], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.35 + 170);
 
+            let hand0 = new Image();
             let hand1 = new Image();
             let hand2 = new Image();
             let hand3 = new Image();
+            hand0.src = "assets/hand0.png";
             hand1.src = "assets/hand1.png";
             hand2.src = "assets/hand2.png";
             hand3.src = "assets/hand3.png";
-            context.drawImage(hand1, (document.documentElement.clientWidth / 2) - width/2 + 10, 
+            context.drawImage(hand0, (document.documentElement.clientWidth / 2) - width/2 + 10, 
+            document.documentElement.clientHeight * 0.35 + 180, 50, 50);            
+            context.drawImage(hand1, (document.documentElement.clientWidth / 2) - width/2 + 60, 
             document.documentElement.clientHeight * 0.35 + 180, 50, 50);
-            context.drawImage(hand2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
+            context.drawImage(hand2, (document.documentElement.clientWidth / 2) - width/2 + 110, 
             document.documentElement.clientHeight * 0.35 + 180, 50, 50);
-            context.drawImage(hand3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            context.drawImage(hand3, (document.documentElement.clientWidth / 2) - width/2 + 160, 
             document.documentElement.clientHeight * 0.35 + 180, 50, 50);
 
-            context.fillText(gameText.elements[5], (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.elements[5], (document.documentElement.clientWidth / 2) - width/2 + 230, 
             document.documentElement.clientHeight * 0.35 + 200);
-            context.fillText(gameText.elements[6], (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.elements[6], (document.documentElement.clientWidth / 2) - width/2 + 230, 
             document.documentElement.clientHeight * 0.35 + 220);
 
             let germ1 = new Image();
@@ -235,9 +239,9 @@ class InstructionsView extends View {
             document.documentElement.clientHeight * 0.35 + 240, 50, 50);
             context.drawImage(germ2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
             document.documentElement.clientHeight * 0.35 + 240, 50, 50);
-            context.drawImage(germ3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            context.drawImage(germ3, (document.documentElement.clientWidth / 2) - width/2 + 110, 
             document.documentElement.clientHeight * 0.35 + 240, 50, 50);
-            context.drawImage(germ4, (document.documentElement.clientWidth / 2) - width/2+ 160, 
+            context.drawImage(germ4, (document.documentElement.clientWidth / 2) - width/2 + 160, 
             document.documentElement.clientHeight * 0.35 + 240, 50, 50);
             context.fillText(gameText.elements[7], (document.documentElement.clientWidth / 2) - width/2 + 230, 
             document.documentElement.clientHeight * 0.35 + 260);
@@ -265,7 +269,7 @@ class InstructionsView extends View {
             document.documentElement.clientHeight * 0.15, 50, 50);
             context.drawImage(food2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
             document.documentElement.clientHeight * 0.15, 50, 50);
-            context.drawImage(food3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            context.drawImage(food3, (document.documentElement.clientWidth / 2) - width/2 + 110, 
             document.documentElement.clientHeight * 0.15, 50, 50);
     
             context.font = "500 12px 'Roboto', sans-serif";
@@ -284,7 +288,7 @@ class InstructionsView extends View {
             document.documentElement.clientHeight * 0.15 + 60, 50, 50);
             context.drawImage(rottenFood2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
             document.documentElement.clientHeight * 0.15 + 60, 50, 50);
-            context.drawImage(rottenFood3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            context.drawImage(rottenFood3, (document.documentElement.clientWidth / 2) - width/2 + 110, 
             document.documentElement.clientHeight * 0.15 + 60, 50, 50);
     
             context.font = "500 12px 'Roboto', sans-serif";
@@ -308,22 +312,26 @@ class InstructionsView extends View {
             context.fillText(gameText.elements[4], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.15 + 170);
     
+            let hand0 = new Image();
             let hand1 = new Image();
             let hand2 = new Image();
             let hand3 = new Image();
+            hand0.src = "assets/hand0.png";
             hand1.src = "assets/hand1.png";
             hand2.src = "assets/hand2.png";
             hand3.src = "assets/hand3.png";
-            context.drawImage(hand1, (document.documentElement.clientWidth / 2) - width/2 + 10, 
+            context.drawImage(hand0, (document.documentElement.clientWidth / 2) - width/2 + 10, 
             document.documentElement.clientHeight * 0.15 + 180, 50, 50);
-            context.drawImage(hand2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
+            context.drawImage(hand1, (document.documentElement.clientWidth / 2) - width/2 + 60, 
             document.documentElement.clientHeight * 0.15 + 180, 50, 50);
-            context.drawImage(hand3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            context.drawImage(hand2, (document.documentElement.clientWidth / 2) - width/2 + 110, 
             document.documentElement.clientHeight * 0.15 + 180, 50, 50);
+            context.drawImage(hand3, (document.documentElement.clientWidth / 2) - width/2 + 160, 
+            document.documentElement.clientHeight * 0.15 + 180, 50, 50);            
     
-            context.fillText(gameText.elements[5], (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.elements[5], (document.documentElement.clientWidth / 2) - width/2 + 230, 
             document.documentElement.clientHeight * 0.15 + 200);
-            context.fillText(gameText.elements[6], (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.elements[6], (document.documentElement.clientWidth / 2) - width/2 + 230, 
             document.documentElement.clientHeight * 0.15 + 220);
     
             let germ1 = new Image();
@@ -339,9 +347,9 @@ class InstructionsView extends View {
             document.documentElement.clientHeight * 0.15 + 240, 50, 50);
             context.drawImage(germ2, (document.documentElement.clientWidth / 2) - width/2 + 60, 
             document.documentElement.clientHeight * 0.15 + 240, 50, 50);
-            context.drawImage(germ3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
+            context.drawImage(germ3, (document.documentElement.clientWidth / 2) - width/2 + 110, 
             document.documentElement.clientHeight * 0.15 + 240, 50, 50);
-            context.drawImage(germ4, (document.documentElement.clientWidth / 2) - width/2+ 160, 
+            context.drawImage(germ4, (document.documentElement.clientWidth / 2) - width/2 + 160, 
             document.documentElement.clientHeight * 0.15 + 240, 50, 50);
             context.fillText(gameText.elements[7], (document.documentElement.clientWidth / 2) - width/2 + 230, 
             document.documentElement.clientHeight * 0.15 + 260);
