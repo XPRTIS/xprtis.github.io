@@ -167,7 +167,7 @@ class InstructionsView extends View {
             context.font = "500 15px 'Roboto', sans-serif";
             context.fillStyle = '#FFF';
             context.textAlign = 'left';
-            context.fillText("Eating food allows you to regain health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.instructions[0], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.35 + 30);
 
             let rottenFood1 = new Image();
@@ -185,9 +185,9 @@ class InstructionsView extends View {
 
             context.font = "500 15px 'Roboto', sans-serif";
             context.fillStyle = '#FFF';
-            context.fillText("If you accidently shoot food, it will go bad.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.instructions[1], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.35 + 80);
-            context.fillText("If you eat rotten food, you will not gain any health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.instructions[2], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.35 + 100);
 
             let stove = new Image();
@@ -199,9 +199,9 @@ class InstructionsView extends View {
             context.drawImage(smoke, (document.documentElement.clientWidth / 2) - width/2 + 60, 
             document.documentElement.clientHeight * 0.35 + 120, 50, 50);
 
-            context.fillText("Fire causes smoke, and getting hit by smoke will make you lose health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.instructions[3], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.35 + 150);
-            context.fillText("Smoke cannot be hit by soap.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.instructions[4], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.35 + 170);
 
             let hand1 = new Image();
@@ -217,9 +217,9 @@ class InstructionsView extends View {
             context.drawImage(hand3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
             document.documentElement.clientHeight * 0.35 + 180, 50, 50);
 
-            context.fillText("Getting hit by a hand will make you lose health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.instructions[5], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.35 + 200);
-            context.fillText("The more germs on a hand, the more times you need to hit the hand.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.instructions[6], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.35 + 220);
 
             let germ1 = new Image();
@@ -239,9 +239,9 @@ class InstructionsView extends View {
             document.documentElement.clientHeight * 0.35 + 240, 50, 50);
             context.drawImage(germ4, (document.documentElement.clientWidth / 2) - width/2+ 160, 
             document.documentElement.clientHeight * 0.35 + 240, 50, 50);
-            context.fillText("Getting by germs also makes you lose health.", (document.documentElement.clientWidth / 2) - width/2 + 230, 
+            context.fillText(gameText.instructions[7], (document.documentElement.clientWidth / 2) - width/2 + 230, 
             document.documentElement.clientHeight * 0.35 + 260);
-            context.fillText("One hit by soap will kill a germ.", (document.documentElement.clientWidth / 2) - width/2 + 230, 
+            context.fillText(gameText.instructions[8], (document.documentElement.clientWidth / 2) - width/2 + 230, 
             document.documentElement.clientHeight * 0.35 + 280);
                         
         }
@@ -271,7 +271,7 @@ class InstructionsView extends View {
             context.font = "500 12px 'Roboto', sans-serif";
             context.fillStyle = '#FFF';
             context.textAlign = 'left';
-            context.fillText("Eating food allows you to regain health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.instructions[0], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.15 + 30);
     
             let rottenFood1 = new Image();
@@ -289,9 +289,9 @@ class InstructionsView extends View {
     
             context.font = "500 12px 'Roboto', sans-serif";
             context.fillStyle = '#FFF';
-            context.fillText("If you accidently shoot food, it will go bad.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.instructions[1], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.15 + 80);
-            context.fillText("If you eat rotten food, you will not gain any health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.instructions[2], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.15 + 100);
     
             let stove = new Image();
@@ -303,9 +303,9 @@ class InstructionsView extends View {
             context.drawImage(smoke, (document.documentElement.clientWidth / 2) - width/2 + 60, 
             document.documentElement.clientHeight * 0.15 + 120, 50, 50);
     
-            context.fillText("Fire causes smoke, and getting hit by smoke will make you lose health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.instructions[3], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.15 + 150);
-            context.fillText("Smoke cannot be hit by soap.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.instructions[4], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.15 + 170);
     
             let hand1 = new Image();
@@ -321,9 +321,9 @@ class InstructionsView extends View {
             context.drawImage(hand3, (document.documentElement.clientWidth / 2) - width/2+ 110, 
             document.documentElement.clientHeight * 0.15 + 180, 50, 50);
     
-            context.fillText("Getting hit by a hand will make you lose health.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.instructions[5], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.15 + 200);
-            context.fillText("The more germs on a hand, the more times you need to hit the hand.", (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.instructions[6], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.15 + 220);
     
             let germ1 = new Image();
@@ -343,9 +343,9 @@ class InstructionsView extends View {
             document.documentElement.clientHeight * 0.15 + 240, 50, 50);
             context.drawImage(germ4, (document.documentElement.clientWidth / 2) - width/2+ 160, 
             document.documentElement.clientHeight * 0.15 + 240, 50, 50);
-            context.fillText("Getting by germs also makes you lose health.", (document.documentElement.clientWidth / 2) - width/2 + 230, 
+            context.fillText(gameText.instructions[7], (document.documentElement.clientWidth / 2) - width/2 + 230, 
             document.documentElement.clientHeight * 0.15 + 260);
-            context.fillText("One hit by soap will kill a germ.", (document.documentElement.clientWidth / 2) - width/2 + 230, 
+            context.fillText(gameText.instructions[8], (document.documentElement.clientWidth / 2) - width/2 + 230, 
             document.documentElement.clientHeight * 0.15 + 280);
         }
         // context.shadowColor = "#000";
