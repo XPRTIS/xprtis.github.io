@@ -467,11 +467,11 @@ class StartScreenView extends View { // subclass of View
         });
         
         for (let i = 0; i < supportedLanguages.length; i++) {
-            let x = document.documentElement.clientWidth * 0.8;
-            let y = instructionsY + (instructionsHeight * i) + (margin * i);
+            let x = instructionsX - margin;
+            let y = instructionsY + instructionsHeight * i + margin * i;
             let text = languageMap[supportedLanguages[i]];
-            this.buttons.push(new Button(x, y, instructionsWidth, instructionsHeight, buttonColor, '#FFF', 
-                fontName, 30, text, true, () => {
+            this.buttons.push(new Button(x, y, instructionsWidth, instructionsHeight, buttonColor, textColor, 
+                fontName, 20, text, true, () => {
                     setGameLanguageAndReload(supportedLanguages[i]);
                 }));
         }
