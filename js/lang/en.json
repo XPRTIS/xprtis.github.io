@@ -23,6 +23,17 @@
         "How does she know all the ways to keep her healthy? There's no way I could get her...",
         "Ha ha, I finally got her! She'll be sick forever!"
     ],
+    "instructions": [
+        "Eating food allows you to regain health.",
+        "If you accidently shoot food, it will go bad.",
+        "If you eat rotten food, you will not gain any health.",
+        "Fire causes smoke, and getting hit by smoke will make you lose health.",
+        "Smoke cannot be hit by soap.",
+        "Getting hit by a hand will make you lose health.",
+        "The more germs on a hand, the more times you need to hit the hand.",
+        "Getting by germs also makes you lose health.",
+        "One hit by soap will kill a germ."
+    ],
     "info": [
         "Research shows that washing hands with soap and water \ncould reduce deaths from diarrheal disease by up to 50%.",
         "Researchers estimate that if everyone routinely washed their hands, \n1 million deaths a year could be prevented.",
