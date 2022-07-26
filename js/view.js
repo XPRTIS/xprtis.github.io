@@ -442,16 +442,6 @@ class StartScreenView extends View { // subclass of View
         let buttonColor = "rgba(255, 255, 255, 1)";
         let textColor = "rgba(0, 0, 0, 1)";
 
-        for (let i = 0; i < supportedLanguages.length; i++) {
-            let x = document.documentElement.clientWidth * 0.8;
-            let y = document.documentElement.clientHeight * 0.1 + (h * i) + (margin * i);
-            let text = languageMap[supportedLanguages[i]];
-            this.buttons.push(new Button(x, y, w, h, buttonColor, textColor, 
-                fontName, fontSize, text, true, () => {
-                    setGameLanguageAndReload(supportedLanguages[i]);
-                }));
-        }
-
         let instructionsWidth;
         let instructionsHeight;
         let instructionsX;
@@ -475,6 +465,16 @@ class StartScreenView extends View { // subclass of View
         this.instructionsButton = new Button(instructionsX, instructionsY, instructionsWidth, instructionsHeight, '#FFF', '#000', fontName, 20, "Game Elements", true, () => {
             stateStack.push(new InstructionsView());
         });
+        
+        for (let i = 0; i < supportedLanguages.length; i++) {
+            let x = document.documentElement.clientWidth * 0.8;
+            let y = instructionsY + (instructionsHeight * i) + (margin * i);
+            let text = languageMap[supportedLanguages[i]];
+            this.buttons.push(new Button(x, y, w, h, buttonColor, textColor, 
+                fontName, fontSize, text, true, () => {
+                    setGameLanguageAndReload(supportedLanguages[i]);
+                }));
+        }
 
         this.bgImage = new Image();
         this.bgImage.src = 'assets/village_bg.jpg';
