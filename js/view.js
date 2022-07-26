@@ -24,7 +24,7 @@ class View {
     renderAll(context) {}
 }
 
-class NextLevelView extends View {
+class NextLevelView extends LevelClearView {
     constructor() {
         super();
         this.name = "NextLevelView";
@@ -1272,11 +1272,11 @@ class LevelClearView extends GameView {
                 audioManager.enableOrDisableMusic("bg");
                 if(level == 2)
                 {
-                    stateStack[stateStack.length - 1].changeBackground('assets/background3.png');
+                    stateStack[stateStack.length - 2].changeBackground('assets/background3.png');
                 }
                 else if(level == 3)
                 {
-                    stateStack[stateStack.length - 1].changeBackground('assets/background2.png');
+                    stateStack[stateStack.length - 2].changeBackground('assets/background2.png');
                 }
             })
     }
