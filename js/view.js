@@ -586,6 +586,7 @@ class StartScreenView extends View { // subclass of View
             context.globalAlpha = 0.8;
             /// get width of text
             var width = 400;
+            context.fillStyle = 'rgba(0, 0, 0, 1)';
             context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
             document.documentElement.clientHeight * 0.20, width, 230, 20).fill();
             // context.shadowColor = "#000";
@@ -628,6 +629,7 @@ class StartScreenView extends View { // subclass of View
             context.globalAlpha = 0.8;
             /// get width of text
             var width = 400;
+            context.fillStyle = 'rgba(0, 0, 0, 1)';
             context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
             document.documentElement.clientHeight * 0.35, width, 230, 20).fill();
             // context.shadowColor = "#000";
