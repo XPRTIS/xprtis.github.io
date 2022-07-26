@@ -1268,7 +1268,7 @@ class LevelClearView extends GameView {
 
         this.nextLevelButton = new Button(x, y, w, h, buttonColor, textColor, 
             fontName, fontSize, text, true, () => {
-                new NextLevelView();
+                stateStack.push(new NextLevelView());
                 audioManager.enableOrDisableMusic("bg");
                 if(level == 2)
                 {
