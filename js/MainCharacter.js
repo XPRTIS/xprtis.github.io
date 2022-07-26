@@ -32,7 +32,7 @@ class MainCharacter {
     }
 
     moveCharacterUp() {
-        if (this.y <= 0) return;
+        if (this.y <= 0 + document.documentElement.clientHeight * 0.8) return;
         if(this.frameIndex == 3) 
         { 
             this.frameIndex = 0 
