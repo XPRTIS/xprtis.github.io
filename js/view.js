@@ -486,7 +486,7 @@ class StartScreenView extends View { // subclass of View
         this.renderTitle(context);
         this.renderInstructions(context);
         this.renderCharacter(context);
-        // this.renderLanguageOptions(context);
+        this.renderLanguageOptions(context);
     }
 
     renderCharacter(context) {
