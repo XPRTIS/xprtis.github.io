@@ -30,7 +30,7 @@ class Stove extends Source {
         super();
         this.sourceName = "Stove";
         this.x = Math.floor(Math.random() * (document.documentElement.clientWidth * .4));
-        this.y = Math.floor(Math.random() * (document.documentElement.clientHeight * .8) + document.documentElement.clientHeight * 0.25);
+        this.y = Math.floor(Math.random() * (document.documentElement.clientHeight * .75) + document.documentElement.clientHeight * 0.25);
         this.w = 60;
         this.h = 60;
         this.imgUrlEnabled = 'assets/stove.png';
