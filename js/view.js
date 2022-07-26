@@ -1261,7 +1261,7 @@ class LevelClearView extends GameView {
 
         this.nextLevelButton = new Button(x, y, w, h, buttonColor, textColor, 
             fontName, fontSize, text, true, () => {
-                stateStack.pop();
+                new NextLevelView();
                 audioManager.enableOrDisableMusic("bg");
                 if(level == 2)
                 {
@@ -1350,7 +1350,7 @@ class LevelClearView extends GameView {
                             document.documentElement.clientHeight * 0.20);
 
             context.font = "600 20px 'Roboto', sans-serif";
-            text = "You cleared this level!";
+            text = gameText.level_cleared_text;
             context.fillText(text, document.documentElement.clientWidth / 2, 
                             document.documentElement.clientHeight * 0.28);
 
@@ -1366,7 +1366,7 @@ class LevelClearView extends GameView {
             context.font = "600 20px 'Roboto', sans-serif";
             context.fillStyle = '#FFF';
             context.globalAlpha = 1;
-            text = "Fun Fact";
+            text = gameText.fun_fact;
             context.fillText(text, document.documentElement.clientWidth / 2, 
                              document.documentElement.clientHeight * 0.45);
     
@@ -1394,7 +1394,7 @@ class LevelClearView extends GameView {
                             document.documentElement.clientHeight * 0.30);
 
             context.font = "600 24px 'Roboto', sans-serif";
-            text = "You cleared this level!";
+            text = gameText.level_clear_text;
             context.fillText(text, document.documentElement.clientWidth / 2, 
                             document.documentElement.clientHeight * 0.35);
 
@@ -1410,7 +1410,7 @@ class LevelClearView extends GameView {
             context.font = "600 24px 'Roboto', sans-serif";
             context.fillStyle = '#FFF';
             context.globalAlpha = 1;
-            text = "Fun Fact";
+            text = gameText.fun_fact;
             context.fillText(text, document.documentElement.clientWidth / 2, 
                              document.documentElement.clientHeight * 0.45);
     
