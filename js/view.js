@@ -61,7 +61,14 @@ class NextLevelView extends View {
     }
 
     renderScript(context) {
-        let scriptText = gameText.villian_scripts[level - 1];
+        if(mainCharcter.gender = male)
+        {
+        let scriptText = gameText.villian_scripts_male[level];
+        }
+        else
+        {
+        let scriptText = gameText.villian_scripts_female[level];
+        }
         let partitionedScript = partitionScript(scriptText, context);
         if (partitionedScript != undefined && partitionedScript.lines.length > 0) {
             context.font = "600 20px 'Roboto', sans-serif";
