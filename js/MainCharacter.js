@@ -5,6 +5,7 @@ class MainCharacter {
         this.speed = 20;
         this.bullets = 10;
         this.spriteImage = spriteImage;
+        this.gender = null;
         this.w = 2260 / (4 * 10);
         this.h = 740 / 10;
         this.frameIndex = 0;
