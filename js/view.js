@@ -24,6 +24,76 @@ class View {
     renderAll(context) {}
 }
 
+class NextLevelView extends View {
+    constructor() {
+        super();
+        this.name = "NextLevelView";
+        this.bgImage = new Image();
+        // Image credit: https://www.freepik.com/vectors/slum
+        this.bgImage.src = 'assets/village_bg.jpg';
+    }
+
+    renderAll(context) {
+        super.renderAll(context);
+        this.renderBackground(context);
+        // TO DO: Uncomment once antagonist asset is supplied:
+        this.renderAntagonist(context);
+        this.renderNextLevelText(context);
+        this.renderScript(context);
+    }
+
+    renderBackground(context) {
+        let bgWidth = document.documentElement.clientWidth;
+        let bgHeight = document.documentElement.clientHeight;
+        context.drawImage(this.bgImage, 0, 0, bgWidth, bgHeight);
+
+        context.save();
+        context.fillStyle = 'rgba(0, 0, 0, 0.3)';
+        context.fillRect(0, 0, bgWidth, bgHeight);
+        context.restore();
+
+    }
+
+    renderAntagonist(context) {
+        let x = document.documentElement.clientWidth / 5;
+        let y = document.documentElement.clientHeight / 2 - (antagonist.h / 2);
+        antagonist.draw(context, x, y);
+    }
+
+    renderScript(context) {
+        if(mainCharacter.gender == true)
+        {
+        let scriptText = gameText.villian_scripts_male[level];
+        }
+        else
+        {
+        let scriptText = gameText.villian_scripts_female[level];
+        }
+        let partitionedScript = partitionScript(scriptText, context);
+        if (partitionedScript != undefined && partitionedScript.lines.length > 0) {
+            context.font = "600 20px 'Roboto', sans-serif";
+            context.fillStyle = 'rgba(255, 255, 255, 1)';
+            let x = document.documentElement.clientWidth * 0.64 - 
+                    context.measureText(partitionedScript.lines[0]).width / 2;
+            let y = document.documentElement.clientHeight * 0.45;
+            let margin = 15;
+            for (let i = 0; i < partitionedScript.lines.length; i++) {
+                context.fillText(partitionedScript.lines[i], x, y)
+                y += partitionedScript.height + margin;
+            }
+        }
+    }
+
+    renderNextLevelText(context) {
+        let text = gameText.next_level_text;
+        var textWidth = context.measureText(text).width;
+        context.font = "12px Helvetica";
+        context.fillStyle = 'rgba(255, 255, 255, 1)';
+        context.fillText(text, document.documentElement.clientWidth * 0.64 - textWidth / 2, 
+                         document.documentElement.clientHeight * 0.75);
+    }
+}
+
 class InstructionsView extends View {
     constructor() {
         super();
@@ -1202,11 +1272,11 @@ class LevelClearView extends GameView {
                 audioManager.enableOrDisableMusic("bg");
                 if(level == 2)
                 {
-                    stateStack[stateStack.length - 2].changeBackground('assets/background3.png');
+                    stateStack[stateStack.length - 1].changeBackground('assets/background3.png');
                 }
                 else if(level == 3)
                 {
-                    stateStack[stateStack.length - 2].changeBackground('assets/background2.png');
+                    stateStack[stateStack.length - 1].changeBackground('assets/background2.png');
                 }
             })
     }
@@ -1361,93 +1431,14 @@ class LevelClearView extends GameView {
             }
            
         }
-        context.restore();
-    }
-}
-
-class NextLevelView extends LevelClearView {
-    constructor() {
-        super();
-        this.name = "NextLevelView";
-        this.bgImage = new Image();
-        // Image credit: https://www.freepik.com/vectors/slum
-        this.bgImage.src = 'assets/village_bg.jpg';
         
-        this.continueButton = new Button(x, y, w, h, buttonColor, textColor, 
-            fontName, fontSize, text, true, () => {
-                stateStack.pop();
-                stateStack.pop();
-            })
-    }
 
-    renderAll(context) {
-        super.renderAll(context);
-        this.renderBackground(context);
-        // TO DO: Uncomment once antagonist asset is supplied:
-        this.renderAntagonist(context);
-        this.renderNextLevelText(context);
-        this.renderScript(context);
-        this.renderGameButtons(context);
-    }
 
-    renderBackground(context) {
-        let bgWidth = document.documentElement.clientWidth;
-        let bgHeight = document.documentElement.clientHeight;
-        context.drawImage(this.bgImage, 0, 0, bgWidth, bgHeight);
 
-        context.save();
-        context.fillStyle = 'rgba(0, 0, 0, 0.3)';
-        context.fillRect(0, 0, bgWidth, bgHeight);
+
+
+
         context.restore();
-
-    }
-
-    renderAntagonist(context) {
-        let x = document.documentElement.clientWidth / 5;
-        let y = document.documentElement.clientHeight / 2 - (antagonist.h / 2);
-        antagonist.draw(context, x, y);
-    }
-
-    renderScript(context) {
-        if(mainCharacter.gender == true)
-        {
-        let scriptText = gameText.villian_scripts_male[level];
-        }
-        else
-        {
-        let scriptText = gameText.villian_scripts_female[level];
-        }
-        let partitionedScript = partitionScript(scriptText, context);
-        if (partitionedScript != undefined && partitionedScript.lines.length > 0) {
-            context.font = "600 20px 'Roboto', sans-serif";
-            context.fillStyle = 'rgba(255, 255, 255, 1)';
-            let x = document.documentElement.clientWidth * 0.64 - 
-                    context.measureText(partitionedScript.lines[0]).width / 2;
-            let y = document.documentElement.clientHeight * 0.45;
-            let margin = 15;
-            for (let i = 0; i < partitionedScript.lines.length; i++) {
-                context.fillText(partitionedScript.lines[i], x, y)
-                y += partitionedScript.height + margin;
-            }
-        }
-    }
-
-    renderGameButtons(context) {
-        for (let i = 0; i < this.buttons.length; i++) {
-            // Game buttons have no functionality, i.e. no function:
-            if (this.buttons[i].fn !== null) {
-                this.buttons[i].draw(context);
-            }
-        }
-    }
-
-    renderNextLevelText(context) {
-        let text = gameText.next_level_text;
-        var textWidth = context.measureText(text).width;
-        context.font = "12px Helvetica";
-        context.fillStyle = 'rgba(255, 255, 255, 1)';
-        context.fillText(text, document.documentElement.clientWidth * 0.64 - textWidth / 2, 
-                         document.documentElement.clientHeight * 0.75);
     }
 }
 
