@@ -470,7 +470,7 @@ class StartScreenView extends View { // subclass of View
             let x = document.documentElement.clientWidth * 0.8;
             let y = instructionsY + (instructionsHeight * i) + (margin * i);
             let text = languageMap[supportedLanguages[i]];
-            this.buttons.push(new Button(x, y, w, h, buttonColor, textColor, 
+            this.buttons.push(new Button(x, y, instructionsWidth, instructionsHeight, buttonColor, textColor, 
                 fontName, fontSize, text, true, () => {
                     setGameLanguageAndReload(supportedLanguages[i]);
                 }));
