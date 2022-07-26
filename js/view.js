@@ -61,7 +61,7 @@ class NextLevelView extends View {
     }
 
     renderScript(context) {
-        if(mainCharacter.gender == male)
+        if(mainCharacter.gender == true)
         {
         let scriptText = gameText.villian_scripts_male[level];
         }
