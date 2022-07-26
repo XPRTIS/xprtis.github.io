@@ -38,8 +38,8 @@ class NextLevelView extends View {
         this.renderBackground(context);
         // TO DO: Uncomment once antagonist asset is supplied:
         this.renderAntagonist(context);
-        this.renderScript(context);
         this.renderNextLevelText(context);
+        this.renderScript(context);
     }
 
     renderBackground(context) {
