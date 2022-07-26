@@ -1361,13 +1361,6 @@ class LevelClearView extends GameView {
             }
            
         }
-        
-
-
-
-
-
-
         context.restore();
     }
 }
@@ -1379,6 +1372,12 @@ class NextLevelView extends LevelClearView {
         this.bgImage = new Image();
         // Image credit: https://www.freepik.com/vectors/slum
         this.bgImage.src = 'assets/village_bg.jpg';
+        
+        this.continueButton = new Button(x, y, w, h, buttonColor, textColor, 
+            fontName, fontSize, text, true, () => {
+                stateStack.pop();
+                stateStack.pop();
+            })
     }
 
     renderAll(context) {
@@ -1388,6 +1387,7 @@ class NextLevelView extends LevelClearView {
         this.renderAntagonist(context);
         this.renderNextLevelText(context);
         this.renderScript(context);
+        this.renderGameButtons(context);
     }
 
     renderBackground(context) {
@@ -1428,6 +1428,15 @@ class NextLevelView extends LevelClearView {
             for (let i = 0; i < partitionedScript.lines.length; i++) {
                 context.fillText(partitionedScript.lines[i], x, y)
                 y += partitionedScript.height + margin;
+            }
+        }
+    }
+
+    renderGameButtons(context) {
+        for (let i = 0; i < this.buttons.length; i++) {
+            // Game buttons have no functionality, i.e. no function:
+            if (this.buttons[i].fn !== null) {
+                this.buttons[i].draw(context);
             }
         }
     }
