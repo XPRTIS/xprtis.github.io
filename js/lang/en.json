@@ -71,6 +71,7 @@
     "try_again_text": "Oh no! Health dropped to 0.",
     "level_text": "Level",
     "title": "Shoot-'em-up",
+    "elements": "Game Elements",
     "rotate_phone_text": "Please rotate your phone to continue playing...",
     "level_clear_text": "You cleared this level!",
     "level_clear_press": "Press here to go to the next level.",
