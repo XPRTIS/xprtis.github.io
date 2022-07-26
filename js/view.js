@@ -1282,14 +1282,14 @@ class LevelClearView extends GameView {
         this.renderText(context);
     }
 
-    renderGameButtons(context) {
-        for (let i = 0; i < this.buttons.length; i++) {
-            // Game buttons have no functionality, i.e. no function:
-            if (this.buttons[i].fn === null) {
-                this.buttons[i].draw(context);
-            }
-        }
-    }
+//    renderGameButtons(context) {
+//        for (let i = 0; i < this.buttons.length; i++) {
+//            // Game buttons have no functionality, i.e. no function:
+//            if (this.buttons[i].fn === null) {
+//                this.buttons[i].draw(context);
+//            }
+//        }
+//    }
 
     renderBackgroundBlur(context) {
         context.save();
