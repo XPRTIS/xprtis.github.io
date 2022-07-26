@@ -586,15 +586,15 @@ class StartScreenView extends View { // subclass of View
             context.globalAlpha = 0.8;
             /// get width of text
             var width = 400;
+            context.fillStyle = 'rgba(255, 255, 255, 1)';
             context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
-            document.documentElement.clientHeight * 0.20, width, 230, 20).fill()
+            document.documentElement.clientHeight * 0.20, width, 230, 20).fill();
             // context.shadowColor = "#000";
             // context.shadowBlur = 5;
             // context.shadowOffsetX = 0;
             // context.shadowOffsetY = 1;
             context.globalAlpha = 1;
             context.font = "500 17px 'Roboto', sans-serif";
-            context.fillStyle = 'rgba(255, 255, 255, 1)';
             context.textAlign = 'center';
             context.fillText(text, document.documentElement.clientWidth / 2, 
                              document.documentElement.clientHeight * 0.20 + 30);
@@ -628,15 +628,15 @@ class StartScreenView extends View { // subclass of View
             context.globalAlpha = 0.8;
             /// get width of text
             var width = 400;
+            context.fillStyle = 'rgba(255, 255, 255, 1)';
             context.roundRect((document.documentElement.clientWidth / 2) - width/2, 
-            document.documentElement.clientHeight * 0.35, width, 230, 20).fill()
+            document.documentElement.clientHeight * 0.35, width, 230, 20).fill();
             // context.shadowColor = "#000";
             // context.shadowBlur = 5;
             // context.shadowOffsetX = 0;
             // context.shadowOffsetY = 1;
             context.globalAlpha = 1;
             context.font = "500 17px 'Roboto', sans-serif";
-            context.fillStyle = 'rgba(255, 255, 255, 1)';
             context.textAlign = 'center';
             context.fillText(text, document.documentElement.clientWidth / 2, 
                              document.documentElement.clientHeight * 0.35 + 30);
