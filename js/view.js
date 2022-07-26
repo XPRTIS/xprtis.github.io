@@ -462,7 +462,7 @@ class StartScreenView extends View { // subclass of View
             instructionsY = instructionsHeight + 10;
             fontName = "'Roboto', sans-serif;";
         }
-        this.instructionsButton = new Button(instructionsX, instructionsY, instructionsWidth, instructionsHeight, '#FFF', '#000', fontName, 20, "Game Elements", true, () => {
+        this.instructionsButton = new Button(instructionsX, instructionsY, instructionsWidth, instructionsHeight, '#FFF', '#000', fontName, 20, gameText.elements, true, () => {
             stateStack.push(new InstructionsView());
         });
         
@@ -471,7 +471,7 @@ class StartScreenView extends View { // subclass of View
             let y = instructionsY + (instructionsHeight * i) + (margin * i);
             let text = languageMap[supportedLanguages[i]];
             this.buttons.push(new Button(x, y, instructionsWidth, instructionsHeight, buttonColor, textColor, 
-                fontName, fontSize, text, true, () => {
+                fontName, 20, text, true, () => {
                     setGameLanguageAndReload(supportedLanguages[i]);
                 }));
         }
