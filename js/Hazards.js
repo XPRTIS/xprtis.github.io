@@ -45,7 +45,7 @@ class Hazard {
 class DirtyHand extends Hazard {
     constructor(type) {
         let name = "Dirty Hand";
-        let yMin = document.documentElement.clientHeight * 0.1;
+        let yMin = document.documentElement.clientHeight * 0.3;
         let yMax = document.documentElement.clientHeight * 0.7;
         let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
         let w = document.documentElement.clientWidth * 0.1;
@@ -110,7 +110,7 @@ class DirtyHand extends Hazard {
 class Germ extends Hazard {
     constructor() {
         let name = "Germ";
-        let yMin = document.documentElement.clientHeight * 0.1;
+        let yMin = document.documentElement.clientHeight * 0.3;
         let yMax = document.documentElement.clientHeight * 0.7;
         let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
         let w = document.documentElement.clientWidth * 0.1;
@@ -150,7 +150,7 @@ class Germ extends Hazard {
 class Food extends Hazard {
     constructor() { // Each hazard should have these fields:
         let name = "Food";
-        let yMin = document.documentElement.clientHeight * 0.1;
+        let yMin = document.documentElement.clientHeight * 0.3;
         let yMax = document.documentElement.clientHeight * 0.7;
         let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
         let dx = 2;
@@ -230,7 +230,7 @@ class Poop extends Hazard {
         let name = "Poop";
         let xMin = document.documentElement.clientWidth * 0.4;
         let xMax = document.documentElement.clientWidth * 0.7;
-        let yMin = document.documentElement.clientHeight * 0.1;
+        let yMin = document.documentElement.clientHeight * 0.3;
         let yMax = document.documentElement.clientHeight * 0.7;
         let x = Math.floor(Math.random() * (xMax - xMin) + xMin);
         let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
@@ -250,7 +250,7 @@ class Flies extends Hazard {
         let name = "Flies";
         let xMin = document.documentElement.clientWidth * 0.4;
         let xMax = document.documentElement.clientWidth * 0.7;
-        let yMin = document.documentElement.clientHeight * 0.1;
+        let yMin = document.documentElement.clientHeight * 0.3;
         let yMax = document.documentElement.clientHeight * 0.7;
         let x = Math.floor(Math.random() * (xMax - xMin) + xMin);
         let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
