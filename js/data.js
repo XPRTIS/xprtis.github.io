@@ -252,6 +252,8 @@ function updateHazardDirection() {
         // Don't change direction if it's already close to the end of the
         // screen.
         let ratio = 3 / 5;
+        hazard.dx = 2;
+        hazard.dy = 0;
         if (hazard.x >= document.documentElement.clientWidth * ratio) {
             continue;
         }
@@ -261,8 +263,8 @@ function updateHazardDirection() {
                                mainCharacter.x - hazard.x);
         
         // Then update the dx and dy using the angle:
-        hazard.dx = hazard.speed * Math.cos(angle);
-        hazard.dy = hazard.speed * Math.sin(angle);
+        hazard.dy = hazard.dx * Math.sin(angle);
+        hazard.dx = hazard.dx * Math.cos(angle);
     }
     
 }
