@@ -54,6 +54,7 @@ class DirtyHand extends Hazard {
         let h = w;
         let dx = 2;
         let dy = 0;
+        let speed = 0;
         let imgUrl;
         if(type == 1)
         {
@@ -70,7 +71,7 @@ class DirtyHand extends Hazard {
 
         let points = 1;
         let healthLoss = 20;
-        super(name, x, y, w, h, dx, dy, imgUrl, points, healthLoss);
+        super(name, x, y, w, h, dx, dy, speed, imgUrl, points, healthLoss);
 
         this.hazardHealth = type == 1 ? 20 : type == 2 ? 30 : 40;
         this.totalHazardHealth = type == 1 ? 20 : type == 2 ? 30 : 40;;
@@ -141,7 +142,7 @@ class Germ extends Hazard {
 
         let points = 1;
         let healthLoss = 30;
-        super(name, x, y, w, h, dx, dy, imgUrl, points, healthLoss);
+        super(name, x, y, w, h, dx, dy, speed, imgUrl, points, healthLoss);
     }
 }
 
@@ -177,7 +178,7 @@ class Food extends Hazard {
         }
         let points = 0;
         let healthLoss = -1 * 5;
-        super(name, x, y, w, h, dx, dy, imgUrl, points, healthLoss);
+        super(name, x, y, w, h, dx, dy, speed, imgUrl, points, healthLoss);
         this.audio = "salad";
     }
 
@@ -222,7 +223,7 @@ class Smoke extends Hazard {
         let imgUrl = 'assets/smoke.png';
         let points = 0;
         let healthLoss = 50;
-        super(name, x, y, w, h, dx, dy, imgUrl, points, healthLoss);
+        super(name, x, y, w, h, dx, dy, speed, imgUrl, points, healthLoss);
         this.audio = "cough";
     }
 }
@@ -246,7 +247,7 @@ class Poop extends Hazard {
         let imgUrl = 'assets/poop.png';
         let points = 0;
         let healthLoss = 10;
-        super(name, x, y, w, h, dx, dy, imgUrl, points, healthLoss);
+        super(name, x, y, w, h, dx, dy, speed, imgUrl, points, healthLoss);
     }
 }
 class Flies extends Hazard {
@@ -267,7 +268,7 @@ class Flies extends Hazard {
         let imgUrl = 'assets/flies.png'; // TODO: find image of flies.
         let points = 0;
         let healthLoss = 10;
-        super(name, x, y, w, h, dx, dy, imgUrl, points, healthLoss);
+        super(name, x, y, w, h, dx, dy, speed, imgUrl, points, healthLoss);
     }
 }
 
