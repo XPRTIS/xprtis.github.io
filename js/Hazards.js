@@ -54,7 +54,6 @@ class DirtyHand extends Hazard {
         let h = w;
         let dx = 2;
         let dy = 0;
-        let speed = 2;
         let imgUrl;
         if(type == 1)
         {
