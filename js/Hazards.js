@@ -118,7 +118,7 @@ class Germ extends Hazard {
         let w = document.documentElement.clientWidth * 0.1;
         let x = w;
         let h = w;
-        let dx = 2;
+        let dx = 3;
         let dy = 0;
         let speed = 3;
         let random = Math.floor(Math.random() * 4);
