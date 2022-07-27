@@ -246,7 +246,7 @@ function removeHazards(hazards, removeList) {
 // Makes hazards follow player. Currently after level 3 this function is
 // enabled (see levels.js to make edits to this feature).
 function updateHazardDirection() {
-    if (!levelInfo.hazardFollowsPlayer) { return; }
+    if (!levelInfo.hazardsFollowPlayer) { return; }
     for (let i = 0; i < hazards.length; i++) {
         let hazard = hazards[i];
         // Don't change direction if it's already close to the end of the
