@@ -120,7 +120,7 @@ class Germ extends Hazard {
         let h = w;
         let dx = 2;
         let dy = 0;
-        let speed = 2;
+        let speed = 3;
         let random = Math.floor(Math.random() * 4);
         let imgUrl;
         if(random == 0)
