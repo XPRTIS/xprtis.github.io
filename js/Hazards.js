@@ -4,12 +4,13 @@ class Hazard {
     static canSpawn() { return true; }
 
     // Each hazard should have these fields:
-    constructor(name, x, y, w, h, dx, dy, imgUrl, points, healthLoss) {
+    constructor(name, x, y, w, h, dx, dy, speed, imgUrl, points, healthLoss) {
         this.name = name;
         this.x = x;
         this.y = y;
         this.dx = dx;
         this.dy = dy;
+        this.speed = speed;
         this.w = w;
         this.h = h;
         this.imgUrl = imgUrl;
@@ -25,8 +26,8 @@ class Hazard {
     }
 
     moveHazard() {
-        this.x += this.dx;
-        this.y += this.dy;
+        this.x += this.dx * levelInfo.speed;
+        this.y += this.dy * levelInfo.speed;
     }
 
     draw(context) {
@@ -53,6 +54,7 @@ class DirtyHand extends Hazard {
         let h = w;
         let dx = 2;
         let dy = 0;
+        let speed = 2;
         let imgUrl;
         if(type == 1)
         {
@@ -118,6 +120,7 @@ class Germ extends Hazard {
         let h = w;
         let dx = 2;
         let dy = 0;
+        let speed = 2;
         let random = Math.floor(Math.random() * 4);
         let imgUrl;
         if(random == 0)
@@ -155,6 +158,7 @@ class Food extends Hazard {
         let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
         let dx = 2;
         let dy = 0;
+        let speed = 2;
         let w = document.documentElement.clientWidth * 0.1;
         let h = w;
         let x = w;
@@ -215,6 +219,7 @@ class Smoke extends Hazard {
         let h = w;
         let dx = 2;
         let dy = 0;
+        let speed = 2;
         let imgUrl = 'assets/smoke.png';
         let points = 0;
         let healthLoss = 50;
@@ -236,6 +241,7 @@ class Poop extends Hazard {
         let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
         let dx = 0;
         let dy = 0;
+        let speed = 0;
         let w = document.documentElement.clientWidth * 0.1;
         let h = w;
         let imgUrl = 'assets/poop.png';
@@ -256,6 +262,7 @@ class Flies extends Hazard {
         let y = Math.floor(Math.random() * (yMax - yMin) + yMin);
         let dx = 0;
         let dy = 0;
+        let speed = 0;
         let w = document.documentElement.clientWidth * 0.1;
         let h = w;
         let imgUrl = 'assets/flies.png'; // TODO: find image of flies.
