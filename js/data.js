@@ -252,8 +252,11 @@ function updateHazardDirection() {
         // Don't change direction if it's already close to the end of the
         // screen.
         let ratio = 3 / 5;
-        hazard.dx = 2;
+        hazard.dx = hazard.speed;
         hazard.dy = 0;
+        if (hazard.name == "Food") {
+            continue;
+        }
         if (hazard.x >= document.documentElement.clientWidth * ratio) {
             continue;
         }
