@@ -156,7 +156,7 @@ function update(dt) {
         timeElapsed.source = 0;
     }
 
-    if (timeElapsed.directionUpdate > 3) {
+    if (timeElapsed.directionUpdate > 1) {
         updateHazardDirection();
         timeElapsed.directionUpdate = 0;
     }
