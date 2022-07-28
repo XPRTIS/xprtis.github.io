@@ -789,6 +789,8 @@ class GameOverView extends View {
             `</table>`;
             $('#leaderboardModal').modal('toggle');
         });
+        
+        audioManager.enableOrDisableMusic("bg");
     }
     
     renderAll(context) {
