@@ -974,10 +974,9 @@ class GameView extends View {
     }
     
     renderCharacter(context) {
-        if(mainCharacter.hit > 0) {
-            mainCharacter -= 1;
-            if(mainCharacter.hit > 400) return;
-            else if(mainCharacter.hit > 200) break;
+        if(timeElapsed.hit > 0) {
+            if(timeElapsed.hit > 0.4) return;
+            else if(timeElapsed.hit > 0.2) break;
             else return;
         }
         mainCharacter.draw(context);
