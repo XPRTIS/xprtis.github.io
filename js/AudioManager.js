@@ -68,7 +68,7 @@ class Sound {
         if (this.isBackgroundMusic) {
             this.audioEnabled = !this.audioEnabled;
             this.audioEnabled ? 
-                this.audioElement.play() :
+                (this.audioElement.play(), this.audioElement.loop()) :
                 this.audioElement.pause();
         }
     }
