@@ -24,6 +24,7 @@
         "Ha ha, I finally got her! She'll be sick forever!"
     ],
     "elements": [
+        "Game Elements",
         "Eating food allows you to regain health.",
         "If you accidently shoot food, it will go bad.",
         "If you eat rotten food, you will not gain any health.",
@@ -71,7 +72,6 @@
     "try_again_text": "Oh no! Health dropped to 0.",
     "level_text": "Level",
     "title": "Shoot-'em-up",
-    "elements": "Game Elements",
     "rotate_phone_text": "Please rotate your phone to continue playing...",
     "level_clear_text": "You cleared this level!",
     "level_clear_press": "Press here to go to the next level.",
