@@ -974,7 +974,12 @@ class GameView extends View {
     }
     
     renderCharacter(context) {
-        return;
+        if(timeElapsed.hitTime != 0) {
+            if(timeElapsed.allTime - timeElapsed.hitTime < 0.2) return;
+            else if(timeElapsed.allTime - timeElapsed.hitTime < 0.4) break;
+            else return;
+        }
+        mainCharacter.draw(context);
     }
     
     renderBullets(context) {
@@ -1000,7 +1005,7 @@ class GameView extends View {
         context.shadowOffsetX = 0;
         context.shadowOffsetY = 0;
         context.fillStyle = 'rgba(255, 255, 255, 1)';
-        context.fillText(timeElapsed.allTime - timeElapsed.hitTime, 0.1 * document.documentElement.clientWidth, 35);
+        context.fillText(text, 0.1 * document.documentElement.clientWidth, 35);
         context.restore();
     }
 
