@@ -204,7 +204,10 @@ function spawnHazard() {
         var hazardName = null;
         for (let i = 0; i < allHazards.length; i++) {
             weight += levelInfo.probHazards[i];
-            if (rand < weight) hazardName = allHazards[i];
+            if (rand < weight) {
+               hazardName = allHazards[i];
+               break;
+            }
         }
         let result = newInstanceFromName(hazardName);
         if (result !== null) {
