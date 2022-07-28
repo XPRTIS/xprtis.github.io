@@ -199,7 +199,13 @@ function spawnHazard() {
     // Use the "canSpawn" functionvbefore choosing a random hazard to spawn
     var allHazards = levelInfo.availableHazards.filter(name => canSpawn(name));
     if (allHazards.length > 0) {
-        var hazardName = allHazards.randomElement();
+        let weight = 0;
+        let rand = Math.random();
+        var hazardName = null;
+        for (let i = 0; i < allHazards.length; i++) {
+            weight += levelInfo.probHazards[i];
+            if (rand < weight) hazardName = allHazards[i];
+        }
         let result = newInstanceFromName(hazardName);
         if (result !== null) {
             hazards.push(result);
