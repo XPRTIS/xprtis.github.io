@@ -12,7 +12,6 @@ class MainCharacter {
         this.numFrames = 5;
         this.score = 0;
         this.health = 100;
-        this.hit = 0;
         this.items = [];
         this.finalScore = 0;
         this.initial = 200;
