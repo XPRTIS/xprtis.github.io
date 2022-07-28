@@ -1000,7 +1000,7 @@ class GameView extends View {
         context.shadowOffsetX = 0;
         context.shadowOffsetY = 0;
         context.fillStyle = 'rgba(255, 255, 255, 1)';
-        context.fillText(text, 0.1 * document.documentElement.clientWidth, 35);
+        context.fillText(timeElapsed.allTime, 0.1 * document.documentElement.clientWidth, 35);
         context.restore();
     }
 
