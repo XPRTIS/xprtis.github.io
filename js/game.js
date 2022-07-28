@@ -7,7 +7,6 @@
 var timeElapsed = {
     hazard: 0,
     source: 0,
-    directionUpdate: 0,
     allTime: 0,
     hitTime: 0,
     bullet: 0,
@@ -132,11 +131,11 @@ function mainLoop(context) {
 function update(dt) {
     timeElapsed.hazard += dt;
     timeElapsed.source += dt;
-    timeElapsed.directionUpdate += dt;
     timeElapsed.allTime += dt;
     timeElapsed.bullet += dt;
     timeElapsed.bulletFired += dt;
 
+    updateHazardDirection();
     moveBullets();
     moveHazards();
 
@@ -156,11 +155,6 @@ function update(dt) {
     if (timeElapsed.source > 5) {
         spawnSource();
         timeElapsed.source = 0;
-    }
-
-    if (timeElapsed.directionUpdate > 1) {
-        updateHazardDirection();
-        timeElapsed.directionUpdate = 0;
     }
 
     if (timeElapsed.bullet > 5) {
