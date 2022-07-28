@@ -10,8 +10,7 @@ var timeElapsed = {
     directionUpdate: 0,
     allTime: 0,
     bullet: 0,
-    bulletFired: 0,
-    hit: 0
+    bulletFired: 0
 }
 var stateStack = [];
 var audioEnabled = false;
@@ -135,7 +134,6 @@ function update(dt) {
     timeElapsed.directionUpdate += dt;
     timeElapsed.bullet += dt;
     timeElapsed.bulletFired += dt;
-    timeElapsed.hit -= dt;
 
     moveBullets();
     moveHazards();
@@ -168,10 +166,7 @@ function update(dt) {
                                 mainCharacter.bullets + 1 :
                                 mainCharacter.bullets;
     }
-    
-    if (timeElasped.hit < 0) {
-        timeElapsed.hit = 0;
-    }
+
 }
 
 /* How to change canvas size code from:
