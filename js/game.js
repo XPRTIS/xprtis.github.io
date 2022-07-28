@@ -9,6 +9,7 @@ var timeElapsed = {
     source: 0,
     directionUpdate: 0,
     allTime: 0,
+    hitTime: 0,
     bullet: 0,
     bulletFired: 0
 }
@@ -132,6 +133,7 @@ function update(dt) {
     timeElapsed.hazard += dt;
     timeElapsed.source += dt;
     timeElapsed.directionUpdate += dt;
+    timeElapsed.allTime += dt;
     timeElapsed.bullet += dt;
     timeElapsed.bulletFired += dt;
 
