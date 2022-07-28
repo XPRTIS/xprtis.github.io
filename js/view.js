@@ -174,7 +174,7 @@ class InstructionsView extends View {
             context.font = "500 15px 'Roboto', sans-serif";
             context.fillStyle = '#FFF';
             context.textAlign = 'left';
-            context.fillText(gameText.elements[0], (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.elements[1], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.35 + 30);
 
             let rottenFood1 = new Image();
@@ -192,9 +192,9 @@ class InstructionsView extends View {
 
             context.font = "500 15px 'Roboto', sans-serif";
             context.fillStyle = '#FFF';
-            context.fillText(gameText.elements[1], (document.documentElement.clientWidth / 2) - width/2 + 170, 
-            document.documentElement.clientHeight * 0.35 + 80);
             context.fillText(gameText.elements[2], (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.35 + 80);
+            context.fillText(gameText.elements[3], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.35 + 100);
 
             let stove = new Image();
@@ -206,9 +206,9 @@ class InstructionsView extends View {
             context.drawImage(smoke, (document.documentElement.clientWidth / 2) - width/2 + 60, 
             document.documentElement.clientHeight * 0.35 + 120, 50, 50);
 
-            context.fillText(gameText.elements[3], (document.documentElement.clientWidth / 2) - width/2 + 170, 
-            document.documentElement.clientHeight * 0.35 + 150);
             context.fillText(gameText.elements[4], (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.35 + 150);
+            context.fillText(gameText.elements[5], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.35 + 170);
 
             let hand0 = new Image();
@@ -228,9 +228,9 @@ class InstructionsView extends View {
             context.drawImage(hand3, (document.documentElement.clientWidth / 2) - width/2 + 160, 
             document.documentElement.clientHeight * 0.35 + 180, 50, 50);
 
-            context.fillText(gameText.elements[5], (document.documentElement.clientWidth / 2) - width/2 + 230, 
-            document.documentElement.clientHeight * 0.35 + 200);
             context.fillText(gameText.elements[6], (document.documentElement.clientWidth / 2) - width/2 + 230, 
+            document.documentElement.clientHeight * 0.35 + 200);
+            context.fillText(gameText.elements[7], (document.documentElement.clientWidth / 2) - width/2 + 230, 
             document.documentElement.clientHeight * 0.35 + 220);
 
             let germ1 = new Image();
@@ -250,9 +250,9 @@ class InstructionsView extends View {
             document.documentElement.clientHeight * 0.35 + 240, 50, 50);
             context.drawImage(germ4, (document.documentElement.clientWidth / 2) - width/2 + 160, 
             document.documentElement.clientHeight * 0.35 + 240, 50, 50);
-            context.fillText(gameText.elements[7], (document.documentElement.clientWidth / 2) - width/2 + 230, 
-            document.documentElement.clientHeight * 0.35 + 260);
             context.fillText(gameText.elements[8], (document.documentElement.clientWidth / 2) - width/2 + 230, 
+            document.documentElement.clientHeight * 0.35 + 260);
+            context.fillText(gameText.elements[9], (document.documentElement.clientWidth / 2) - width/2 + 230, 
             document.documentElement.clientHeight * 0.35 + 280);
                         
         }
@@ -282,7 +282,7 @@ class InstructionsView extends View {
             context.font = "500 12px 'Roboto', sans-serif";
             context.fillStyle = '#FFF';
             context.textAlign = 'left';
-            context.fillText(gameText.elements[0], (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            context.fillText(gameText.elements[1], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.15 + 30);
     
             let rottenFood1 = new Image();
@@ -300,9 +300,9 @@ class InstructionsView extends View {
     
             context.font = "500 12px 'Roboto', sans-serif";
             context.fillStyle = '#FFF';
-            context.fillText(gameText.elements[1], (document.documentElement.clientWidth / 2) - width/2 + 170, 
-            document.documentElement.clientHeight * 0.15 + 80);
             context.fillText(gameText.elements[2], (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.15 + 80);
+            context.fillText(gameText.elements[3], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.15 + 100);
     
             let stove = new Image();
@@ -314,9 +314,9 @@ class InstructionsView extends View {
             context.drawImage(smoke, (document.documentElement.clientWidth / 2) - width/2 + 60, 
             document.documentElement.clientHeight * 0.15 + 120, 50, 50);
     
-            context.fillText(gameText.elements[3], (document.documentElement.clientWidth / 2) - width/2 + 170, 
-            document.documentElement.clientHeight * 0.15 + 150);
             context.fillText(gameText.elements[4], (document.documentElement.clientWidth / 2) - width/2 + 170, 
+            document.documentElement.clientHeight * 0.15 + 150);
+            context.fillText(gameText.elements[5], (document.documentElement.clientWidth / 2) - width/2 + 170, 
             document.documentElement.clientHeight * 0.15 + 170);
     
             let hand0 = new Image();
@@ -336,9 +336,9 @@ class InstructionsView extends View {
             context.drawImage(hand3, (document.documentElement.clientWidth / 2) - width/2 + 160, 
             document.documentElement.clientHeight * 0.15 + 180, 50, 50);            
     
-            context.fillText(gameText.elements[5], (document.documentElement.clientWidth / 2) - width/2 + 230, 
-            document.documentElement.clientHeight * 0.15 + 200);
             context.fillText(gameText.elements[6], (document.documentElement.clientWidth / 2) - width/2 + 230, 
+            document.documentElement.clientHeight * 0.15 + 200);
+            context.fillText(gameText.elements[7], (document.documentElement.clientWidth / 2) - width/2 + 230, 
             document.documentElement.clientHeight * 0.15 + 220);
     
             let germ1 = new Image();
@@ -358,9 +358,9 @@ class InstructionsView extends View {
             document.documentElement.clientHeight * 0.15 + 240, 50, 50);
             context.drawImage(germ4, (document.documentElement.clientWidth / 2) - width/2 + 160, 
             document.documentElement.clientHeight * 0.15 + 240, 50, 50);
-            context.fillText(gameText.elements[7], (document.documentElement.clientWidth / 2) - width/2 + 230, 
-            document.documentElement.clientHeight * 0.15 + 260);
             context.fillText(gameText.elements[8], (document.documentElement.clientWidth / 2) - width/2 + 230, 
+            document.documentElement.clientHeight * 0.15 + 260);
+            context.fillText(gameText.elements[9], (document.documentElement.clientWidth / 2) - width/2 + 230, 
             document.documentElement.clientHeight * 0.15 + 280);
         }
         // context.shadowColor = "#000";
@@ -462,7 +462,7 @@ class StartScreenView extends View { // subclass of View
             instructionsY = instructionsHeight + 10;
             fontName = "'Roboto', sans-serif;";
         }
-        this.instructionsButton = new Button(instructionsX, instructionsY, instructionsWidth, instructionsHeight, '#FFF', '#000', fontName, 20, gameText.elements, true, () => {
+        this.instructionsButton = new Button(instructionsX, instructionsY, instructionsWidth, instructionsHeight, '#FFF', '#000', fontName, 20, gameText.elements[0], true, () => {
             stateStack.push(new InstructionsView());
         });
         
