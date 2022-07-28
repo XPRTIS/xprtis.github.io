@@ -977,7 +977,8 @@ class GameView extends View {
         if(timeElapsed.hitTime != 0) {
             if((timeElapsed.allTime - timeElapsed.hitTime) < 0.2) return;
             else if((timeElapsed.allTime - timeElapsed.hitTime) < 0.4);
-            else return;
+            else if((timeElapsed.allTime - timeElapsed.hitTime) < 0.6) return;
+            else;
         }
         mainCharacter.draw(context);
     }
