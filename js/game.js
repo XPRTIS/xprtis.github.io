@@ -10,7 +10,8 @@ var timeElapsed = {
     directionUpdate: 0,
     allTime: 0,
     bullet: 0,
-    bulletFired: 0
+    bulletFired: 0,
+    hit: 0
 }
 var stateStack = [];
 var audioEnabled = false;
@@ -20,7 +21,7 @@ var languageMap = {
     "ta": "Tamil"
 }
 var gameText;
-var BULLET_DELAY = 0.5; // Delay for how often you can fire bullets, in seconds.
+var BULLET_DELAY = 0.2; // Delay for how often you can fire bullets, in seconds.
 var KEEP_AUDIO_OFF = false; // Debug variable for keeping audio always off.
 var audioManager = new AudioManager();
 var infoText;
@@ -134,6 +135,7 @@ function update(dt) {
     timeElapsed.directionUpdate += dt;
     timeElapsed.bullet += dt;
     timeElapsed.bulletFired += dt;
+    timeElapsed.hit -= dt;
 
     moveBullets();
     moveHazards();
@@ -165,6 +167,10 @@ function update(dt) {
         mainCharacter.bullets = mainCharacter.bullets < 15 ? 
                                 mainCharacter.bullets + 1 :
                                 mainCharacter.bullets;
+    }
+    
+    if (timeElasped.hit < 0) {
+        timeElapsed.hit = 0;
     }
 }
 
