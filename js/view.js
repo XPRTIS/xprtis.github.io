@@ -791,6 +791,8 @@ class GameOverView extends View {
         });
     }
 
+    audioManager.enableOrDisableMusic("bg");
+    
     renderAll(context) {
         super.renderAll(context);
         this.renderBackground(context);
@@ -1286,6 +1288,8 @@ class LevelClearView extends GameView {
             })
     }
 
+    audioManager.enableOrDisableMusic("bg");
+    
     renderAll(context) {
         super.renderAll(context);
         this.renderGameButtons(context);
@@ -1437,12 +1441,6 @@ class LevelClearView extends GameView {
            
         }
         
-
-
-
-
-
-
         context.restore();
     }
 }
