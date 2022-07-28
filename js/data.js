@@ -134,7 +134,7 @@ function checkAllCollisions(bullets, hazards) {
         if (collisionCheckRect(mainCharacter, hazard)) {
             hazardRemoveList.push(hazard);
             mainCharacter.health -= hazard.healthLoss;
-            if (hazard.name != "Food") mainCharacter.hit = 600;
+            if (hazard.name != "Food") timeElapsed.hit = 0.6;
             if (mainCharacter.health > 100) mainCharacter.health = 100;
             hazard.playCollisionAudio();
         }
