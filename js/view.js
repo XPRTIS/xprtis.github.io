@@ -790,8 +790,6 @@ class GameOverView extends View {
             $('#leaderboardModal').modal('toggle');
         });
     }
-
-    audioManager.enableOrDisableMusic("bg");
     
     renderAll(context) {
         super.renderAll(context);
@@ -1286,9 +1284,8 @@ class LevelClearView extends GameView {
                     stateStack[stateStack.length - 1].changeBackground('assets/background2.png');
                 }
             })
+        audioManager.enableOrDisableMusic("bg");
     }
-
-    audioManager.enableOrDisableMusic("bg");
     
     renderAll(context) {
         super.renderAll(context);
