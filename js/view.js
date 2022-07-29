@@ -24,7 +24,7 @@ class View {
     renderAll(context) {}
 }
 
-class NextLevelView extends View {
+class NextLevelView extends LevelClearView {
     constructor() {
         super();
         this.name = "NextLevelView";
@@ -1299,7 +1299,7 @@ class LevelClearView extends GameView {
 
         this.nextLevelButton = new Button(x, y, w, h, buttonColor, textColor, 
             fontName, fontSize, text, true, () => {
-                stateStack.pop();
+                stateStack.push(new(NextLevelView());
                 audioManager.enableOrDisableMusic("bg");
                 if(level == 2)
                 {
