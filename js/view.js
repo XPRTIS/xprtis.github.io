@@ -1171,7 +1171,7 @@ class PauseView extends GameView {
             context.font = "700 35px 'Roboto', sans-serif";
             context.fillStyle = 'rgba(0, 0, 0, 1)';
             context.textAlign = 'center';
-            if (confirm == false) {
+            if (confirm != true) {
                 context.fillText(gameText.paused, document.documentElement.clientWidth / 2, 
                      document.documentElement.clientHeight * 0.10 + 70);
             }
@@ -1198,7 +1198,7 @@ class PauseView extends GameView {
             context.font = "700 35px 'Roboto', sans-serif";
             context.fillStyle = 'rgba(0, 0, 0, 1)';
             context.textAlign = 'center';
-            if (confirm == false) {
+            if (confirm != true) {
                 context.fillText(gameText.paused, document.documentElement.clientWidth / 2, 
                      document.documentElement.clientHeight * 0.35 + 70);
             }
