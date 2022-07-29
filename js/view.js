@@ -64,11 +64,11 @@ class NextLevelView extends View {
         let scriptText = null;
         if(mainCharacter.gender == true)
         {
-        scriptText = gameText.villian_scripts_male[level - 1];
+        scriptText = gameText.villain_scripts_male[level - 1];
         }
         else
         {
-        scriptText = gameText.villian_scripts_female[level - 1];
+        scriptText = gameText.villain_scripts_female[level - 1];
         }
         let partitionedScript = partitionScript(scriptText, context);
         if (partitionedScript != undefined && partitionedScript.lines.length > 0) {
@@ -819,11 +819,11 @@ class GameOverView extends View {
         let text = null;
         if(mainCharacter.gender == true)
         {
-        text = gameText.villian_scripts_male[gameText.villain_scripts_male.length - 1];
+        text = gameText.villain_scripts_male[gameText.villain_scripts_male.length - 1];
         }
         else
         {
-        text = gameText.villian_scripts_female[gameText.villian_scripts_female.length - 1];
+        text = gameText.villain_scripts_female[gameText.villain_scripts_female.length - 1];
         }
         let x = document.documentElement.clientWidth / 2;
         let y = document.documentElement.clientHeight * 0.3;
@@ -848,11 +848,11 @@ class GameOverView extends View {
         let text = null;
         if(mainCharacter.gender == true)
         {
-        text = gameText.villian_scripts_male[gameText.villian_scripts_male.length - 2];
+        text = gameText.villain_scripts_male[gameText.villain_scripts_male.length - 2];
         }
         else
         {
-        text = gameText.villian_scripts_female[gameText.villian_scripts_female.length - 2];
+        text = gameText.villain_scripts_female[gameText.villain_scripts_female.length - 2];
         }
         let x = document.documentElement.clientWidth * 0.5;
         let y = document.documentElement.clientHeight * 0.35;
