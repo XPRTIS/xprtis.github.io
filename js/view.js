@@ -435,7 +435,7 @@ class StartScreenView extends View { // subclass of View
         super();
         this.name = "StartScreenView";
         this.buttons = [];
-        let margin = 14;
+        let margin = 10;
         let w = document.documentElement.clientWidth * 0.075;
         let h = document.documentElement.clientHeight * 0.03;
         let fontName = "'Roboto', sans-serif;";
@@ -468,8 +468,8 @@ class StartScreenView extends View { // subclass of View
         });
         
         for (let i = 0; i < supportedLanguages.length; i++) {
-            let x = instructionsX - 200;
-            let y = instructionsY + instructionsHeight * i + 40 * i;
+            let x = instructionsWidth + 10;
+            let y = instructionsY + instructionsHeight * 2 * i + margin * i;
             let text = languageMap[supportedLanguages[i]];
             this.buttons.push(new Button(x, y, instructionsWidth, instructionsHeight, buttonColor, textColor, 
                 fontName, 20, text, true, () => {
@@ -910,7 +910,7 @@ class GameOverView extends View {
         context.save();
         let text = gameText.final_score_text + ": " + mainCharacter.finalScore;
         let x = document.documentElement.clientWidth * 0.5;
-        let y = document.documentElement.clientHeight * 0.5;
+        let y = document.documentElement.clientHeight * 0.2;
         context.shadowColor = "#000";
         context.shadowBlur = 4;
         context.shadowOffsetX = 0;
@@ -1417,7 +1417,7 @@ class LevelClearView extends GameView {
                             document.documentElement.clientHeight * 0.20);
 
             context.font = "600 20px 'Roboto', sans-serif";
-            text = gameText.level_cleared_text;
+            text = gameText.level_clear_text;
             context.fillText(text, document.documentElement.clientWidth / 2, 
                             document.documentElement.clientHeight * 0.28);
 
