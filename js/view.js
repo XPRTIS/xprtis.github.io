@@ -816,7 +816,15 @@ class GameOverView extends View {
         context.fillStyle = '#FFF';
         context.textAlign = "center";
         context.font = "600 32px 'Roboto', sans-serif";
-        let text = gameText.try_again_text;
+        let text = null;
+        if(mainCharacter.gender == true)
+        {
+        text = gameText.villian_scripts_male[gameText.length - 1];
+        }
+        else
+        {
+        text = gameText.villian_scripts_female[gameText.length - 1];
+        }
         let x = document.documentElement.clientWidth / 2;
         let y = document.documentElement.clientHeight * 0.3;
         let metrics = context.measureText(text);
@@ -837,7 +845,15 @@ class GameOverView extends View {
         context.fillStyle = '#FFF';
         context.textAlign = "center";
         context.font = "600 32px 'Roboto', sans-serif";
-        let text = gameText.congrats_text;
+        let text = null;
+        if(mainCharacter.gender == true)
+        {
+        text = gameText.villian_scripts_male[gameText.length - 2];
+        }
+        else
+        {
+        text = gameText.villian_scripts_female[gameText.length - 2];
+        }
         let x = document.documentElement.clientWidth * 0.5;
         let y = document.documentElement.clientHeight * 0.35;
         let metrics = context.measureText(text);
