@@ -805,8 +805,15 @@ class GameOverView extends View {
         this.renderScore(context);
         // this.renderAntagonist(context);
         this.renderLeaderboard(context);
+        this.renderAntagonist(context);
     }
 
+    renderAntagonist(context) {
+        let x = document.documentElement.clientWidth / 5;
+        let y = document.documentElement.clientHeight / 2 - (antagonist.h / 2);
+        antagonist.draw(context, x, y);
+    }
+    
     renderTryAgainText(context) {
         context.save();
         context.shadowColor = "#000";
@@ -825,14 +832,19 @@ class GameOverView extends View {
         {
         text = gameText.villain_scripts_female[gameText.villain_scripts_female.length - 1];
         }
-        let x = document.documentElement.clientWidth / 2;
-        let y = document.documentElement.clientHeight * 0.3;
-        let metrics = context.measureText(text);
-        let textWidth = metrics.width;
-        let textHeight = metrics.actualBoundingBoxAscent + 
-                         metrics.actualBoundingBoxDescent;
-
-        context.fillText(text, x, y + textHeight / 2);
+        let partitionedScript = partitionScript(scriptText, context);
+        if (partitionedScript != undefined && partitionedScript.lines.length > 0) {
+            context.font = "600 20px 'Roboto', sans-serif";
+            context.fillStyle = 'rgba(255, 255, 255, 1)';
+            let x = document.documentElement.clientWidth * 0.64 - 
+                    context.measureText(partitionedScript.lines[0]).width / 2;
+            let y = document.documentElement.clientHeight * 0.45;
+            let margin = 15;
+            for (let i = 0; i < partitionedScript.lines.length; i++) {
+                context.fillText(partitionedScript.lines[i], x, y)
+                y += partitionedScript.height + margin;
+            }
+        }
         context.restore();
     }
 
