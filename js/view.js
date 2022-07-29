@@ -1318,14 +1318,6 @@ class LevelClearView extends GameView {
             fontName, fontSize, text, true, () => {
                 stateStack.push(new NextLevelView());
                 audioManager.enableOrDisableMusic("bg");
-                if(level == 2)
-                {
-                    stateStack[stateStack.length - 1].changeBackground('assets/background3.png');
-                }
-                else if(level == 3)
-                {
-                    stateStack[stateStack.length - 1].changeBackground('assets/background2.png');
-                }
             });
         audioManager.enableOrDisableMusic("bg");
     }
