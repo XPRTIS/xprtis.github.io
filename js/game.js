@@ -204,7 +204,7 @@ function configureLanguageAndStartGame() {
     fetch('./js/lang/' + lang + '.json')
         .then(response => response.json())
         .then(data => {
-            gameText = data
+            gameText = data;
             initCanvas();
         })
         .catch(error => console.error(error));
