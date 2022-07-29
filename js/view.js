@@ -866,13 +866,19 @@ class GameOverView extends View {
         {
         text = gameText.villain_scripts_female[gameText.villain_scripts_female.length - 2];
         }
-        let x = document.documentElement.clientWidth * 0.5;
-        let y = document.documentElement.clientHeight * 0.35;
-        let metrics = context.measureText(text);
-        let textHeight = metrics.actualBoundingBoxAscent + 
-                         metrics.actualBoundingBoxDescent;
-
-        context.fillText(text, x, y + textHeight / 2);
+        let partitionedScript = partitionScript(text, context);
+        if (partitionedScript != undefined && partitionedScript.lines.length > 0) {
+            context.font = "600 20px 'Roboto', sans-serif";
+            context.fillStyle = 'rgba(255, 255, 255, 1)';
+            let x = document.documentElement.clientWidth * 0.64 - 
+                    context.measureText(partitionedScript.lines[0]).width / 2;
+            let y = document.documentElement.clientHeight * 0.45;
+            let margin = 15;
+            for (let i = 0; i < partitionedScript.lines.length; i++) {
+                context.fillText(partitionedScript.lines[i], x, y)
+                y += partitionedScript.height + margin;
+            }
+        }
         context.restore();
     }
 
@@ -1146,10 +1152,11 @@ class PauseView extends GameView {
                 confirm = true;
                 this.buttons.push(new Button(x, y-60, w, h, buttonColor, textColor, 
                     fontName, fontSize, gameText.yes, true, () => {
+                        audioManager.enableOrDisableMusic("bg");
                         stateStack.pop();
                         stateStack.pop(); // Pop twice to get to the main screen.
                         // Restart any data
-                        resetGame();   
+                        resetGame();
                     }));
 
                 // Resume
