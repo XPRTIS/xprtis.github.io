@@ -14,11 +14,10 @@ var timeElapsed = {
 }
 var stateStack = [];
 var audioEnabled = false;
-var fs = require('fs');
-var supportedLanguages = fs.readdirSync('/js/lang', false);
+var supportedLanguages = ["en", "ta"]; // TODO: add Tamil once supported.
 var languageMap = {
     "en": "English",
-    "ta": "Tamil"
+    "ta": "தமிழ்"
 }
 var gameText;
 var BULLET_DELAY = 0.2; // Delay for how often you can fire bullets, in seconds.
