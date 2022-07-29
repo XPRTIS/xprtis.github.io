@@ -24,7 +24,7 @@ class View {
     renderAll(context) {}
 }
 
-class NextLevelView extends LevelClearView {
+class NextLevelView extends View {
     constructor() {
         super();
         this.name = "NextLevelView";
