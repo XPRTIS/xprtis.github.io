@@ -832,7 +832,7 @@ class GameOverView extends View {
         {
         text = gameText.villain_scripts_female[gameText.villain_scripts_female.length - 1];
         }
-        let partitionedScript = partitionScript(scriptText, context);
+        let partitionedScript = partitionScript(text, context);
         if (partitionedScript != undefined && partitionedScript.lines.length > 0) {
             context.font = "600 20px 'Roboto', sans-serif";
             context.fillStyle = 'rgba(255, 255, 255, 1)';
