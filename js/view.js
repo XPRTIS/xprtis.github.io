@@ -1199,7 +1199,7 @@ class PauseView extends GameView {
             context.fillStyle = 'rgba(0, 0, 0, 1)';
             context.textAlign = 'center';
             if (confirm != true) {
-                context.fillText(gameText.paused, document.documentElement.clientWidth / 2, 
+                context.fillText(timeElapsed.allTime, document.documentElement.clientWidth / 2, 
                      document.documentElement.clientHeight * 0.35 + 70);
             }
             else {
