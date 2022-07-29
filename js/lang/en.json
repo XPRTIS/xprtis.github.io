@@ -64,6 +64,7 @@
     "restart_text": "Restart",
     "yes": "Yes",
     "no": "No",
+    "paused": "Game Paused",
     "restart_confirm": "Are you sure?",
     "pause_text": "Pause",
     "resume_text": "Resume",
