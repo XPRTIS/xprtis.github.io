@@ -449,7 +449,7 @@ function changeToGameView(character) {
 
     var gameView = new GameView();
     stateStack.push(gameView);
-    stateStack.push(new NextLevelView));
+    stateStack.push(new NextLevelView());
 
     // Most browsers (notably Chrome and Safari) don't allow
     // autoplaying music until the page is interacted with in
