@@ -1114,17 +1114,7 @@ class PauseView extends GameView {
             fontName, fontSize, text, true, () => {
                 this.buttons.pop();
                 this.buttons.pop();
-                    context.font = "700 35px 'Roboto', sans-serif";
-                    context.fillStyle = 'rgba(0, 0, 0, 1)';
-                    context.textAlign = 'center';
-                    if (document.documentElement.clientWidth < 1000) {
-                        context.fillText(gameText.restart_confirm, document.documentElement.clientWidth / 2, 
-                             document.documentElement.clientHeight * 0.10 + 70);
-                    }
-                    else {
-                        context.fillText(gameText.restart_confirm, document.documentElement.clientWidth / 2, 
-                             document.documentElement.clientHeight * 0.35 + 70);
-                    }
+                confirm = true;
                 this.buttons.push(new Button(x, y-60, w, h, buttonColor, textColor, 
                     fontName, fontSize, gameText.yes, true, () => {
                         stateStack.pop();
