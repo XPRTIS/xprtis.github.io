@@ -1103,6 +1103,7 @@ class PauseView extends GameView {
         let fontName = "'Roboto', sans-serif";
         let fontSize = 20;
         let text = gameText.restart_text;
+        let confirm = false;
 
         // Don't let buttons work while paused:
         for (var button of this.buttons) {
@@ -1113,8 +1114,9 @@ class PauseView extends GameView {
             fontName, fontSize, text, true, () => {
                 this.buttons.pop();
                 this.buttons.pop();
+                confirm = true;
                 this.buttons.push(new Button(x, y-60, w, h, buttonColor, textColor, 
-                    fontName, fontSize, "Yes", true, () => {
+                    fontName, fontSize, gameText.yes, true, () => {
                         stateStack.pop();
                         stateStack.pop(); // Pop twice to get to the main screen.
                         // Restart any data
@@ -1124,7 +1126,7 @@ class PauseView extends GameView {
                 // Resume
                 text = gameText.resume_text;
                 this.buttons.push(new Button(x, y, w, h, buttonColor, textColor, 
-                    fontName, fontSize, "No", true, () => { stateStack.pop(); }));
+                    fontName, fontSize, gameText.no, true, () => { stateStack.pop(); }));
             }));
 
         // Resume
@@ -1170,8 +1172,14 @@ class PauseView extends GameView {
             context.font = "700 35px 'Roboto', sans-serif";
             context.fillStyle = 'rgba(0, 0, 0, 1)';
             context.textAlign = 'center';
-            context.fillText("Game Paused", document.documentElement.clientWidth / 2, 
-                             document.documentElement.clientHeight * 0.10 + 70);
+            if (confirm == false) {
+                context.fillText(gameText.paused, document.documentElement.clientWidth / 2, 
+                     document.documentElement.clientHeight * 0.10 + 70);
+            }
+            else {
+                context.fillText(gameText.restart_confirm, document.documentElement.clientWidth / 2, 
+                     document.documentElement.clientHeight * 0.10 + 70);
+            }
         }
         else
         {
