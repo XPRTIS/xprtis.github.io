@@ -32,9 +32,9 @@ function addToScore(points) {
             stateStack.push(new GameOverView());
             antagonist.gameWon();
         } else {
+            stateStack.push(new LevelClearView());
             level += 1;
             levelInfo = getLevelInfo(level);
-            stateStack.push(new LevelClearView());
             mainCharacter.score = 0;
             mainCharacter.health = 100;
             hazards = [];
