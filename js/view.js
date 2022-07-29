@@ -819,11 +819,11 @@ class GameOverView extends View {
         let text = null;
         if(mainCharacter.gender == true)
         {
-        text = gameText.villian_scripts_male[gameText.length - 1];
+        text = gameText.villian_scripts_male[gameText.villain_scripts_male.length - 1];
         }
         else
         {
-        text = gameText.villian_scripts_female[gameText.length - 1];
+        text = gameText.villian_scripts_female[gameText.villian_scripts_female.length - 1];
         }
         let x = document.documentElement.clientWidth / 2;
         let y = document.documentElement.clientHeight * 0.3;
@@ -848,11 +848,11 @@ class GameOverView extends View {
         let text = null;
         if(mainCharacter.gender == true)
         {
-        text = gameText.villian_scripts_male[gameText.length - 2];
+        text = gameText.villian_scripts_male[gameText.villian_scripts_male.length - 2];
         }
         else
         {
-        text = gameText.villian_scripts_female[gameText.length - 2];
+        text = gameText.villian_scripts_female[gameText.villian_scripts_female.length - 2];
         }
         let x = document.documentElement.clientWidth * 0.5;
         let y = document.documentElement.clientHeight * 0.35;
