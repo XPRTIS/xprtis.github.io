@@ -821,7 +821,7 @@ class GameOverView extends View {
         context.shadowOffsetX = 0;
         context.shadowOffsetY = 3;
         context.fillStyle = '#FFF';
-        context.textAlign = "center";
+        //context.textAlign = "center";
         context.font = "600 32px 'Roboto', sans-serif";
         let text = null;
         if(mainCharacter.gender == true)
@@ -855,7 +855,7 @@ class GameOverView extends View {
         context.shadowOffsetX = 0;
         context.shadowOffsetY = 3;
         context.fillStyle = '#FFF';
-        context.textAlign = "center";
+        //context.textAlign = "center";
         context.font = "600 32px 'Roboto', sans-serif";
         let text = null;
         if(mainCharacter.gender == true)
