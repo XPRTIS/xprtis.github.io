@@ -14,7 +14,8 @@ var timeElapsed = {
 }
 var stateStack = [];
 var audioEnabled = false;
-var supportedLanguages = ["en", "ta"]; // TODO: add Tamil once supported.
+var fs = require('fs');
+var supportedLanguages = fs.readdirSync('/js/lang', false);
 var languageMap = {
     "en": "English",
     "ta": "Tamil"
