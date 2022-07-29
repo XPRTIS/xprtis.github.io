@@ -63,12 +63,7 @@ function initCanvas() {
             if (event.code === 'KeyA') { audioManager.muteOrUnmuteAllAudio(); }
             // Separate out to different views so that keys only work in their
             // respective views:
-            if (stateStack[stateStack.length - 1].name === "StartScreenView") {
-                if (event.code === 'Space') {
-                    changeToGameView();
-                }
-
-            } else if (stateStack[stateStack.length - 1].name === "GameView") {
+            if (stateStack[stateStack.length - 1].name === "GameView") {
                 if (event.code === "KeyB") {
                     stateStack.pop();
                 }
@@ -86,10 +81,6 @@ function initCanvas() {
                     mainCharacter.moveCharacter(event.code);
                 }
 
-            } else if (stateStack[stateStack.length - 1].name === "NextLevelView") {
-                if (event.code === 'Space') {
-                    stateStack.pop();
-                }
             }
         });
 
@@ -404,7 +395,7 @@ function handleButtonClicks(x, y) {
         currentState.pauseButton.wasClicked(x, y);
     } else if (currentState.name === "NextLevelView") {
         stateStack.pop();
-        stateStack.pop();
+        if(level != 1) stateStack.pop();
         if(level == 2)
         {
             stateStack[stateStack.length - 1].changeBackground('assets/background3.png');
@@ -458,6 +449,7 @@ function changeToGameView(character) {
 
     var gameView = new GameView();
     stateStack.push(gameView);
+    stateStack.push(new NextLevelView));
 
     // Most browsers (notably Chrome and Safari) don't allow
     // autoplaying music until the page is interacted with in
