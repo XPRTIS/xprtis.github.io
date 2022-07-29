@@ -64,11 +64,11 @@ class NextLevelView extends View {
         let scriptText = null;
         if(mainCharacter.gender == true)
         {
-        scriptText = gameText.villian_scripts_male[level];
+        scriptText = gameText.villian_scripts_male[level - 1];
         }
         else
         {
-        scriptText = gameText.villian_scripts_female[level];
+        scriptText = gameText.villian_scripts_female[level - 1];
         }
         let partitionedScript = partitionScript(scriptText, context);
         if (partitionedScript != undefined && partitionedScript.lines.length > 0) {
