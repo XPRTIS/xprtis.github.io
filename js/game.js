@@ -44,7 +44,6 @@ function initCanvas() {
     // disabled.
     if (canvas.getContext) {
         const ratio = Math.ceil(window.devicePixelRatio);
-        console.log(ratio);
         var context = canvas.getContext('2d');
         var startScreen = new StartScreenView();
         stateStack.push(startScreen);
