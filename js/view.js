@@ -1309,7 +1309,7 @@ class LevelClearView extends GameView {
                 {
                     stateStack[stateStack.length - 1].changeBackground('assets/background2.png');
                 }
-            })
+            });
         audioManager.enableOrDisableMusic("bg");
     }
     
