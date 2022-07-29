@@ -1114,6 +1114,7 @@ class PauseView extends GameView {
             fontName, fontSize, text, true, () => {
                 this.buttons.pop();
                 this.buttons.pop();
+                confirm = true;
                 this.buttons.push(new Button(x, y-60, w, h, buttonColor, textColor, 
                     fontName, fontSize, gameText.yes, true, () => {
                         stateStack.pop();
@@ -1126,6 +1127,7 @@ class PauseView extends GameView {
                 text = gameText.resume_text;
                 this.buttons.push(new Button(x, y, w, h, buttonColor, textColor, 
                     fontName, fontSize, gameText.no, true, () => { stateStack.pop(); }));
+                this.renderButtons(context);
             }));
 
         // Resume
@@ -1199,7 +1201,7 @@ class PauseView extends GameView {
             context.fillStyle = 'rgba(0, 0, 0, 1)';
             context.textAlign = 'center';
             if (confirm != true) {
-                context.fillText(timeElapsed.allTime, document.documentElement.clientWidth / 2, 
+                context.fillText(gameText.paused, document.documentElement.clientWidth / 2, 
                      document.documentElement.clientHeight * 0.35 + 70);
             }
             else {
