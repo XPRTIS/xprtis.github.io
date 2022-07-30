@@ -68,6 +68,8 @@ class DirtyHand extends Hazard {
         {
             imgUrl = 'assets/hand3.png';
         }
+        if(mainCharacter.gender == true) this.audio = "hit_male";
+        else this.audio = "hit_female";
 
         let points = 1;
         let healthLoss = 20;
@@ -139,7 +141,9 @@ class Germ extends Hazard {
         {
             imgUrl = 'assets/germ4.png';
         }
-
+        if(mainCharacter.gender == true) this.audio = "hit_male";
+        else this.audio = "hit_female";
+        
         let points = 1;
         let healthLoss = 30;
         super(name, x, y, w, h, dx, dy, speed, imgUrl, points, healthLoss);
