@@ -68,12 +68,12 @@ class DirtyHand extends Hazard {
         {
             imgUrl = 'assets/hand3.png';
         }
-        if(mainCharacter.gender == true) this.audio = "hit_male";
-        else this.audio = "hit_female";
 
         let points = 1;
         let healthLoss = 20;
         super(name, x, y, w, h, dx, dy, speed, imgUrl, points, healthLoss);
+        if(mainCharacter.gender == true) this.audio = "hit_male";
+        else this.audio = "hit_female";
 
         this.hazardHealth = type == 1 ? 20 : type == 2 ? 30 : 40;
         this.totalHazardHealth = type == 1 ? 20 : type == 2 ? 30 : 40;;
@@ -141,12 +141,12 @@ class Germ extends Hazard {
         {
             imgUrl = 'assets/germ4.png';
         }
-        if(mainCharacter.gender == true) this.audio = "hit_male";
-        else this.audio = "hit_female";
         
         let points = 1;
         let healthLoss = 30;
         super(name, x, y, w, h, dx, dy, speed, imgUrl, points, healthLoss);
+        if(mainCharacter.gender == true) this.audio = "hit_male";
+        else this.audio = "hit_female";
     }
 }
 
