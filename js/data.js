@@ -178,7 +178,6 @@ function isGameOver() {
 
     // Check if lost:
     if (mainCharacter.health <= 0) {
-        audioManager.playSound("fail"); 
         return true;
     }
 
