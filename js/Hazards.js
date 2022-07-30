@@ -179,7 +179,7 @@ class Food extends Hazard {
         let points = 0;
         let healthLoss = -1 * 5;
         super(name, x, y, w, h, dx, dy, speed, imgUrl, points, healthLoss);
-        this.audio = "salad";
+        this.audio = "food";
     }
 
     disable() {
