@@ -790,8 +790,10 @@ class GameOverView extends View {
             `</table>`;
             $('#leaderboardModal').modal('toggle');
         });
-        
         audioManager.enableOrDisableMusic("bg");
+        this.gameWon ?
+            audioManager.playSound("victory") :
+            audioManager.playSound("fail");
     }
     
     renderAll(context) {
