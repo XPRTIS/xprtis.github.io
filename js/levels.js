@@ -20,6 +20,7 @@ function getLevelInfo(level) {
         // level will last forever.
         maxPoints: Math.min(),
         speed: 1,
+        spawnrate: 5,
         // If set to true, hazards will shift towards player to increase
         // difficulty.
         hazardsFollowPlayer: false,
@@ -30,28 +31,30 @@ function getLevelInfo(level) {
         case 1:
             levelInfo.availableHazards.push(DirtyHand.name);
             levelInfo.probHazards.push(1);
-            levelInfo.maxPoints = 1;//3; // Should be 16, we set to 1 for testing purposes.
+            levelInfo.maxPoints = 2;//3; // Should be 16, we set to 1 for testing purposes.
             break;
         case 2:
             levelInfo.availableHazards.push(DirtyHand.name, Food.name);
             levelInfo.probHazards.push(0.8, 0.2);
-            levelInfo.maxPoints = 1;//10;
+            levelInfo.maxPoints = 3;//10;
             levelInfo.speed = 1.2;
             break;
         case 3:
             levelInfo.availableHazards.push(DirtyHand.name, Food.name, Smoke.name);
             levelInfo.probHazards.push(0.6, 0.2, 0.2);
             levelInfo.availableSources.push(Stove.name);
-            levelInfo.maxPoints = 1;//15;
+            levelInfo.maxPoints = 3;//15;
             levelInfo.speed = 1.5;
+            levelInfo.spawnrate = 4;
             levelInfo.hazardsFollowPlayer = true;
             break;
         case 4:
             levelInfo.availableHazards.push(DirtyHand.name, Food.name, Smoke.name, Germ.name);
             levelInfo.probHazards.push(0.3, 0.2, 0.2, 0.3);
             levelInfo.availableSources.push(Stove.name);
-            levelInfo.maxPoints = 1;//20;
+            levelInfo.maxPoints = 5;//20;
             levelInfo.speed = 2;
+            levelInfo.spawnrate = 3;
             levelInfo.hazardsFollowPlayer = true;
             levelInfo.lastLevel = true;
             break;
