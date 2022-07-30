@@ -845,6 +845,7 @@ class GameOverView extends View {
                 y += partitionedScript.height + margin;
             }
         }
+        audioManager.playSound("fail");
         context.restore();
     }
 
