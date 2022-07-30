@@ -941,8 +941,8 @@ class GameView extends View {
         super();
         this.name = "GameView";
         
-        let x = document.documentElement.clientWidth * 0.60;
-        let y = document.documentElement.clientHeight * 0.80;
+        let x = document.documentElement.clientWidth * 0.20;
+        let y = document.documentElement.clientHeight * 0.85;
         let w = 30;
         let h = 20;
         let fontName = "'Roboto', sans-serif";
@@ -950,18 +950,18 @@ class GameView extends View {
         let buttonColor = "rgba(255, 255, 255, 1)";
         let textColor = "rgba(0, 0, 0, 1)";
         
-        let upButton = new Button(x, y, w, h, buttonColor, textColor, fontName,
-            fontSize, "Up", true, () => {
+        let upButton = new Button(x, y - 25, w, h, buttonColor, textColor, fontName,
+            fontSize, "↑", true, () => {
                 mainCharacter.moveCharacterUp()
             });
 
-        let downButton = new Button(x + 140, y , w, h, buttonColor, textColor,
-            fontName, fontSize, "Down", true, () => {
+        let downButton = new Button(x, y + 25, w, h, buttonColor, textColor,
+            fontName, fontSize, "↓", true, () => {
                 mainCharacter.moveCharacterDown();
             });
         
-        let shootButton = new Button (x + 70, y, w, h + 20, 
-            buttonColor, textColor, fontName, fontSize, "Shoot", true, () => {
+        let shootButton = new Button (document.documentElement.clientWidth * 0.80, y, w, h + 20, 
+            buttonColor, textColor, fontName, fontSize, gameText.shoot, true, () => {
                 shootBullet();
             });
         
