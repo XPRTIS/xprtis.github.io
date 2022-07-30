@@ -20,7 +20,7 @@ var languageMap = {
     "ta": "தமிழ்"
 }
 var gameText;
-var BULLET_DELAY = 0.2; // Delay for how often you can fire bullets, in seconds.
+var BULLET_DELAY = 0.25; // Delay for how often you can fire bullets, in seconds.
 var KEEP_AUDIO_OFF = false; // Debug variable for keeping audio always off.
 var audioManager = new AudioManager();
 var infoText;
