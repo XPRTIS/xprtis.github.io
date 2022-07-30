@@ -1138,7 +1138,7 @@ class PauseView extends GameView {
         let fontName = "'Roboto', sans-serif";
         let fontSize = 20;
         let text = gameText.restart_text;
-        var this.reset_confirm = false;
+        this.reset_confirm = false;
 
         // Don't let buttons work while paused:
         for (var button of this.buttons) {
