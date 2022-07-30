@@ -137,12 +137,12 @@ function update(dt) {
     var hazardsOffScreen = checkHazardsOffSceen(hazards);
     removeHazards(hazards, hazardsOffScreen);
 
-    if (timeElapsed.hazard > 5) {
+    if (timeElapsed.hazard > getLevelInfo(spawnrate)) {
         spawnHazard();
         timeElapsed.hazard = 0;
     }
 
-    if (timeElapsed.source > 5) {
+    if (timeElapsed.source > getLevelInfo(spawnrate)) {
         spawnSource();
         timeElapsed.source = 0;
     }
